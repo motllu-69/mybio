@@ -35,6 +35,18 @@
             align-items: center;
         }
 
+        /* Big Title Above Image */
+        .top-banner-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin: 0 0 24px 0;
+            text-align: center;
+            letter-spacing: -0.5px;
+            background: var(--accent-glow);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         /* Profile Header */
         .profile-img {
             width: 96px;
@@ -91,7 +103,6 @@
             border-color: rgba(255, 255, 255, 0.25);
         }
 
-        /* Styling specifically for copy notice tracking */
         .uid-number {
             font-size: 12px;
             color: var(--text-muted);
@@ -103,20 +114,28 @@
 <body>
 
 <div class="container">
-    <img class="profile-img" src="avatar.png" alt="Profile Picture">
+    <!-- Big Title Above Image -->
+    <div class="top-banner-title">Motu..Motllu handle links</div>
+
+    <!-- Profile Image Avatar (Using your working image name setup) -->
+    <img class="profile-img" src="pfp.png" alt="Profile Picture">
     
+    <!-- User Handles & Bio Info -->
     <h1>@motllu (gamer)</h1>
     <p class="bio">hey there! me motu also known motllu (part time gamer ;-;) check my all handles here and drop a rating or follow me ;-;</p>
 
     <div class="links-wrapper">
+        <!-- 1st Button: YouTube -->
         <a href="https://youtube.com/@motllugaming?si=WHJTxWYa711FzVej" class="link-item" target="_blank">
             YouTube Channel 📺
         </a>
 
+        <!-- 2nd Button: Instagram -->
         <a href="https://www.instagram.com/motllubhau.01?igsh=MThvMzRqY3oxNTVkZw==" class="link-item" target="_blank">
             Instagram Profile 📸
         </a>
 
+        <!-- 3rd Button: Free Fire UID Copy Action -->
         <div class="link-item" id="ffButton" onclick="copyUID()">
             <span>Free Fire UID 🎮</span>
             <div class="uid-number" id="uidText">UID: 1673944735 (Click to copy)</div>
@@ -129,13 +148,9 @@ function copyUID() {
     const uid = "1673944735";
     navigator.clipboard.writeText(uid).then(() => {
         const uidText = document.getElementById('uidText');
-        const ffButton = document.getElementById('ffButton');
-        
-        // Visual updates upon copy success
         uidText.innerText = "UID Copied! ✅";
         uidText.style.color = "#00b4db";
         
-        // Reset message back to default indicator after 2 seconds
         setTimeout(() => {
             uidText.innerText = "UID: " + uid + " (Click to copy)";
             uidText.style.color = "#a0aec0";
