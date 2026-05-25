@@ -297,14 +297,14 @@
         .menu-tab-item.active#btn-default { border-color: rgba(148, 163, 184, 0.15); background: rgba(148, 163, 184, 0.03); }
         .menu-tab-item.active#btn-normal { border-color: rgba(74, 222, 128, 0.15); background: rgba(74, 222, 128, 0.03); }
         .menu-tab-item.active#btn-premium { border-color: rgba(192, 132, 252, 0.15); background: rgba(192, 132, 252, 0.03); }
-        .menu-tab-item.active#btn-ultra { border-color: rgba(251, 191, 36, 0.15); background: rgba(251, 191, 36, 0.03); }
+        .menu-tab-item.active#btn-ultra-premium { border-color: rgba(251, 191, 36, 0.15); background: rgba(251, 191, 36, 0.03); }
 
         .tab-identity-group { display: flex; align-items: center; gap: 14px; }
         .tab-indicator-dot { width: 8px; height: 8px; border-radius: 50%; }
         .dot-default { background-color: #94a3b8; box-shadow: 0 0 10px #94a3b8; }
         .dot-normal { background-color: #4ade80; box-shadow: 0 0 10px #4ade80; }
         .dot-premium { background-color: #c084fc; box-shadow: 0 0 10px #c084fc; }
-        .dot-ultra { background-color: #fbbf24; box-shadow: 0 0 14px #fbbf24; }
+        .dot-ultra-premium { background-color: #fbbf24; box-shadow: 0 0 14px #fbbf24; }
 
         .tab-label-text { font-weight: 600; font-size: 14.5px; color: #475569; transition: var(--transition-smooth); }
         .menu-tab-item.active .tab-label-text { color: #ffffff; }
@@ -333,7 +333,7 @@
         .tag-default { background: rgba(148, 163, 184, 0.04); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.12); }
         .tag-normal { background: rgba(34, 197, 94, 0.04); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.12); }
         .tag-premium { background: rgba(168, 85, 247, 0.04); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.12); }
-        .tag-ultra { background: rgba(234, 179, 8, 0.04); color: #fbbf24; border: 1px solid rgba(234, 179, 8, 0.12); }
+        .tag-ultra-premium { background: rgba(234, 179, 8, 0.04); color: #fbbf24; border: 1px solid rgba(234, 179, 8, 0.12); }
 
         .details-summary-text { font-size: 14px; color: #8892b0; line-height: 1.65; margin: 0; }
         .feature-checklist { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 16px; }
@@ -342,7 +342,7 @@
         .icon-accent-default { color: #94a3b8; }
         .icon-accent-normal { color: #4ade80; }
         .icon-accent-premium { color: #c084fc; }
-        .icon-accent-ultra { color: #fbbf24; }
+        .icon-accent-ultra-premium { color: #fbbf24; }
 
         /* ================= VIBRANT HIGH-CONTRAST BUY BUTTONS ================= */
         .purchase-action-btn {
@@ -397,12 +397,12 @@
             background: linear-gradient(135deg, #c084fc 0%, #7e22ce 100%);
         }
 
-        .btn-theme-ultra {
+        .btn-theme-ultra-premium {
             background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
             color: #000000;
             box-shadow: 0 4px 25px rgba(251, 191, 36, 0.35);
         }
-        .btn-theme-ultra:hover {
+        .btn-theme-ultra-premium:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 35px rgba(251, 191, 36, 0.6);
             background: linear-gradient(135deg, #fcd34d 0%, #b45309 100%);
@@ -574,7 +574,7 @@
             transition: max-height 0.3s cubic-bezier(0.25, 1, 0.5, 1), padding 0.3s ease;
         }
         .accordion-item.open .accordion-content-panel { padding-bottom: 22px; }
-        .accordion-item.open { border-color: rgba(255,255,255,0.05); background: rgba(255,255,255,0.015); }
+        .accordion-item.open { border-color: rgba(255, 255, 255, 0.05); background: rgba(255, 255, 255, 0.015); }
         .accordion-icon { transition: transform 0.3s ease; color: #475569; }
         .accordion-item.open .accordion-icon { transform: rotate(180deg); color: var(--active-accent); }
 
@@ -668,9 +668,9 @@
                     <i data-lucide="chevron-right" class="chevron-icon" style="width: 16px; height: 16px;"></i>
                 </div>
 
-                <div class="menu-tab-item" id="btn-ultra" onclick="selectTier('ultra')">
+                <div class="menu-tab-item" id="btn-ultra-premium" onclick="selectTier('ultra-premium')">
                     <div class="tab-identity-group">
-                        <span class="tab-indicator-dot dot-ultra"></span>
+                        <span class="tab-indicator-dot dot-ultra-premium"></span>
                         <span class="tab-label-text">Ultra Premium</span>
                     </div>
                     <i data-lucide="chevron-right" class="chevron-icon" style="width: 16px; height: 16px;"></i>
@@ -696,8 +696,8 @@
             
             <div class="tier-details-card active" id="card-default">
                 <div class="details-header">
-                    <span class="details-title-pack">Starter Edition</span>
-                    <span class="tag-pill tag-default">Cheapest Pack</span>
+                    <span class="details-title-pack">Default Edition</span>
+                    <span class="tag-pill tag-default">Default Tier</span>
                 </div>
                 <p class="details-summary-text">
                     Essential automation layout with a fixed, unalterable 1000ms checking speed interval, animated dynamic chroma RGB border canvas, click counter tracker, and simple exact-match button triggering.
@@ -716,34 +716,34 @@
 
             <div class="tier-details-card" id="card-normal">
                 <div class="details-header">
-                    <span class="details-title-pack">Standard Unlocked Edition</span>
+                    <span class="details-title-pack">Normal Edition</span>
                     <span class="tag-pill tag-normal">Normal Tier</span>
                 </div>
                 <p class="details-summary-text">
                     Upgraded core build including fully unlocked variable speed adjustment intervals, real-time stop/start control operations, animated dynamic layout borders, and instant target matching elements.
                 </p>
                 <ul class="feature-checklist">
-                    <li><i data-lucide="check" class="icon-accent-normal" style="width: 16px; height: 16px;"></i> Fully customizable variable click interval speeds upto 500ms</li>
+                    <li><i data-lucide="check" class="icon-accent-normal" style="width: 16px; height: 16px;"></i> Fully customizable variable click interval speeds up to 500ms</li>
                     <li><i data-lucide="check" class="icon-accent-normal" style="width: 16px; height: 16px;"></i> Dedicated system START and STOP sequence controls</li>
                     <li><i data-lucide="check" class="icon-accent-normal" style="width: 16px; height: 16px;"></i> Live active click telemetry tracker panel</li>
                     <li><i data-lucide="check" class="icon-accent-normal" style="width: 16px; height: 16px;"></i> Dynamic multi-color scrolling RGB border canvas</li>
                     <li><i data-lucide="check" class="icon-accent-normal" style="width: 16px; height: 16px;"></i> Drag-and-drop panel positioning setup</li>
                 </ul>
                 <button onclick="triggerPurchase('Normal')" class="purchase-action-btn btn-theme-normal">
-                    <i data-lucide="shopping-cart" style="width: 18px; height: 18px;"></i> Purchase Standard Build
+                    <i data-lucide="shopping-cart" style="width: 18px; height: 18px;"></i> Purchase Normal Build
                 </button>
             </div>
 
             <div class="tier-details-card" id="card-premium">
                 <div class="details-header">
-                    <span class="details-title-pack">Elite Sniper Edition</span>
+                    <span class="details-title-pack">Premium Edition</span>
                     <span class="tag-pill tag-premium">Premium Tier</span>
                 </div>
                 <p class="details-summary-text">
                     Advanced implementation highlighting native system push alerts, background runtime clock logs, audio indicator alerts, a hideable control body interface, rainbow title aesthetics, and full storage configuration retention.
                 </p>
                 <ul class="feature-checklist">
-                    <li><i data-lucide="check" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> Fully customizable variable click interval speeds upto 1ms</li>
+                    <li><i data-lucide="check" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> Fully customizable variable click interval speeds up to 1ms</li>
                     <li><i data-lucide="check" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> Native OS system push notifications support</li>
                     <li><i data-lucide="check" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> Integrated 0.3s ambient audio indicator feeds</li>
                     <li><i data-lucide="check" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> Live elapsed session duration background tracking clock</li>
@@ -757,27 +757,27 @@
                 </button>
             </div>
 
-            <div class="tier-details-card" id="card-ultra">
+            <div class="tier-details-card" id="card-ultra-premium">
                 <div class="details-header">
-                    <span class="details-title-pack">God Mode Client Suite</span>
-                    <span class="tag-pill tag-ultra">Ultra Premium</span>
+                    <span class="details-title-pack">Ultra Premium Suite</span>
+                    <span class="tag-pill tag-ultra-premium">Ultra Premium Tier</span>
                 </div>
                 <p class="details-summary-text">
-                    Unmatched high-frequency system capable of adjusting ultra fast connection cycle intervals down to 0.01s (10ms) latency. Supports multi-theme canvas visualization, instant velocity macros, and execution logic metrics tracking panels.
+                    Unmatched high-frequency system capable of adjusting ultra-fast connection cycle intervals down to 0.01s (10ms) latency. Supports multi-theme canvas visualization, instant velocity macros, and execution logic metrics tracking panels.
                 </p>
                 <ul class="feature-checklist">
-                    <li><i data-lucide="zap" class="icon-accent-ultra" style="width: 16px; height: 16px;"></i> Can set ultra fast speed upto 0.01s</li>
-                    <li><i data-lucide="zap" class="icon-accent-ultra" style="width: 16px; height: 16px;"></i> Adjust ultra fast speed intervals up to 0.001s latency</li>
-                    <li><i data-lucide="zap" class="icon-accent-ultra" style="width: 16px; height: 16px;"></i> Instant preset speed triggers (Fast: 500ms | Ultra: 100ms)</li>
-                    <li><i data-lucide="zap" class="icon-accent-ultra" style="width: 16px; height: 16px;"></i> 4-Theme UI options (RGB, Matrix Green, Red Hacker, Neon Blue)</li>
-                    <li><i data-lucide="zap" class="icon-accent-ultra" style="width: 16px; height: 16px;"></i> 1.5-Second anti-spam cooldown protection safety layers</li>
-                    <li><i data-lucide="zap" class="icon-accent-ultra" style="width: 16px; height: 16px;"></i> High-velocity success banners & screen flash overlays</li>
-                    <li><i data-lucide="zap" class="icon-accent-ultra" style="width: 16px; height: 16px;"></i> Super compact overlay canvas mode layout profiles</li>
-                    <li><i data-lucide="zap" class="icon-accent-ultra" style="width: 16px; height: 16px;"></i> Advanced thread execution performance mode overrides</li>
-                    <li><i data-lucide="zap" class="icon-accent-ultra" style="width: 16px; height: 16px;"></i> Split telemetry for total queues found vs clicks executed</li>
+                    <li><i data-lucide="zap" class="icon-accent-ultra-premium" style="width: 16px; height: 16px;"></i> Fully unlocked ultra-fast speed threshold limits</li>
+                    <li><i data-lucide="zap" class="icon-accent-ultra-premium" style="width: 16px; height: 16px;"></i> Adjust speeds up to 0.01s intervals seamlessly</li>
+                    <li><i data-lucide="zap" class="icon-accent-ultra-premium" style="width: 16px; height: 16px;"></i> Instant preset speed triggers (Normal: 500ms | Fast: 100ms)</li>
+                    <li><i data-lucide="zap" class="icon-accent-ultra-premium" style="width: 16px; height: 16px;"></i> 4-Theme UI options (RGB, Matrix Green, Red Hacker, Neon Blue)</li>
+                    <li><i data-lucide="zap" class="icon-accent-ultra-premium" style="width: 16px; height: 16px;"></i> 1.5-Second anti-spam cooldown protection safety layers</li>
+                    <li><i data-lucide="zap" class="icon-accent-ultra-premium" style="width: 16px; height: 16px;"></i> High-velocity success banners & screen flash overlays</li>
+                    <li><i data-lucide="zap" class="icon-accent-ultra-premium" style="width: 16px; height: 16px;"></i> Super compact overlay canvas mode layout profiles</li>
+                    <li><i data-lucide="zap" class="icon-accent-ultra-premium" style="width: 16px; height: 16px;"></i> Advanced thread execution performance mode overrides</li>
+                    <li><i data-lucide="zap" class="icon-accent-ultra-premium" style="width: 16px; height: 16px;"></i> Split telemetry for total queues found vs clicks executed</li>
                 </ul>
-                <button onclick="triggerPurchase('Ultra Premium')" class="purchase-action-btn btn-theme-ultra">
-                    <i data-lucide="shield-alert" style="width: 18px; height: 18px;"></i> Deploy God Mode Suite
+                <button onclick="triggerPurchase('Ultra Premium')" class="purchase-action-btn btn-theme-ultra-premium">
+                    <i data-lucide="shield-alert" style="width: 18px; height: 18px;"></i> Deploy Ultra Premium Suite
                 </button>
             </div>
         </div>
@@ -818,7 +818,7 @@
                 </div>
                 <input type="range" min="30" max="1000" value="1000" class="sim-slider" id="frequency-slider" oninput="adjustSimFrequency(this.value)">
                 <div id="sim-tier-badge" style="font-size:11px; font-weight:700; text-transform:uppercase; color:#94a3b8; letter-spacing:1px; margin-top:4px;">
-                    Current Output Level: Default Sniper Edition
+                    Current Output Level: Default Tier
                 </div>
             </div>
             <div class="sim-visual-terminal" id="sim-terminal-view">
@@ -839,7 +839,7 @@
                         <th>Default</th>
                         <th>Normal</th>
                         <th>Premium</th>
-                        <th>Ultra God</th>
+                        <th>Ultra Premium</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -896,7 +896,7 @@
             <div class="matrix-feature-box">
                 <div class="box-icon-wrap"><i data-lucide="eye-off" style="width:18px; height:18px;"></i></div>
                 <div class="box-title">Shadow DOM Injection</div>
-                <div class="box-desc">Renders interface overlays inside an decoupled memory layer, hiding code parameters from intrusive element inspectors.</div>
+                <div class="box-desc">Renders interface overlays inside a decoupled memory layer, hiding code parameters from intrusive element inspectors.</div>
             </div>
             <div class="matrix-feature-box">
                 <div class="box-icon-wrap"><i data-lucide="lock" style="width:18px; height:18px;"></i></div>
@@ -935,7 +935,7 @@
                     <i data-lucide="chevron-down" class="accordion-icon" style="width:16px; height:16px;"></i>
                 </div>
                 <div class="accordion-content-panel">
-                    Yes. The Premium and God Mode editions contain an analytics communication matrix that relays queue status alerts and connection logs straight to designated server notification endpoints automatically.
+                    Yes. The Premium and Ultra Premium editions contain an analytics communication matrix that relays queue status alerts and connection logs straight to designated server notification endpoints automatically.
                 </div>
             </div>
         </div>
@@ -954,11 +954,12 @@
         adjustSimFrequency(1000);
     });
 
+    // Fully re-mapped internal theme names matching requested tiers
     const tierThemes = {
-        default: { color: '#94a3b8', text: 'DEFAULT BUILD STACK', glow: 'rgba(148, 163, 184, 0.12)', orb1: 'rgba(148, 163, 184, 0.06)', orb2: 'rgba(30, 41, 59, 0.15)' },
-        normal: { color: '#4ade80', text: 'STANDARD OPERATIONAL CORE', glow: 'rgba(74, 222, 128, 0.15)', orb1: 'rgba(34, 197, 94, 0.08)', orb2: 'rgba(4, 120, 87, 0.03)' },
-        premium: { color: '#c084fc', text: 'ELITE ARCHITECTURE ENGAGED', glow: 'rgba(192, 132, 252, 0.18)', orb1: 'rgba(168, 85, 247, 0.1)', orb2: 'rgba(76, 29, 149, 0.03)' },
-        ultra: { color: '#fbbf24', text: 'GOD MODE PROTOCOL ACTIVE', glow: 'rgba(251, 191, 36, 0.22)', orb1: 'rgba(234, 179, 8, 0.14)', orb2: 'rgba(120, 53, 4, 0.03)' }
+        'default': { color: '#94a3b8', text: 'DEFAULT BUILD STACK', glow: 'rgba(148, 163, 184, 0.12)', orb1: 'rgba(148, 163, 184, 0.06)', orb2: 'rgba(30, 41, 59, 0.15)' },
+        'normal': { color: '#4ade80', text: 'NORMAL OPERATIONAL CORE', glow: 'rgba(74, 222, 128, 0.15)', orb1: 'rgba(34, 197, 94, 0.08)', orb2: 'rgba(4, 120, 87, 0.03)' },
+        'premium': { color: '#c084fc', text: 'PREMIUM ARCHITECTURE ENGAGED', glow: 'rgba(192, 132, 252, 0.18)', orb1: 'rgba(168, 85, 247, 0.1)', orb2: 'rgba(76, 29, 149, 0.03)' },
+        'ultra-premium': { color: '#fbbf24', text: 'ULTRA PREMIUM PROTOCOL ACTIVE', glow: 'rgba(251, 191, 36, 0.22)', orb1: 'rgba(234, 179, 8, 0.14)', orb2: 'rgba(120, 53, 4, 0.03)' }
     };
 
     function executeScramble(element, targetText) {
@@ -979,7 +980,7 @@
     }
 
     function selectTier(tierId) {
-        ['default', 'normal', 'premium', 'ultra'].forEach(id => {
+        ['default', 'normal', 'premium', 'ultra-premium'].forEach(id => {
             document.getElementById('btn-' + id).classList.remove('active');
             document.getElementById('card-' + id).classList.remove('active');
         });
@@ -1094,16 +1095,16 @@
         const badge = document.getElementById('sim-tier-badge');
         
         if(val > 500) {
-            badge.innerText = "Current Output Level: Default Sniper Edition";
+            badge.innerText = "Current Output Level: Default Tier";
             badge.style.color = "#94a3b8";
         } else if(val > 100) {
-            badge.innerText = "Current Output Level: Standard Unlocked Edition";
+            badge.innerText = "Current Output Level: Normal Tier";
             badge.style.color = "#4ade80";
         } else if(val > 35) {
-            badge.innerText = "Current Output Level: Elite Sniper Edition";
+            badge.innerText = "Current Output Level: Premium Tier";
             badge.style.color = "#c084fc";
         } else {
-            badge.innerText = "Current Output Level: God Mode Client Suite";
+            badge.innerText = "Current Output Level: Ultra Premium Tier";
             badge.style.color = "#fbbf24";
         }
         
