@@ -9,29 +9,23 @@
     <style>
         :root {
             --bg-color: #020406;
-            --card-bg: rgba(255, 255, 255, 0.01);
-            --glass-bg: rgba(7, 10, 15, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.05);
+            --card-bg: rgba(5, 8, 14, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.04);
             --text-main: #ffffff;
             --text-muted: #64748b;
             --discord-color: #5865F2;
-            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             
-            /* Dynamic Accent Color System - Default State */
-            --accent-glow: 0 0 30px rgba(0, 229, 255, 0.15);
+            /* Core Theme Adaptation Properties */
             --active-accent: #00e5ff;
+            --accent-glow: rgba(0, 229, 255, 0.18);
+            --bg-orb-1: rgba(0, 229, 255, 0.12);
+            --bg-orb-2: rgba(168, 85, 247, 0.06);
         }
 
         body {
             font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
             background-color: var(--bg-color);
-            /* Dark Grid Overlay + Vivid Colored Back-Glows */
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.005) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.005) 1px, transparent 1px),
-                radial-gradient(at 100% 0%, rgba(0, 229, 255, 0.08) 0px, transparent 50%),
-                radial-gradient(at 0% 100%, rgba(168, 85, 247, 0.06) 0px, transparent 50%);
-            background-size: 24px 24px, 24px 24px, 100% 100%, 100% 100%;
             color: var(--text-main);
             margin: 0;
             padding: 40px 20px;
@@ -40,44 +34,83 @@
             align-items: center;
             min-height: 100vh;
             box-sizing: border-box;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 1. Animated Tech Matrix Background Layer */
+        .cyber-grid-backdrop {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.004) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.004) 1px, transparent 1px);
+            background-size: 32px 32px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* 2. Interactive Dynamic Backdrop Mesh Orbs */
+        .glow-orb {
+            position: fixed;
+            width: 50vw;
+            height: 50vw;
+            border-radius: 50%;
+            filter: blur(140px);
+            z-index: 0;
+            pointer-events: none;
+            transition: var(--transition-smooth);
+        }
+        .orb-top-right {
+            top: -10%; right: -10%;
+            background: var(--bg-orb-1);
+        }
+        .orb-bottom-left {
+            bottom: -10%; left: -10%;
+            background: var(--bg-orb-2);
         }
 
         .container {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1020px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Gradient Main Headings */
         .top-main-title {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 36px;
+            font-size: 38px;
             font-weight: 700;
             margin: 0 0 8px 0;
             text-align: center;
-            letter-spacing: 2px;
-            background: linear-gradient(135deg, #fff 30%, #00e5ff 100%);
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #ffffff 40%, var(--active-accent) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
+            transition: var(--transition-smooth);
         }
 
-        /* Pure CSS Sniper Scope Interface */
+        /* 4. Target Crosshair Scope Component with Spin Actions */
         .pfp-logo-container {
-            width: 80px;
-            height: 80px;
+            width: 84px;
+            height: 84px;
             border-radius: 50%;
-            background: #05080e;
-            border: 2px solid var(--active-accent);
+            background: #04070c;
+            border: 2px dashed var(--active-accent);
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
-            box-shadow: var(--accent-glow);
+            box-shadow: 0 0 35px var(--accent-glow);
             margin-bottom: 24px;
             transition: var(--transition-smooth);
+        }
+        .pfp-logo-container.spin-lock {
+            transform: rotate(180deg) scale(1.05);
         }
 
         .sniper-dot {
@@ -85,18 +118,18 @@
             height: 6px;
             background-color: var(--active-accent);
             border-radius: 50%;
-            box-shadow: 0 0 10px var(--active-accent);
+            box-shadow: 0 0 12px var(--active-accent);
             transition: var(--transition-smooth);
         }
 
         .sniper-line {
             position: absolute;
             background: var(--active-accent);
-            opacity: 0.5;
+            opacity: 0.6;
             transition: var(--transition-smooth);
         }
-        .line-v { width: 1px; height: 16px; }
-        .line-h { width: 16px; height: 1px; }
+        .line-v { width: 2px; height: 16px; }
+        .line-h { width: 16px; height: 2px; }
         .pos-top { top: 6px; }
         .pos-bottom { bottom: 6px; }
         .pos-left { left: 6px; }
@@ -104,31 +137,30 @@
 
         h1 {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
-            margin: 0 0 16px 0;
-            letter-spacing: 4px;
+            margin: 0 0 20px 0;
+            letter-spacing: 5px;
             color: var(--active-accent);
             text-transform: uppercase;
-            text-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+            text-shadow: 0 0 20px var(--accent-glow);
             transition: var(--transition-smooth);
         }
 
         .main-description {
-            font-size: 14px;
+            font-size: 14.5px;
             color: #94a3b8;
             text-align: center;
-            margin: 0 0 40px 0;
+            margin: 0 0 44px 0;
             line-height: 1.6;
-            max-width: 580px;
+            max-width: 600px;
         }
 
-        /* Side-by-Side Main Dashboard Layout */
         .dashboard-frame {
             width: 100%;
             display: grid;
             grid-template-columns: 1fr;
-            gap: 24px;
+            gap: 28px;
         }
 
         @media (min-width: 768px) {
@@ -137,34 +169,33 @@
             }
         }
 
-        /* Glassmorphism Structural Panels */
+        /* Glassmorphism Hub Layout Wrap */
         .glass-panel {
-            background: var(--glass-bg);
+            background: var(--card-bg);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 28px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            border-radius: 28px;
+            padding: 32px;
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 50px -15px rgba(0,0,0,0.7);
             position: relative;
-            overflow: hidden;
         }
 
-        /* Glowing Accent Indicator Border for the Active Right Panel */
+        /* 3. True Laser Glow Framework for Right Display */
         .glass-panel.detail-viewer {
             border-color: rgba(255, 255, 255, 0.05);
-            box-shadow: var(--accent-glow), 0 10px 40px -10px rgba(0,0,0,0.5);
+            box-shadow: 0 0 40px -10px var(--accent-glow), 0 20px 50px -15px rgba(0,0,0,0.7);
             transition: var(--transition-smooth);
         }
 
         .sidebar-controls {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
         .sidebar-header {
@@ -177,33 +208,32 @@
             margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
-        /* Nav Tab Selectors */
+        /* Navigation List Blocks */
         .menu-tab-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 16px 20px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.01);
-            border: 1px solid rgba(255, 255, 255, 0.02);
+            padding: 18px 22px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.005);
+            border: 1px solid rgba(255, 255, 255, 0.01);
             cursor: pointer;
             transition: var(--transition-smooth);
         }
-
         .menu-tab-item:hover {
-            background: rgba(255, 255, 255, 0.03);
-            border-color: rgba(255, 255, 255, 0.08);
-            transform: translateX(4px);
+            background: rgba(255, 255, 255, 0.02);
+            border-color: rgba(255, 255, 255, 0.05);
+            transform: translateX(6px);
         }
 
-        /* Dynamic Visual Profiles on Active Tabs */
-        .menu-tab-item.active#btn-default { border-color: rgba(148, 163, 184, 0.3); background: rgba(148, 163, 184, 0.05); }
-        .menu-tab-item.active#btn-normal { border-color: rgba(74, 222, 128, 0.3); background: rgba(74, 222, 128, 0.05); }
-        .menu-tab-item.active#btn-premium { border-color: rgba(192, 132, 252, 0.3); background: rgba(192, 132, 252, 0.05); }
-        .menu-tab-item.active#btn-ultra { border-color: rgba(251, 191, 36, 0.3); background: rgba(251, 191, 36, 0.05); }
+        /* Specialized Tab Glow Anchors */
+        .menu-tab-item.active#btn-default { border-color: rgba(148, 163, 184, 0.25); background: rgba(148, 163, 184, 0.04); }
+        .menu-tab-item.active#btn-normal { border-color: rgba(74, 222, 128, 0.25); background: rgba(74, 222, 128, 0.04); }
+        .menu-tab-item.active#btn-premium { border-color: rgba(192, 132, 252, 0.25); background: rgba(192, 132, 252, 0.04); }
+        .menu-tab-item.active#btn-ultra { border-color: rgba(251, 191, 36, 0.25); background: rgba(251, 191, 36, 0.04); }
 
         .tab-identity-group {
             display: flex;
@@ -223,8 +253,8 @@
 
         .tab-label-text {
             font-weight: 600;
-            font-size: 14px;
-            color: #94a3b8;
+            font-size: 14.5px;
+            color: #64748b;
             transition: var(--transition-smooth);
         }
         .menu-tab-item.active .tab-label-text {
@@ -246,7 +276,7 @@
         #btn-premium.active .chevron-icon { color: #c084fc; }
         #btn-ultra.active .chevron-icon { color: #fbbf24; }
 
-        /* Unified Layout Base Buttons */
+        /* General Functional Layout Interactive Button Fields */
         .action-button {
             display: flex;
             align-items: center;
@@ -254,58 +284,58 @@
             gap: 10px;
             text-decoration: none;
             color: var(--text-main);
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.01);
             border: 1px solid var(--glass-border);
-            border-radius: 14px;
+            border-radius: 16px;
             padding: 16px;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 14.5px;
             transition: var(--transition-smooth);
             cursor: pointer;
         }
 
         .discord-channel-hook {
             background: var(--discord-color);
-            border-color: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.02);
             margin-top: 24px;
         }
         .discord-channel-hook:hover {
-            background: #4e5ad2;
-            box-shadow: 0 8px 25px rgba(88, 101, 242, 0.3);
+            background: #4651ca;
+            box-shadow: 0 10px 28px rgba(88, 101, 242, 0.35);
             transform: translateY(-2px);
         }
 
-        /* Details Cards Layout */
+        /* Output Sub-Card Enclosures */
         .tier-details-card {
             display: none;
             flex-direction: column;
-            gap: 24px;
+            gap: 26px;
             opacity: 0;
-            transform: translateY(12px);
+            transform: scale(0.98) translateY(8px);
             transition: var(--transition-smooth);
             height: 100%;
         }
 
         .tier-details-card.active {
             display: flex;
-            animation: cardReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: cardReveal 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         @keyframes cardReveal {
-            to { opacity: 1; transform: translateY(0); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .details-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            padding-bottom: 22px;
         }
 
         .details-title-pack {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 700;
             letter-spacing: 0.5px;
         }
@@ -318,36 +348,35 @@
             border-radius: 30px;
             letter-spacing: 1px;
         }
-        .tag-default { background: rgba(148, 163, 184, 0.06); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.2); }
-        .tag-normal { background: rgba(34, 197, 94, 0.06); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.2); }
-        .tag-premium { background: rgba(168, 85, 247, 0.06); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.2); }
-        .tag-ultra { background: rgba(234, 179, 8, 0.06); color: #fbbf24; border: 1px solid rgba(234, 179, 8, 0.2); }
+        .tag-default { background: rgba(148, 163, 184, 0.05); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.15); }
+        .tag-normal { background: rgba(34, 197, 94, 0.05); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.15); }
+        .tag-premium { background: rgba(168, 85, 247, 0.05); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.15); }
+        .tag-ultra { background: rgba(234, 179, 8, 0.05); color: #fbbf24; border: 1px solid rgba(234, 179, 8, 0.15); }
 
         .details-summary-text {
             font-size: 14px;
             color: #94a3b8;
-            line-height: 1.6;
+            line-height: 1.65;
             margin: 0;
         }
 
-        /* Checklists Design */
+        /* Checklists Structural Grid Layout Components */
         .feature-checklist {
             list-style: none;
             padding: 0;
             margin: 0;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 16px;
         }
 
         .feature-checklist li {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 14px;
+            gap: 14px;
+            font-size: 14.5px;
             color: #cbd5e1;
         }
-
         .feature-checklist li i {
             flex-shrink: 0;
         }
@@ -358,25 +387,30 @@
         .icon-accent-ultra { color: #fbbf24; }
 
         .purchase-action-btn {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.01);
             border: 1px solid var(--glass-border);
             margin-top: auto;
         }
         .purchase-action-btn:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            color: #ffffff;
         }
         
-        /* Individual Color Accents for Shop Footers */
-        #card-default .purchase-action-btn:hover { border-color: #94a3b8; background: rgba(148, 163, 184, 0.04); box-shadow: 0 0 20px rgba(148, 163, 184, 0.1); }
-        #card-normal .purchase-action-btn:hover { border-color: #4ade80; background: rgba(74, 222, 128, 0.04); box-shadow: 0 0 20px rgba(74, 222, 128, 0.15); }
-        #card-premium .purchase-action-btn:hover { border-color: #c084fc; background: rgba(192, 132, 252, 0.04); box-shadow: 0 0 20px rgba(192, 132, 252, 0.15); }
-        #card-ultra .purchase-action-btn:hover { border-color: #fbbf24; background: rgba(251, 191, 36, 0.04); box-shadow: 0 0 25px rgba(251, 191, 36, 0.2); }
+        /* Interactive Unique Accent Overrides for Every Card Variant Block */
+        #card-default .purchase-action-btn:hover { border-color: #94a3b8; background: rgba(148, 163, 184, 0.05); box-shadow: 0 0 25px rgba(148, 163, 184, 0.12); }
+        #card-normal .purchase-action-btn:hover { border-color: #4ade80; background: rgba(74, 222, 128, 0.05); box-shadow: 0 0 25px rgba(74, 222, 128, 0.18); }
+        #card-premium .purchase-action-btn:hover { border-color: #c084fc; background: rgba(192, 132, 252, 0.05); box-shadow: 0 0 25px rgba(192, 132, 252, 0.18); }
+        #card-ultra .purchase-action-btn:hover { border-color: #fbbf24; background: rgba(251, 191, 36, 0.05); box-shadow: 0 0 30px rgba(251, 191, 36, 0.25); }
     </style>
 </head>
 <body>
 
+<div class="cyber-grid-backdrop"></div>
+<div class="glow-orb orb-top-right" id="mesh-orb-1"></div>
+<div class="glow-orb orb-bottom-left" id="mesh-orb-2"></div>
+
 <div class="container">
-    <div class="top-main-title">QUEUE SNIPER HUB</div>
+    <div class="top-main-title" id="main-brand-header">QUEUE SNIPER HUB</div>
 
     <div class="pfp-logo-container" id="scope-hud">
         <div class="sniper-line line-v pos-top"></div>
@@ -386,7 +420,7 @@
         <div class="sniper-dot"></div>
     </div>
     
-    <h1 id="subtitle-tier">DEFAULT LEVEL</h1>
+    <h1 id="subtitle-tier">DEFAULT BUILD</h1>
     <p class="main-description">
         The ultimate automated client system engineered for zero-delay server connection bypass. Secure your spot instantly, track real-time position metrics, and get immediate custom network notifications.
     </p>
@@ -531,19 +565,19 @@
 </div>
 
 <script>
-    // Initialize Vector Icons
+    // Asset Vector Render Call Hook
     lucide.createIcons();
 
-    // Map tier config profiles to dynamic design parameters
+    // Map tier parameters to responsive global style engines
     const tierThemes = {
-        default: { color: '#94a3b8', text: 'DEFAULT BUILD', glow: '0 0 35px rgba(148, 163, 184, 0.15)' },
-        normal: { color: '#4ade80', text: 'STANDARD UNLOCKED', glow: '0 0 35px rgba(74, 222, 128, 0.18)' },
-        premium: { color: '#c084fc', text: 'ELITE SYSTEM LAYER', glow: '0 0 35px rgba(192, 132, 252, 0.2)' },
-        ultra: { color: '#fbbf24', text: 'GOD MODE PROTOCOL', glow: '0 0 40px rgba(251, 191, 36, 0.25)' }
+        default: { color: '#94a3b8', text: 'DEFAULT BUILD', glow: 'rgba(148, 163, 184, 0.2)', orb1: 'rgba(148, 163, 184, 0.1)', orb2: 'rgba(30, 41, 59, 0.2)' },
+        normal: { color: '#4ade80', text: 'STANDARD UNLOCKED', glow: 'rgba(74, 222, 128, 0.22)', orb1: 'rgba(34, 197, 94, 0.12)', orb2: 'rgba(4, 120, 87, 0.05)' },
+        premium: { color: '#c084fc', text: 'ELITE SYSTEM LAYER', glow: 'rgba(192, 132, 252, 0.25)', orb1: 'rgba(168, 85, 247, 0.15)', orb2: 'rgba(76, 29, 149, 0.05)' },
+        ultra: { color: '#fbbf24', text: 'GOD MODE PROTOCOL', glow: 'rgba(251, 191, 36, 0.3)', orb1: 'rgba(234, 179, 8, 0.18)', orb2: 'rgba(120, 53, 4, 0.05)' }
     };
 
     function selectTier(tierId) {
-        // Toggle Nav Tab UI Classes
+        // Toggle Master Grid Classes across controls
         ['default', 'normal', 'premium', 'ultra'].forEach(id => {
             document.getElementById('btn-' + id).classList.remove('active');
             document.getElementById('card-' + id).classList.remove('active');
@@ -552,14 +586,20 @@
         document.getElementById('btn-' + tierId).classList.add('active');
         document.getElementById('card-' + tierId).classList.add('active');
 
-        // Dynamic Global Theme Color Swap Injection
+        // Fire Sniper Target Rotation Effect
+        const scope = document.getElementById('scope-hud');
+        scope.classList.add('spin-lock');
+        setTimeout(() => scope.classList.remove('spin-lock'), 500);
+
+        // Inject color tokens into CSS custom variable trees
         const theme = tierThemes[tierId];
         const root = document.documentElement;
         
         root.style.setProperty('--active-accent', theme.color);
         root.style.setProperty('--accent-glow', theme.glow);
+        root.style.setProperty('--bg-orb-1', theme.orb1);
+        root.style.setProperty('--bg-orb-2', theme.orb2);
         
-        // Update text labels inside global subtitle elements
         document.getElementById('subtitle-tier').innerText = theme.text;
     }
 </script>
