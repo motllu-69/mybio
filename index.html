@@ -38,7 +38,7 @@
             align-items: center;
         }
 
-        /* Top Banner Title - Maximum Weight & Caps */
+        /* Top Banner Title - Bold & Caps */
         .top-main-title {
             font-size: 28px;
             font-weight: 900;
@@ -63,7 +63,7 @@
             align-items: center;
             position: relative;
             box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         /* Crosshair Center Dot */
@@ -92,7 +92,7 @@
         h1 {
             font-size: 22px;
             font-weight: 900;
-            margin: 0 0 8px 0;
+            margin: 0 0 16px 0;
             letter-spacing: 0.5px;
             color: #ffffff;
             text-transform: uppercase;
@@ -175,19 +175,6 @@
             line-height: 1.5;
             margin: 0;
             padding-left: 16px;
-        }
-
-        .status-badge {
-            background: rgba(0, 229, 255, 0.1);
-            color: var(--sniper-cyan);
-            border: 1px solid rgba(0, 229, 255, 0.2);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 24px;
         }
 
         /* View-Switching Wrapper Setup */
@@ -351,7 +338,6 @@
     </div>
     
     <h1>TIER QUEUE SNIPER</h1>
-    <div class="status-badge" id="statusPanel">🟢 System Online</div>
 
     <!-- MAIN HOME PAGE -->
     <div id="homePage" class="view-panel active">
@@ -397,12 +383,12 @@
             </div>
         </div>
 
-        <!-- Interactive Configurator Entry Button -->
+        <!-- Renamed Configuration Button - Set to All Detail Features -->
         <div class="link-item sniper-btn" onclick="switchPage('sniperPage')">
-            Configure Package Features 🎯
+            All Detail Features 🎯
         </div>
 
-        <!-- Updated Dedicated Discord Link Button -->
+        <!-- Dedicated Discord Link Button -->
         <a href="https://discord.gg/H34E398QeC" class="link-item discord-btn" target="_blank">
             💬 Join Our Discord Server
         </a>
@@ -499,14 +485,10 @@ function switchPage(pageId) {
     
     document.getElementById(pageId).classList.add('active');
     
-    const status = document.getElementById('statusPanel');
     const mainTitle = document.getElementById('mainHeaderTitle');
-    
     if(pageId === 'sniperPage') {
-        status.innerText = "⚡ Select Package";
         mainTitle.innerText = "SNIPER PACKAGES";
     } else {
-        status.innerText = "🟢 System Online";
         mainTitle.innerText = "QUEUE SNIPER HUB";
     }
 }
