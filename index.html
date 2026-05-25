@@ -400,6 +400,21 @@
             box-shadow: 0 0 10px var(--active-accent);
         }
 
+        .sim-input-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            outline: none;
+            width: 100%;
+            box-sizing: border-box;
+            transition: var(--transition-smooth);
+        }
+        .sim-input-box:focus { border-color: var(--active-accent); }
+
         .sim-visual-terminal {
             background: #020408;
             border: 1px solid rgba(255,255,255,0.03);
@@ -413,6 +428,33 @@
             flex-direction: column;
             gap: 8px;
         }
+
+        /* Feature Matrix Comparison Matrix */
+        .matrix-table-wrap {
+            overflow-x: auto;
+            background: rgba(3, 5, 9, 0.4);
+            border: 1px solid rgba(255,255,255,0.02);
+            border-radius: 24px;
+        }
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+        .matrix-table th, .matrix-table td {
+            padding: 18px 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+        .matrix-table th {
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: #475569;
+        }
+        .matrix-table tr:last-child td { border-bottom: none; }
+        .matrix-table td i { vertical-align: middle; }
 
         /* Features Matrix Cluster */
         .matrix-features-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
@@ -432,19 +474,6 @@
         }
         .box-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; font-family: 'Space Grotesk', sans-serif; }
         .box-desc { font-size: 13.5px; color: #64748b; line-height: 1.6; margin: 0; }
-
-        /* Network Status Analytics Infrastructure */
-        .network-analytics-board {
-            background: rgba(3, 5, 9, 0.4); border: 1px solid rgba(255,255,255,0.02);
-            border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 20px;
-        }
-        .network-node-row {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 14px 20px; background: rgba(255,255,255,0.005); border-radius: 14px; border: 1px solid rgba(255,255,255,0.01);
-        }
-        .node-identity { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 600; }
-        .node-pulse-indicator { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 10px #4ade80; }
-        .node-speed-metric { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #4ade80; }
 
         /* Interactive FAQ Accordion Matrix */
         .accordion-stack { display: flex; flex-direction: column; gap: 12px; }
@@ -475,8 +504,8 @@
     <div class="page-navigation-hub">
         <a href="#main-brand-header">Licensing</a>
         <a href="#simulator">Velocity Sim</a>
+        <a href="#matrix">Comparison</a>
         <a href="#safeguards">Safeguards</a>
-        <a href="#network">Network Status</a>
         <a href="#faq">FAQ Matrix</a>
     </div>
 
@@ -498,11 +527,11 @@
     <div class="live-counter-row">
         <div class="glass-panel" style="padding: 24px; text-align: center; align-items: center; justify-content: center;">
             <div style="font-size: 11px; font-weight:700; color:#475569; letter-spacing:1.5px; text-transform:uppercase;">Global Clears (Today)</div>
-            <div id="global-counter-clears" style="font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight:700; color:#fff; margin-top:8px;">842,109</div>
+            <div id="global-counter-clears" style="font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight:700; color:#fff; margin-top:8px;">109</div>
         </div>
         <div class="glass-panel" style="padding: 24px; text-align: center; align-items: center; justify-content: center;">
             <div style="font-size: 11px; font-weight:700; color:#475569; letter-spacing:1.5px; text-transform:uppercase;">Active Core Connections</div>
-            <div id="global-counter-active" style="font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight:700; color:var(--active-accent); margin-top:8px;">1,424</div>
+            <div id="global-counter-active" style="font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight:700; color:var(--active-accent); margin-top:8px;">142</div>
         </div>
     </div>
 
@@ -654,25 +683,85 @@
 
     <div class="full-width-section" id="simulator">
         <div class="section-header-title">
-            <i data-lucide="gauge" style="color:var(--active-accent);"></i> Execution Frequency Engine Simulator
+            <i data-lucide="gauge" style="color:var(--active-accent);"></i> Configuration Sandbox & Frequency Simulator
         </div>
         <div class="simulator-box">
             <div class="sim-controls-panel">
-                <div style="font-size: 14px; color: #8892b0; line-height: 1.6;">
-                    Adjust the interactive telemetry framework below to simulate how checking cycle speeds shift parameters between licensing blocks.
+                <div style="font-size: 14px; color: #8892b0; line-height: 1.6; margin-bottom: 12px;">
+                    Interactively update parameter structures to evaluate how verification thresholds lock performance configurations.
                 </div>
-                <div style="display:flex; justify-content:space-between; font-weight:600; font-size:14px; margin-top:10px;">
+                <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:14px;">
+                    <span style="font-size:12px; font-weight:700; color:#475569; text-transform:uppercase;">Custom Target String Selector:</span>
+                    <input type="text" class="sim-input-box" id="target-string-box" value="Queue" placeholder="e.g. Queue, Claim, Join Match" oninput="updateSimTarget(this.value)">
+                </div>
+                <div style="display:flex; justify-content:space-between; font-weight:600; font-size:14px;">
                     <span>Interval Delay Threshold:</span>
                     <span id="sim-speed-val" style="color:var(--active-accent); font-family:'JetBrains Mono';">1000ms</span>
                 </div>
                 <input type="range" min="30" max="1000" value="1000" class="sim-slider" id="frequency-slider" oninput="adjustSimFrequency(this.value)">
-                <div id="sim-tier-badge" style="font-size:11px; font-weight:700; text-transform:uppercase; color:#94a3b8; letter-spacing:1px;">
+                <div id="sim-tier-badge" style="font-size:11px; font-weight:700; text-transform:uppercase; color:#94a3b8; letter-spacing:1px; margin-top:8px;">
                     Current Output Level: Default Sniper Edition
                 </div>
             </div>
             <div class="sim-visual-terminal" id="sim-terminal-view">
                 <div style="color:#64748b;">// Awaiting frequency loop initialization...</div>
             </div>
+        </div>
+    </div>
+
+    <div class="full-width-section" id="matrix">
+        <div class="section-header-title">
+            <i data-lucide="bar-chart-2" style="color:var(--active-accent);"></i> Comparative Feature Capability Matrix
+        </div>
+        <div class="matrix-table-wrap">
+            <table class="matrix-table">
+                <thead>
+                    <tr>
+                        <th>Capability Framework</th>
+                        <th>Default</th>
+                        <th>Normal</th>
+                        <th>Premium</th>
+                        <th>Ultra God</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight:600;">Minimum Speed Delay</td>
+                        <td style="color:#64748b;">1000ms</td>
+                        <td style="color:#4ade80;">500ms</td>
+                        <td style="color:#c084fc;">1ms</td>
+                        <td style="color:#fbbf24; font-weight:700;">0.01ms</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:600;">Chroma RGB Boundary Layout</td>
+                        <td><i data-lucide="check" style="color:#4ade80; width:16px;"></i></td>
+                        <td><i data-lucide="check" style="color:#4ade80; width:16px;"></i></td>
+                        <td><i data-lucide="check" style="color:#4ade80; width:16px;"></i></td>
+                        <td><i data-lucide="check" style="color:#4ade80; width:16px;"></i></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:600;">Dedicated Engine Toggle Hotkeys</td>
+                        <td style="color:#64748b;">❌</td>
+                        <td style="color:#cbd5e1;">F6 Bind</td>
+                        <td style="color:#cbd5e1;">F6 Dynamic</td>
+                        <td style="color:#fbbf24; font-weight:700;">Multi-Profile</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:600;">Anti-Bot Human Jitter Engine</td>
+                        <td style="color:#64748b;">❌</td>
+                        <td style="color:#64748b;">❌</td>
+                        <td style="color:#4ade80;">Standard</td>
+                        <td style="color:#fbbf24; font-weight:700;">Adaptive</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:600;">Live Webhook Stream Alerts</td>
+                        <td style="color:#64748b;">❌</td>
+                        <td style="color:#64748b;">❌</td>
+                        <td style="color:#cbd5e1;">Discord Hook</td>
+                        <td style="color:#fbbf24; font-weight:700;">Realtime API</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -695,26 +784,6 @@
                 <div class="box-icon-wrap"><i data-lucide="lock" style="width:18px; height:18px;"></i></div>
                 <div class="box-title">Isolated Storage States</div>
                 <div class="box-desc">Encrypts state values inside dedicated configurations before saving variables locally, leaving zero clear-text trace identifiers behind.</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="full-width-section" id="network">
-        <div class="section-header-title">
-            <i data-lucide="activity" style="color:var(--active-accent);"></i> Infrastructure Deployment Logs
-        </div>
-        <div class="network-analytics-board">
-            <div class="network-node-row">
-                <div class="node-identity"><span class="node-pulse-indicator"></span> US-EAST Enterprise Pipeline Instance</div>
-                <div class="node-speed-metric">0.002s Response</div>
-            </div>
-            <div class="network-node-row">
-                <div class="node-identity"><span class="node-pulse-indicator"></span> EU-CENTRAL Routing Core Relay</div>
-                <div class="node-speed-metric">0.005s Response</div>
-            </div>
-            <div class="network-node-row">
-                <div class="node-identity"><span class="node-pulse-indicator"></span> ASIA-SOUTH Telemetry Grid Node</div>
-                <div class="node-speed-metric">0.009s Response</div>
             </div>
         </div>
     </div>
@@ -836,15 +905,17 @@
         }
     }
 
-    // WEB DATA TICKER SIMULATOR
-    let baseClears = 842109;
-    let baseActive = 1424;
+    // WEB DATA TICKER SIMULATOR (Scaled values to ~100)
+    let baseClears = 109;
+    let baseActive = 142;
     setInterval(() => {
-        baseClears += Math.floor(Math.random() * 3) + 1;
+        baseClears += Math.floor(Math.random() * 2);
         document.getElementById('global-counter-clears').innerText = baseClears.toLocaleString();
-        baseActive += Math.floor(Math.random() * 5) - 2;
+        baseActive += Math.floor(Math.random() * 3) - 1;
+        // Clamp to avoid dropping too far below initial range
+        if (baseActive < 130) baseActive = 135;
         document.getElementById('global-counter-active').innerText = baseActive.toLocaleString();
-    }, 2500);
+    }, 3000);
 
     // DYNAMIC STREAM COMPONENT LOGIC
     const activities = [
@@ -868,6 +939,12 @@
 
     // VELOCITY SIMULATOR STABILIZED LOGIC ENGINE
     let simIntervalTimer;
+    let currentSimTarget = "Queue";
+
+    function updateSimTarget(val) {
+        currentSimTarget = val.trim() || "Queue";
+    }
+
     function adjustSimFrequency(val) {
         document.getElementById('sim-speed-val').innerText = val + "ms";
         const badge = document.getElementById('sim-tier-badge');
@@ -892,10 +969,9 @@
             if(!view) return;
             const log = document.createElement('div');
             log.style.color = val < 100 ? '#fbbf24' : '#cbd5e1';
-            log.innerHTML = `> Executing search check parameters... Done [${val}ms latency]`;
+            log.innerHTML = `> Scanning DOM for ["${currentSimTarget}"]... Target hit [${val}ms latency]`;
             view.appendChild(log);
             
-            // Critical Safeguard: Trim DOM nodes aggressively to avoid leaks or memory crashes
             while (view.children.length > 6) {
                 view.removeChild(view.children[0]);
             }
@@ -935,6 +1011,7 @@
         }
     }
 
+    // Initialize Matrix Engine Content mapping
     function initMatrixEngine() {
         particlesArray = [];
         for (let i = 0; i < 45; i++) { particlesArray.push(new ParticleNode()); }
