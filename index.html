@@ -16,15 +16,14 @@
             --discord-color: #5865F2;
             --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             
-            /* Static Page Accent Colors to prevent awkward shifting */
-            --page-brand-color: #00e5ff;
-            --page-brand-glow: rgba(0, 229, 255, 0.12);
+            /* STATIC BASE THEME - Elements will NOT change color */
+            --page-brand-color: #ffffff; 
+            --page-brand-glow: rgba(255, 255, 255, 0.05);
 
-            /* Unlinked Tier-Specific Reactive Variables */
-            --active-accent: #00e5ff;
-            --accent-glow: rgba(0, 229, 255, 0.12);
-            --bg-orb-1: rgba(0, 229, 255, 0.08);
-            --bg-orb-2: rgba(168, 85, 247, 0.04);
+            /* DYNAMIC BACKGROUND ENGINE VARIABLES (ONLY THESE SHIFT) */
+            --bg-orb-1: rgba(255, 255, 255, 0.03);
+            --bg-orb-2: rgba(255, 255, 255, 0.01);
+            --active-accent: #ffffff;
         }
 
         html {
@@ -46,13 +45,13 @@
             overflow-x: hidden;
         }
 
-        /* Interactive Background Engine Canvas Frame */
+        /* Moving Background Engine Canvas Frame */
         #particle-canvas {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0;
             pointer-events: none;
-            opacity: 0.6;
+            opacity: 0.3;
         }
 
         .cyber-grid-backdrop {
@@ -66,6 +65,7 @@
             pointer-events: none;
         }
 
+        /* Moving orbs that react dynamically */
         .glow-orb {
             position: fixed;
             width: 45vw;
@@ -109,7 +109,7 @@
             transition: var(--transition-smooth);
         }
         .page-navigation-hub a:hover {
-            color: var(--page-brand-color);
+            color: #ffffff;
         }
 
         .top-main-title {
@@ -119,43 +119,38 @@
             margin: 0 0 8px 0;
             text-align: center;
             letter-spacing: 5px;
-            background: linear-gradient(135deg, #ffffff 40%, var(--page-brand-color) 100%);
+            background: linear-gradient(135deg, #ffffff 60%, #475569 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
-            transition: var(--transition-smooth);
         }
 
-        /* Crosshair Telemetry Ring Component */
+        /* Crosshair Telemetry Ring Component (Fixed Design) */
         .pfp-logo-container {
             width: 88px;
             height: 88px;
             border-radius: 50%;
             background: #020407;
-            border: 2px dashed var(--page-brand-color);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
-            box-shadow: 0 0 40px var(--page-brand-glow);
             margin-bottom: 24px;
             transition: var(--transition-smooth);
         }
-        .pfp-logo-container.spin-lock { transform: rotate(360deg) scale(1.08); }
+        .pfp-logo-container.spin-lock { transform: rotate(360deg) scale(1.04); }
 
         .sniper-dot {
             width: 6px; height: 6px;
-            background-color: var(--page-brand-color);
+            background-color: #ffffff;
             border-radius: 50%;
-            box-shadow: 0 0 14px var(--page-brand-color);
-            transition: var(--transition-smooth);
         }
 
         .sniper-line {
             position: absolute;
-            background: var(--page-brand-color);
-            opacity: 0.6;
-            transition: var(--transition-smooth);
+            background: #ffffff;
+            opacity: 0.3;
         }
         .line-v { width: 2px; height: 16px; }
         .line-h { width: 16px; height: 2px; }
@@ -170,10 +165,8 @@
             font-weight: 500;
             margin: 0 0 24px 0;
             letter-spacing: 7px;
-            color: var(--page-brand-color);
+            color: #64748b;
             text-transform: uppercase;
-            text-shadow: 0 0 20px var(--page-brand-glow);
-            transition: var(--transition-smooth);
             text-align: center;
         }
 
@@ -208,7 +201,7 @@
             .dashboard-frame { grid-template-columns: 340px 1fr; }
         }
 
-        /* Glassmorphism Structural Hub Enclosures */
+        /* Structural Enclosures */
         .glass-panel {
             background: var(--card-bg);
             border: 1px solid var(--glass-border);
@@ -225,41 +218,10 @@
             transition: var(--transition-smooth);
         }
 
-        .glass-panel:hover {
-            transform: scale(1.01);
-            border-color: rgba(255, 255, 255, 0.04);
-        }
-
         .glass-panel.detail-viewer {
             border: 1px solid rgba(255, 255, 255, 0.03);
-            box-shadow: 0 0 50px -20px var(--accent-glow), 0 40px 80px -20px rgba(0,0,0,0.9);
             overflow: hidden;
         }
-
-        /* Dynamic Moving Circuit Border Component Overlay */
-        .laser-border-wrapper {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 5;
-        }
-        .laser-border-wrapper::before {
-            content: '';
-            position: absolute;
-            width: 160%; height: 160%;
-            top: -30%; left: -30%;
-            background: conic-gradient(from 0deg, transparent 70%, var(--active-accent) 100%);
-            animation: laserRotate 4s linear infinite;
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            padding: 1.5px;
-            border-radius: 32px;
-            opacity: 0.8;
-            transition: var(--transition-smooth);
-        }
-
-        @keyframes laserRotate { 100% { transform: rotate(360deg); } }
 
         .sidebar-controls {
             display: flex;
@@ -298,17 +260,11 @@
             transform: translateX(6px);
         }
 
-        .menu-tab-item.active#btn-default { border-color: rgba(148, 163, 184, 0.15); background: rgba(148, 163, 184, 0.03); }
-        .menu-tab-item.active#btn-normal { border-color: rgba(74, 222, 128, 0.15); background: rgba(74, 222, 128, 0.03); }
-        .menu-tab-item.active#btn-premium { border-color: rgba(192, 132, 252, 0.15); background: rgba(192, 132, 252, 0.03); }
-        .menu-tab-item.active#btn-ultra-premium { border-color: rgba(251, 191, 36, 0.15); background: rgba(251, 191, 36, 0.03); }
+        .menu-tab-item.active { border-color: rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.02); }
 
         .tab-identity-group { display: flex; align-items: center; gap: 14px; }
-        .tab-indicator-dot { width: 8px; height: 8px; border-radius: 50%; }
-        .dot-default { background-color: #94a3b8; box-shadow: 0 0 10px #94a3b8; }
-        .dot-normal { background-color: #4ade80; box-shadow: 0 0 10px #4ade80; }
-        .dot-premium { background-color: #c084fc; box-shadow: 0 0 10px #c084fc; }
-        .dot-ultra-premium { background-color: #fbbf24; box-shadow: 0 0 14px #fbbf24; }
+        .tab-indicator-dot { width: 8px; height: 8px; border-radius: 50%; background-color: #475569; }
+        .menu-tab-item.active .tab-indicator-dot { background-color: #ffffff; }
 
         .tab-label-text { font-weight: 600; font-size: 14.5px; color: #475569; transition: var(--transition-smooth); }
         .menu-tab-item.active .tab-label-text { color: #ffffff; }
@@ -330,25 +286,28 @@
         .tier-details-card.active { display: flex; animation: cardReveal 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
         @keyframes cardReveal { to { opacity: 1; transform: scale(1); } }
 
-        /* Setup: Maximized the tier badge size and dropped standard white text headings */
         .details-header { display: flex; justify-content: flex-start; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.02); padding-bottom: 22px; }
 
-        .tag-pill { font-family: 'Space Grotesk', sans-serif; font-size: 38px; font-weight: 700; text-transform: uppercase; padding: 0; border-radius: 0; letter-spacing: 0.5px; background: none; border: none !important; transition: var(--transition-smooth); }
-        .tag-default { color: #94a3b8; }
-        .tag-normal { color: #4ade80; }
-        .tag-premium { color: #c084fc; }
-        .tag-ultra-premium { color: #fbbf24; }
+        /* DYNAMIC SNIPER EDITION & INFO STYLING (Changes color according to selection) */
+        .tag-pill { 
+            font-family: 'Space Grotesk', sans-serif; 
+            font-size: 38px; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            padding: 0; 
+            border-radius: 0; 
+            letter-spacing: 0.5px; 
+            background: none; 
+            border: none !important; 
+            transition: var(--transition-smooth); 
+        }
 
         .details-summary-text { font-size: 14px; color: #8892b0; line-height: 1.65; margin: 0; }
         .feature-checklist { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 16px; }
         .feature-checklist li { display: flex; align-items: center; gap: 14px; font-size: 14.5px; color: #cbd5e1; }
-        
-        .icon-accent-default { color: #94a3b8; }
-        .icon-accent-normal { color: #4ade80; }
-        .icon-accent-premium { color: #c084fc; }
-        .icon-accent-ultra-premium { color: #fbbf24; }
+        .feature-checklist li i { color: #64748b; }
 
-        /* ================= VIBRANT HIGH-CONTRAST BUY BUTTONS ================= */
+        /* Dynamic High-Contrast Button Architecture */
         .purchase-action-btn {
             margin-top: auto;
             border-radius: 20px;
@@ -367,52 +326,7 @@
             transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
-        .btn-theme-default {
-            background: linear-gradient(135deg, #475569 0%, #1e293b 100%);
-            color: #ffffff;
-            box-shadow: 0 4px 20px rgba(71, 85, 105, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .btn-theme-default:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 24px rgba(71, 85, 105, 0.4);
-            background: linear-gradient(135deg, #64748b 0%, #334155 100%);
-        }
-
-        .btn-theme-normal {
-            background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
-            color: #ffffff;
-            box-shadow: 0 4px 20px rgba(34, 197, 150, 0.25);
-        }
-        .btn-theme-normal:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 28px rgba(34, 197, 94, 0.45);
-            background: linear-gradient(135deg, #4ade80 0%, #166534 100%);
-        }
-
-        .btn-theme-premium {
-            background: linear-gradient(135deg, #a855f7 0%, #6b21a8 100%);
-            color: #ffffff;
-            box-shadow: 0 4px 25px rgba(168, 85, 247, 0.3);
-        }
-        .btn-theme-premium:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(168, 85, 247, 0.5);
-            background: linear-gradient(135deg, #c084fc 0%, #7e22ce 100%);
-        }
-
-        .btn-theme-ultra-premium {
-            background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
-            color: #000000;
-            box-shadow: 0 4px 25px rgba(251, 191, 36, 0.35);
-        }
-        .btn-theme-ultra-premium:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(251, 191, 36, 0.6);
-            background: linear-gradient(135deg, #fcd34d 0%, #b45309 100%);
-        }
-
-        /* ================= CONTENT LAYOUTS ================= */
+        /* CONTENT SECTIONS */
         .full-width-section {
             width: 100%;
             margin-bottom: 80px;
@@ -431,6 +345,7 @@
             gap: 12px;
             border-bottom: 1px solid rgba(255,255,255,0.03);
             padding-bottom: 14px;
+            color: #ffffff;
         }
 
         /* Interactive Speed Simulator Module */
@@ -453,16 +368,14 @@
             border-radius: 3px;
             background: rgba(255,255,255,0.1);
             outline: none;
-            transition: var(--transition-smooth);
         }
         .sim-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
             width: 18px; height: 18px;
             border-radius: 50%;
-            background: var(--page-brand-color);
+            background: #ffffff;
             cursor: pointer;
-            box-shadow: 0 0 10px var(--page-brand-color);
         }
 
         .sim-input-box {
@@ -476,11 +389,9 @@
             outline: none;
             width: 100%;
             box-sizing: border-box;
-            transition: var(--transition-smooth);
         }
-        .sim-input-box:focus { border-color: var(--page-brand-color); }
 
-        /* Custom Interactive Toggle Switches */
+        /* Custom Switches */
         .toggle-row {
             display: flex;
             align-items: center;
@@ -490,9 +401,7 @@
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.03);
         }
-        .switch {
-            position: relative; display: inline-block; width: 44px; height: 22px;
-        }
+        .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider-switch {
             position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
@@ -502,7 +411,7 @@
             position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px;
             background-color: white; border-radius: 50%; transition: .3s;
         }
-        input:checked + .slider-switch { background-color: var(--page-brand-color); }
+        input:checked + .slider-switch { background-color: #ffffff; }
         input:checked + .slider-switch:before { transform: translateX(22px); }
 
         .sim-visual-terminal {
@@ -519,34 +428,18 @@
             gap: 8px;
         }
 
-        /* Side-by-Side Capability Compare Matrix */
+        /* Comparison Framework Matrix */
         .matrix-table-wrap {
             overflow-x: auto;
             background: rgba(3, 5, 9, 0.4);
             border: 1px solid rgba(255,255,255,0.02);
             border-radius: 24px;
         }
-        .matrix-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 14px;
-        }
-        .matrix-table th, .matrix-table td {
-            padding: 18px 24px;
-            border-bottom: 1px solid rgba(255,255,255,0.02);
-        }
-        .matrix-table th {
-            font-family: 'Space Grotesk', sans-serif;
-            text-transform: uppercase;
-            font-size: 12px;
-            letter-spacing: 1px;
-            color: #475569;
-        }
-        .matrix-table tr:last-child td { border-bottom: none; }
-        .matrix-table td i { vertical-align: middle; }
-
-        /* Features Matrix Cluster */
+        .matrix-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
+        .matrix-table th, .matrix-table td { padding: 18px 24px; border-bottom: 1px solid rgba(255,255,255,0.02); }
+        .matrix-table th { font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; font-size: 12px; letter-spacing: 1px; color: #475569; }
+        
+        /* Features Grid */
         .matrix-features-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
         @media(min-width: 768px) { .matrix-features-grid { grid-template-columns: repeat(3, 1fr); } }
 
@@ -554,18 +447,15 @@
             background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.02);
             border-radius: 24px; padding: 28px; transition: var(--transition-smooth);
         }
-        .matrix-feature-box:hover {
-            background: rgba(255,255,255,0.02); border-color: rgba(255,255,255,0.06); transform: translateY(-4px);
-        }
         .box-icon-wrap {
             width: 44px; height: 44px; border-radius: 12px;
             display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
-            background: rgba(0, 229, 255, 0.03); border: 1px solid rgba(0, 229, 255, 0.1); color: var(--page-brand-color);
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); color: #ffffff;
         }
         .box-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; font-family: 'Space Grotesk', sans-serif; }
         .box-desc { font-size: 13.5px; color: #64748b; line-height: 1.6; margin: 0; }
 
-        /* Interactive FAQ Accordion Matrix */
+        /* FAQ Accordion Matrix */
         .accordion-stack { display: flex; flex-direction: column; gap: 12px; }
         .accordion-item {
             background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.02); border-radius: 18px;
@@ -578,19 +468,14 @@
             transition: max-height 0.3s cubic-bezier(0.25, 1, 0.5, 1), padding 0.3s ease;
         }
         .accordion-item.open .accordion-content-panel { padding-bottom: 22px; }
-        .accordion-item.open { border-color: rgba(255, 255, 255, 0.05); background: rgba(255, 255, 255, 0.015); }
         .accordion-icon { transition: transform 0.3s ease; color: #475569; }
-        .accordion-item.open .accordion-icon { transform: rotate(180deg); color: var(--page-brand-color); }
+        .accordion-item.open .accordion-icon { transform: rotate(180deg); color: #ffffff; }
 
-        /* Notification Toast Container */
-        #toast-container {
-            position: fixed; bottom: 24px; right: 24px; z-index: 10000;
-            display: flex; flex-direction: column; gap: 10px;
-        }
+        /* Toast Container */
+        #toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
         .toast-popup {
-            background: #090d16; border: 1px solid var(--page-brand-color);
+            background: #090d16; border: 1px solid rgba(255,255,255,0.1);
             padding: 16px 20px; border-radius: 14px; color: #fff; font-size: 13.5px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px var(--page-brand-glow);
             display: flex; align-items: center; gap: 12px;
             transform: translateX(120%); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
@@ -637,7 +522,7 @@
         </div>
         <div class="glass-panel" style="padding: 24px; text-align: center; align-items: center; justify-content: center;">
             <div style="font-size: 11px; font-weight:700; color:#475569; letter-spacing:1.5px; text-transform:uppercase;">Active Core Connections</div>
-            <div id="global-counter-active" style="font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight:700; color:var(--page-brand-color); margin-top:8px;">142</div>
+            <div id="global-counter-active" style="font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight:700; color:#ffffff; margin-top:8px;">142</div>
         </div>
     </div>
 
@@ -650,7 +535,7 @@
                 
                 <div class="menu-tab-item active" id="btn-default" onclick="selectTier('default')">
                     <div class="tab-identity-group">
-                        <span class="tab-indicator-dot dot-default"></span>
+                        <span class="tab-indicator-dot"></span>
                         <span class="tab-label-text">Default Sniper</span>
                     </div>
                     <i data-lucide="chevron-right" class="chevron-icon" style="width: 16px; height: 16px;"></i>
@@ -658,7 +543,7 @@
 
                 <div class="menu-tab-item" id="btn-normal" onclick="selectTier('normal')">
                     <div class="tab-identity-group">
-                        <span class="tab-indicator-dot dot-normal"></span>
+                        <span class="tab-indicator-dot"></span>
                         <span class="tab-label-text">Normal Sniper</span>
                     </div>
                     <i data-lucide="chevron-right" class="chevron-icon" style="width: 16px; height: 16px;"></i>
@@ -666,7 +551,7 @@
 
                 <div class="menu-tab-item" id="btn-premium" onclick="selectTier('premium')">
                     <div class="tab-identity-group">
-                        <span class="tab-indicator-dot dot-premium"></span>
+                        <span class="tab-indicator-dot"></span>
                         <span class="tab-label-text">Premium Sniper</span>
                     </div>
                     <i data-lucide="chevron-right" class="chevron-icon" style="width: 16px; height: 16px;"></i>
@@ -674,7 +559,7 @@
 
                 <div class="menu-tab-item" id="btn-ultra-premium" onclick="selectTier('ultra-premium')">
                     <div class="tab-identity-group">
-                        <span class="tab-indicator-dot dot-ultra-premium"></span>
+                        <span class="tab-indicator-dot"></span>
                         <span class="tab-label-text">Ultra Premium</span>
                     </div>
                     <i data-lucide="chevron-right" class="chevron-icon" style="width: 16px; height: 16px;"></i>
@@ -682,10 +567,10 @@
             </div>
 
             <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
-                <div class="sidebar-header" style="color:var(--page-brand-color); margin-bottom: 0;">
+                <div class="sidebar-header" style="color:#ffffff; margin-bottom: 0;">
                     <i data-lucide="terminal" style="width: 12px; height: 12px;"></i> Telemetry Stream
                 </div>
-                <div id="live-stream-terminal" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #a7f3d0; background: #02040a; padding: 14px; border-radius: 16px; height: 95px; overflow-y: hidden; line-height: 1.7; border: 1px solid rgba(255,255,255,0.01);">
+                <div id="live-stream-terminal" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #cbd5e1; background: #02040a; padding: 14px; border-radius: 16px; height: 95px; overflow-y: hidden; line-height: 1.7; border: 1px solid rgba(255,255,255,0.01);">
                     <div>[SYS] Relay link stable...</div>
                 </div>
             </div>
@@ -696,87 +581,86 @@
         </div>
 
         <div class="glass-panel detail-viewer" id="main-viewer-card">
-            <div class="laser-border-wrapper"></div>
             
             <div class="tier-details-card active" id="card-default">
                 <div class="details-header">
-                    <span class="tag-pill tag-default" id="title-label-default">Default Edition</span>
+                    <span class="tag-pill" id="title-label-default" style="color: #94a3b8;">Default Edition</span>
                 </div>
                 <p class="details-summary-text">
                     Essential automation layout with a fixed, unalterable 1000ms checking speed interval, animated dynamic chroma RGB border canvas, click counter tracker, and simple exact-match button triggering.
                 </p>
                 <ul class="feature-checklist">
-                    <li><i data-lucide="check" class="icon-accent-default" style="width: 16px; height: 16px;"></i> Fixed 1000ms system operational speed</li>
-                    <li><i data-lucide="check" class="icon-accent-default" style="width: 16px; height: 16px;"></i> Live executed clicks counter dashboard</li>
-                    <li><i data-lucide="check" class="icon-accent-default" style="width: 16px; height: 16px;"></i> Dynamic multi-color scrolling RGB border canvas</li>
-                    <li><i data-lucide="check" class="icon-accent-default" style="width: 16px; height: 16px;"></i> Drag-and-drop panel positioning setup</li>
-                    <li><i data-lucide="check" class="icon-accent-default" style="width: 16px; height: 16px;"></i> Exact text click selector trigger algorithms</li>
+                    <li><i data-lucide="check" style="width: 16px; height: 16px;"></i> Fixed 1000ms system operational speed</li>
+                    <li><i data-lucide="check" style="width: 16px; height: 16px;"></i> Live executed clicks counter dashboard</li>
+                    <li><i data-lucide="check" style="width: 16px; height: 16px;"></i> Dynamic multi-color scrolling RGB border canvas</li>
+                    <li><i data-lucide="check" style="width: 16px; height: 16px;"></i> Drag-and-drop panel positioning setup</li>
+                    <li><i data-lucide="check" style="width: 16px; height: 16px;"></i> Exact text click selector trigger algorithms</li>
                 </ul>
-                <button onclick="triggerPurchase('Default')" class="purchase-action-btn btn-theme-default">
+                <button onclick="triggerPurchase('Default')" class="purchase-action-btn" id="btn-purchase-default" style="background: linear-gradient(135deg, #475569 0%, #1e293b 100%); color: #ffffff;">
                     <i data-lucide="shopping-cart" style="width: 18px; height: 18px;"></i> Purchase Default Tier
                 </button>
             </div>
 
             <div class="tier-details-card" id="card-normal">
                 <div class="details-header">
-                    <span class="tag-pill tag-normal" id="title-label-normal">Normal Edition</span>
+                    <span class="tag-pill" id="title-label-normal" style="color: #4ade80;">Normal Edition</span>
                 </div>
                 <p class="details-summary-text">
                     Upgraded core build including fully unlocked variable speed adjustment intervals, real-time stop/start control operations, animated dynamic layout borders, and instant target matching elements.
                 </p>
                 <ul class="feature-checklist">
-                    <li><i data-lucide="check" class="icon-accent-normal" style="width: 16px; height: 16px;"></i> Fully customizable variable click interval speeds up to 500ms</li>
-                    <li><i data-lucide="check" class="icon-accent-normal" style="width: 16px; height: 16px;"></i> Dedicated system START and STOP sequence controls</li>
-                    <li><i data-lucide="check" class="icon-accent-normal" style="width: 16px; height: 16px;"></i> Live active click telemetry tracker panel</li>
-                    <li><i data-lucide="check" class="icon-accent-normal" style="width: 16px; height: 16px;"></i> Dynamic multi-color scrolling RGB border canvas</li>
-                    <li><i data-lucide="check" class="icon-accent-normal" style="width: 16px; height: 16px;"></i> Drag-and-drop panel positioning setup</li>
+                    <li><i data-lucide="check" style="width: 16px; height: 16px;"></i> Fully customizable variable click interval speeds up to 500ms</li>
+                    <li><i data-lucide="check" style="width: 16px; height: 16px;"></i> Dedicated system START and STOP sequence controls</li>
+                    <li><i data-lucide="check" style="width: 16px; height: 16px;"></i> Live active click telemetry tracker panel</li>
+                    <li><i data-lucide="check" style="width: 16px; height: 16px;"></i> Dynamic multi-color scrolling RGB border canvas</li>
+                    <li><i data-lucide="check" style="width: 16px; height: 16px;"></i> Drag-and-drop panel positioning setup</li>
                 </ul>
-                <button onclick="triggerPurchase('Normal')" class="purchase-action-btn btn-theme-normal">
+                <button onclick="triggerPurchase('Normal')" class="purchase-action-btn" id="btn-purchase-normal" style="background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); color: #ffffff;">
                     <i data-lucide="shopping-cart" style="width: 18px; height: 18px;"></i> Purchase Normal Build
                 </button>
             </div>
 
             <div class="tier-details-card" id="card-premium">
                 <div class="details-header">
-                    <span class="tag-pill tag-premium" id="title-label-premium">Premium Edition</span>
+                    <span class="tag-pill" id="title-label-premium" style="color: #c084fc;">Premium Edition</span>
                 </div>
                 <p class="details-summary-text">
                     Advanced implementation highlighting native system push alerts, background runtime clock logs, audio indicator alerts, a hideable control body interface, rainbow title aesthetics, and full storage configuration retention.
                 </p>
                 <ul class="feature-checklist">
-                    <li><i data-lucide="check" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> Fully customizable variable click interval speeds up to 1ms</li>
-                    <li><i data-lucide="check" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> Native OS system push notifications support</li>
-                    <li><i data-lucide="check" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> Integrated 0.3s ambient audio indicator feeds</li>
-                    <li><i data-lucide="check" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> Live elapsed session duration background tracking clock</li>
-                    <li><i data-lucide="check" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> Live background operational history event logs feed</li>
-                    <li><i data-lucide="check" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> F6 keyboard global macro activation shortcut toggle</li>
-                    <li><i data-lucide="check" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> One-click interface body minimize option layout</li>
-                    <li><i data-lucide="check" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> Auto-save memory engine configuration speed parameters</li>
+                    <li><i data-lucide="check" style="width: 16px; height: 16px;"></i> Fully customizable variable click interval speeds up to 1ms</li>
+                    <li><i data-lucide="check" style="width: 16px; height: 16px;"></i> Native OS system push notifications support</li>
+                    <li><i data-lucide="check" style="width: 16px; height: 16px;"></i> Integrated 0.3s ambient audio indicator feeds</li>
+                    <li><i data-lucide="check" style="width: 16px; height: 16px;"></i> Live elapsed session duration background tracking clock</li>
+                    <li><i data-lucide="check" style="width: 16px; height: 16px;"></i> Live background operational history event logs feed</li>
+                    <li><i data-lucide="check" style="width: 16px; height: 16px;"></i> F6 keyboard global macro activation shortcut toggle</li>
+                    <li><i data-lucide="check" style="width: 16px; height: 16px;"></i> One-click interface body minimize option layout</li>
+                    <li><i data-lucide="check" style="width: 16px; height: 16px;"></i> Auto-save memory engine configuration speed parameters</li>
                 </ul>
-                <button onclick="triggerPurchase('Premium')" class="purchase-action-btn btn-theme-premium">
+                <button onclick="triggerPurchase('Premium')" class="purchase-action-btn" id="btn-purchase-premium" style="background: linear-gradient(135deg, #a855f7 0%, #6b21a8 100%); color: #ffffff;">
                     <i data-lucide="zap" style="width: 18px; height: 18px;"></i> Secure Premium License
                 </button>
             </div>
 
             <div class="tier-details-card" id="card-ultra-premium">
                 <div class="details-header">
-                    <span class="tag-pill tag-ultra-premium" id="title-label-ultra-premium">Ultra Premium</span>
+                    <span class="tag-pill" id="title-label-ultra-premium" style="color: #fbbf24;">Ultra Premium</span>
                 </div>
                 <p class="details-summary-text">
                     Unmatched high-frequency system capable of adjusting ultra-fast connection cycle intervals down to 0.01s (10ms) latency. Supports multi-theme canvas visualization, instant velocity macros, and execution logic metrics tracking panels.
                 </p>
                 <ul class="feature-checklist">
-                    <li><i data-lucide="zap" class="icon-accent-ultra-premium" style="width: 16px; height: 16px;"></i> Fully unlocked ultra-fast speed threshold limits</li>
-                    <li><i data-lucide="zap" class="icon-accent-ultra-premium" style="width: 16px; height: 16px;"></i> Adjust speeds up to 0.01s intervals seamlessly</li>
-                    <li><i data-lucide="zap" class="icon-accent-ultra-premium" style="width: 16px; height: 16px;"></i> Instant preset speed triggers (Normal: 500ms | Fast: 100ms)</li>
-                    <li><i data-lucide="zap" class="icon-accent-ultra-premium" style="width: 16px; height: 16px;"></i> 4-Theme UI options (RGB, Matrix Green, Red Hacker, Neon Blue)</li>
-                    <li><i data-lucide="zap" class="icon-accent-ultra-premium" style="width: 16px; height: 16px;"></i> 1.5-Second anti-spam cooldown protection safety layers</li>
-                    <li><i data-lucide="zap" class="icon-accent-ultra-premium" style="width: 16px; height: 16px;"></i> High-velocity success banners & screen flash overlays</li>
-                    <li><i data-lucide="zap" class="icon-accent-ultra-premium" style="width: 16px; height: 16px;"></i> Super compact overlay canvas mode layout profiles</li>
-                    <li><i data-lucide="zap" class="icon-accent-ultra-premium" style="width: 16px; height: 16px;"></i> Advanced thread execution performance mode overrides</li>
-                    <li><i data-lucide="zap" class="icon-accent-ultra-premium" style="width: 16px; height: 16px;"></i> Split telemetry for total queues found vs clicks executed</li>
+                    <li><i data-lucide="zap" style="width: 16px; height: 16px;"></i> Fully unlocked ultra-fast speed threshold limits</li>
+                    <li><i data-lucide="zap" style="width: 16px; height: 16px;"></i> Adjust speeds up to 0.01s intervals seamlessly</li>
+                    <li><i data-lucide="zap" style="width: 16px; height: 16px;"></i> Instant preset speed triggers (Normal: 500ms | Fast: 100ms)</li>
+                    <li><i data-lucide="zap" style="width: 16px; height: 16px;"></i> 4-Theme UI options (RGB, Matrix Green, Red Hacker, Neon Blue)</li>
+                    <li><i data-lucide="zap" style="width: 16px; height: 16px;"></i> 1.5-Second anti-spam cooldown protection safety layers</li>
+                    <li><i data-lucide="zap" style="width: 16px; height: 16px;"></i> High-velocity success banners & screen flash overlays</li>
+                    <li><i data-lucide="zap" style="width: 16px; height: 16px;"></i> Super compact overlay canvas mode layout profiles</li>
+                    <li><i data-lucide="zap" style="width: 16px; height: 16px;"></i> Advanced thread execution performance mode overrides</li>
+                    <li><i data-lucide="zap" style="width: 16px; height: 16px;"></i> Split telemetry for total queues found vs clicks executed</li>
                 </ul>
-                <button onclick="triggerPurchase('Ultra Premium')" class="purchase-action-btn btn-theme-ultra-premium">
+                <button onclick="triggerPurchase('Ultra Premium')" class="purchase-action-btn" id="btn-purchase-ultra-premium" style="background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%); color: #000000;">
                     <i data-lucide="shield-alert" style="width: 18px; height: 18px;"></i> Deploy Ultra Premium Suite
                 </button>
             </div>
@@ -785,7 +669,7 @@
 
     <div class="full-width-section" id="simulator">
         <div class="section-header-title">
-            <i data-lucide="gauge" style="color:var(--page-brand-color);"></i> Configuration Sandbox & Frequency Simulator
+            <i data-lucide="gauge"></i> Configuration Sandbox & Frequency Simulator
         </div>
         <div class="simulator-box">
             <div class="sim-controls-panel">
@@ -814,7 +698,7 @@
 
                 <div style="display:flex; justify-content:space-between; font-weight:600; font-size:14px; margin-top: 10px;">
                     <span>Interval Delay Threshold:</span>
-                    <span id="sim-speed-val" style="color:var(--page-brand-color); font-family:'JetBrains Mono';">1000ms</span>
+                    <span id="sim-speed-val" style="color:#ffffff; font-family:'JetBrains Mono';">1000ms</span>
                 </div>
                 <input type="range" min="30" max="1000" value="1000" class="sim-slider" id="frequency-slider" oninput="adjustSimFrequency(this.value)">
                 <div id="sim-tier-badge" style="font-size:11px; font-weight:700; text-transform:uppercase; color:#94a3b8; letter-spacing:1px; margin-top:4px;">
@@ -829,7 +713,7 @@
 
     <div class="full-width-section" id="matrix">
         <div class="section-header-title">
-            <i data-lucide="bar-chart-2" style="color:var(--page-brand-color);"></i> Comparative Feature Capability Matrix
+            <i data-lucide="bar-chart-2"></i> Comparative Feature Capability Matrix
         </div>
         <div class="matrix-table-wrap">
             <table class="matrix-table">
@@ -852,10 +736,10 @@
                     </tr>
                     <tr>
                         <td style="font-weight:600;">Chroma RGB Boundary Layout</td>
-                        <td><i data-lucide="check" style="color:#4ade80; width:16px;"></i></td>
-                        <td><i data-lucide="check" style="color:#4ade80; width:16px;"></i></td>
-                        <td><i data-lucide="check" style="color:#4ade80; width:16px;"></i></td>
-                        <td><i data-lucide="check" style="color:#4ade80; width:16px;"></i></td>
+                        <td><i data-lucide="check" style="color:#ffffff; width:16px;"></i></td>
+                        <td><i data-lucide="check" style="color:#ffffff; width:16px;"></i></td>
+                        <td><i data-lucide="check" style="color:#ffffff; width:16px;"></i></td>
+                        <td><i data-lucide="check" style="color:#ffffff; width:16px;"></i></td>
                     </tr>
                     <tr>
                         <td style="font-weight:600;">Dedicated Engine Toggle Hotkeys</td>
@@ -885,7 +769,7 @@
 
     <div class="full-width-section" id="safeguards">
         <div class="section-header-title">
-            <i data-lucide="shield-check" style="color:var(--page-brand-color);"></i> Security & Bypass Safeguard Core
+            <i data-lucide="shield-check"></i> Security & Bypass Safeguard Core
         </div>
         <div class="matrix-features-grid">
             <div class="matrix-feature-box">
@@ -908,7 +792,7 @@
 
     <div class="full-width-section" id="faq">
         <div class="section-header-title">
-            <i data-lucide="help-circle" style="color:var(--page-brand-color);"></i> Frequently Answered Matrix
+            <i data-lucide="help-circle"></i> Frequently Answered Matrix
         </div>
         <div class="accordion-stack">
             <div class="accordion-item">
@@ -954,31 +838,14 @@
     });
 
     const tierThemes = {
-        'default': { color: '#94a3b8', text: 'DEFAULT BUILD STACK', label: 'Default Edition', glow: 'rgba(148, 163, 184, 0.12)', orb1: 'rgba(148, 163, 184, 0.06)', orb2: 'rgba(30, 41, 59, 0.15)' },
-        'normal': { color: '#4ade80', text: 'NORMAL OPERATIONAL CORE', label: 'Normal Edition', glow: 'rgba(74, 222, 128, 0.15)', orb1: 'rgba(34, 197, 94, 0.08)', orb2: 'rgba(4, 120, 87, 0.03)' },
-        'premium': { color: '#c084fc', text: 'PREMIUM ARCHITECTURE ENGAGED', label: 'Premium Edition', glow: 'rgba(192, 132, 252, 0.18)', orb1: 'rgba(168, 85, 247, 0.1)', orb2: 'rgba(76, 29, 149, 0.03)' },
-        'ultra-premium': { color: '#fbbf24', text: 'ULTRA PREMIUM PROTOCOL ACTIVE', label: 'Ultra Premium', glow: 'rgba(251, 191, 36, 0.22)', orb1: 'rgba(234, 179, 8, 0.14)', orb2: 'rgba(120, 53, 4, 0.03)' }
+        'default': { color: '#94a3b8', orb1: 'rgba(148, 163, 184, 0.06)', orb2: 'rgba(30, 41, 59, 0.15)' },
+        'normal': { color: '#4ade80', orb1: 'rgba(34, 197, 94, 0.08)', orb2: 'rgba(4, 120, 87, 0.03)' },
+        'premium': { color: '#c084fc', orb1: 'rgba(168, 85, 247, 0.1)', orb2: 'rgba(76, 29, 149, 0.03)' },
+        'ultra-premium': { color: '#fbbf24', orb1: 'rgba(234, 179, 8, 0.14)', orb2: 'rgba(120, 53, 4, 0.03)' }
     };
 
-    function executeScramble(element, targetText) {
-        if(!element) return;
-        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$&*+%';
-        let cycle = 0;
-        clearInterval(element.scrambleTimer);
-        
-        element.scrambleTimer = setInterval(() => {
-            element.innerText = targetText.split('').map((char, index) => {
-                if (index < cycle) return targetText[index];
-                if (char === ' ') return ' ';
-                return letters[Math.floor(Math.random() * letters.length)];
-            }).join('');
-            
-            if (cycle >= targetText.length) clearInterval(element.scrambleTimer);
-            cycle += 1 / 2;
-        }, 20);
-    }
-
     function selectTier(tierId) {
+        // Switch card visibility configurations
         ['default', 'normal', 'premium', 'ultra-premium'].forEach(id => {
             document.getElementById('btn-' + id).classList.remove('active');
             document.getElementById('card-' + id).classList.remove('active');
@@ -994,18 +861,10 @@
         const currentTheme = tierThemes[tierId];
         const rootElement = document.documentElement;
         
-        // Dynamically update background highlights, glowing structures, and title metrics
-        rootElement.style.setProperty('--active-accent', currentTheme.color);
-        rootElement.style.setProperty('--accent-glow', currentTheme.glow);
+        // ONLY changes the background floating moving orbs color mapping variables
         rootElement.style.setProperty('--bg-orb-1', currentTheme.orb1);
         rootElement.style.setProperty('--bg-orb-2', currentTheme.orb2);
-        
-        executeScramble(document.getElementById('subtitle-tier'), currentTheme.text);
-        
-        const targetLabelElement = document.getElementById('title-label-' + tierId);
-        if(targetLabelElement) {
-            executeScramble(targetLabelElement, currentTheme.label);
-        }
+        rootElement.style.setProperty('--active-accent', currentTheme.color);
     }
 
     function toggleAccordion(element) {
@@ -1031,7 +890,7 @@
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
         toast.className = 'toast-popup';
-        toast.innerHTML = `<i data-lucide="bell" style="width:16px; height:16px; color:var(--page-brand-color);"></i> <span>${message}</span>`;
+        toast.innerHTML = `<i data-lucide="bell" style="width:16px; height:16px; color:#ffffff;"></i> <span>${message}</span>`;
         container.appendChild(toast);
         lucide.createIcons();
         
@@ -1097,16 +956,12 @@
         
         if(val > 500) {
             badge.innerText = "Current Output Level: Default Tier";
-            badge.style.color = "#94a3b8";
         } else if(val > 100) {
             badge.innerText = "Current Output Level: Normal Tier";
-            badge.style.color = "#4ade80";
         } else if(val > 35) {
             badge.innerText = "Current Output Level: Premium Tier";
-            badge.style.color = "#c084fc";
         } else {
             badge.innerText = "Current Output Level: Ultra Premium Tier";
-            badge.style.color = "#fbbf24";
         }
         
         clearInterval(simIntervalTimer);
@@ -1121,7 +976,7 @@
             }
             
             const log = document.createElement('div');
-            log.style.color = val < 100 ? '#fbbf24' : '#cbd5e1';
+            log.style.color = '#cbd5e1';
             
             let DOMTypePrefix = activeSimFeatures.shadow ? `[ShadowRoot Tree]` : `[Global Document]`;
             log.innerHTML = `> ${DOMTypePrefix} Scanning elements for value ["${currentSimTarget}"]... Action dispatched at ${latencyText} latency.`;
@@ -1160,7 +1015,8 @@
             if (this.y < 0 || this.y > particleCanvas.height) this.speedY *= -1;
         }
         draw() {
-            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--active-accent').trim() || '#00e5ff';
+            // Background interactive particle structure reads from dynamic accent color context
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--active-accent').trim() || '#ffffff';
             ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
         }
     }
@@ -1181,7 +1037,7 @@
                 const dy = particlesArray[i].y - particlesArray[j].y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
                 if (distance < 110) {
-                    ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--active-accent').trim() || '#00e5ff';
+                    ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--active-accent').trim() || '#ffffff';
                     ctx.globalAlpha = (110 - distance) / 110 * 0.05;
                     ctx.lineWidth = 0.5;
                     ctx.beginPath(); ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
