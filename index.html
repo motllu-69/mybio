@@ -4,331 +4,355 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Queue Sniper Client | Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --bg-color: #0a0c10;
-            --card-bg: rgba(255, 255, 255, 0.04);
-            --card-hover: rgba(0, 229, 255, 0.1);
+            --bg-color: #030508;
+            --card-bg: rgba(255, 255, 255, 0.02);
+            --glass-bg: rgba(10, 14, 22, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.06);
             --text-main: #ffffff;
-            --text-muted: #64748b;
-            --border-color: rgba(255, 255, 255, 0.08);
+            --text-muted: #94a3b8;
             --sniper-cyan: #00e5ff;
             --sniper-blue: #0083b0;
             --glow: linear-gradient(135deg, var(--sniper-cyan) 0%, var(--sniper-blue) 100%);
-            --discord-blurple: #5865F2;
+            --discord-color: #5865F2;
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
             background-color: var(--bg-color);
+            /* Ambient Mesh Background */
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(0, 229, 255, 0.04) 0px, transparent 40%),
+                radial-gradient(at 100% 100%, rgba(251, 191, 36, 0.03) 0px, transparent 40%),
+                radial-gradient(at 50% 50%, rgba(0, 131, 176, 0.02) 0px, transparent 50%);
             color: var(--text-main);
             margin: 0;
             padding: 40px 20px;
             display: flex;
             justify-content: center;
+            align-items: center;
             min-height: 100vh;
             box-sizing: border-box;
         }
 
         .container {
             width: 100%;
-            max-width: 480px;
+            max-width: 960px; /* Expanded for side-by-side grid interface */
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* Top Banner Title - Bold & Caps */
+        /* Top Banner Title */
         .top-main-title {
-            font-size: 28px;
-            font-weight: 900;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
             margin: 0 0 24px 0;
             text-align: center;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             background: var(--glow);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
         }
 
-        /* Pure CSS Minecraft Sniper Profile Icon */
+        /* Pure CSS Sniper Profile Icon with Enhanced Glow */
         .pfp-logo-container {
-            width: 100px;
-            height: 100px;
+            width: 90px;
+            height: 90px;
             border-radius: 24px;
-            background: #121620;
-            border: 2px solid var(--border-color);
+            background: #090d16;
+            border: 1px solid var(--glass-border);
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.1);
             margin-bottom: 24px;
         }
 
-        /* Crosshair Center Dot */
         .sniper-dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             background-color: var(--sniper-cyan);
-            border-radius: 2px;
-            box-shadow: 0 0 10px var(--sniper-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--sniper-cyan);
         }
 
-        /* Crosshair Reticle Lines */
         .sniper-line {
             position: absolute;
             background: var(--glow);
-            box-shadow: 0 0 8px var(--sniper-cyan);
         }
-        .line-v { width: 4px; height: 24px; }
-        .line-h { width: 24px; height: 4px; }
+        .line-v { width: 2px; height: 20px; }
+        .line-h { width: 20px; height: 2px; }
         .pos-top { top: 12px; }
         .pos-bottom { bottom: 12px; }
         .pos-left { left: 12px; }
         .pos-right { right: 12px; }
 
-        /* Secondary Heading - Bold and Uppercase */
         h1 {
-            font-size: 22px;
-            font-weight: 900;
-            margin: 0 0 16px 0;
-            letter-spacing: 0.5px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0 0 14px 0;
+            letter-spacing: 1.5px;
             color: #ffffff;
             text-transform: uppercase;
         }
 
-        /* Core Brand Description */
         .main-description {
             font-size: 14px;
-            color: #cbd5e1;
+            color: var(--text-muted);
             text-align: center;
-            margin: 0 0 24px 0;
+            margin: 0 0 32px 0;
             line-height: 1.6;
-            max-width: 95%;
+            max-width: 540px;
         }
 
-        /* Detailed Tier Summary Area */
-        .detailed-tier-breakdown {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 24px;
+        /* Multi-Column Dashboard Core Frame */
+        .dashboard-frame {
             width: 100%;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .dashboard-frame {
+                grid-template-columns: 380px 1fr; /* Sidebar navigation layout */
+            }
+        }
+
+        /* Glassmorphism Wrappers */
+        .glass-panel {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 24px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        .breakdown-header {
-            font-size: 15px;
-            font-weight: 800;
-            color: var(--sniper-cyan);
+        /* Sidebar Navigation Controls Stack */
+        .sidebar-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sidebar-header {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--text-muted);
             text-transform: uppercase;
-            margin-bottom: 16px;
-            text-align: center;
-            letter-spacing: 0.5px;
-        }
-
-        .tier-summary-item {
-            margin-bottom: 16px;
-            padding-bottom: 14px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .tier-summary-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        .summary-title-row {
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 6px;
         }
 
-        .summary-dot {
+        /* Redesigned Tab Selection List Buttons */
+        .menu-tab-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .menu-tab-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.05);
+            transform: translateX(4px);
+        }
+
+        .menu-tab-item.active {
+            background: rgba(0, 229, 255, 0.04);
+            border-color: rgba(0, 229, 255, 0.2);
+        }
+
+        .tab-identity-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tab-indicator-dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
         }
-        .dot-default { background-color: #94a3b8; box-shadow: 0 0 6px #94a3b8; }
-        .dot-normal { background-color: #4ade80; box-shadow: 0 0 6px #4ade80; }
-        .dot-premium { background-color: #c084fc; box-shadow: 0 0 6px #c084fc; }
-        .dot-ultra { background-color: #fbbf24; box-shadow: 0 0 6px #fbbf24; }
+        .dot-default { background-color: #94a3b8; box-shadow: 0 0 8px #94a3b8; }
+        .dot-normal { background-color: #4ade80; box-shadow: 0 0 8px #4ade80; }
+        .dot-premium { background-color: #c084fc; box-shadow: 0 0 8px #c084fc; }
+        .dot-ultra { background-color: #fbbf24; box-shadow: 0 0 12px #fbbf24; }
 
-        .summary-name {
-            font-weight: 700;
+        .tab-label-text {
+            font-weight: 600;
             font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            transition: var(--transition-smooth);
         }
-        .color-default { color: #94a3b8; }
-        .color-normal { color: #4ade80; }
-        .color-premium { color: #c084fc; }
-        .color-ultra { color: #fbbf24; }
-
-        .summary-text {
-            font-size: 13px;
-            color: #94a3b8;
-            line-height: 1.5;
-            margin: 0;
-            padding-left: 16px;
+        .menu-tab-item.active .tab-label-text {
+            color: var(--text-main);
         }
 
-        /* View-Switching Wrapper Setup */
-        .view-panel {
-            width: 100%;
-            display: none;
-            flex-direction: column;
-            gap: 16px;
+        .chevron-icon {
+            color: var(--text-muted);
+            opacity: 0;
+            transform: translateX(-4px);
+            transition: var(--transition-smooth);
         }
-        
-        .view-panel.active {
+        .menu-tab-item.active .chevron-icon {
+            opacity: 1;
+            transform: translateX(0);
+            color: var(--sniper-cyan);
+        }
+
+        /* Global Action Link System Layout Components */
+        .action-button {
             display: flex;
-        }
-
-        .link-item {
-            display: block;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             text-decoration: none;
             color: var(--text-main);
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 18px;
-            text-align: center;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 14px;
             font-weight: 600;
-            font-size: 16px;
-            transition: all 0.2s ease;
-            backdrop-filter: blur(10px);
+            font-size: 14px;
+            transition: var(--transition-smooth);
             cursor: pointer;
         }
 
-        .link-item:hover {
+        .discord-channel-hook {
+            background: var(--discord-color);
+            border-color: rgba(255, 255, 255, 0.05);
+            margin-top: 16px;
+        }
+        .discord-channel-hook:hover {
+            background: #4752C4;
+            box-shadow: 0 8px 24px rgba(88, 101, 242, 0.25);
             transform: translateY(-2px);
         }
 
-        .sniper-btn:hover {
-            background: var(--card-hover);
-            border-color: var(--sniper-cyan);
-            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.15);
-        }
-
-        .discord-btn {
-            background: #5865F2;
-            border-color: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            margin-top: 8px;
-            font-size: 15px;
-            padding: 14px;
-        }
-        .discord-btn:hover {
-            background: #4752C4;
-            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
-        }
-
-        .back-btn {
-            border-style: dashed;
-            color: var(--text-muted);
-            margin-top: 10px;
-        }
-        .back-btn:hover {
-            color: var(--text-main);
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        /* Tier Feature Box Card */
-        .tier-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
+        /* Right Content Panel - Tab System Display Output Frame */
+        .tier-details-card {
             display: none;
+            flex-direction: column;
+            gap: 20px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: var(--transition-smooth);
+        }
+
+        .tier-details-card.active {
+            display: flex;
+            animation: paneFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes paneFadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .details-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 16px;
+        }
+
+        .details-title-pack {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .tag-pill {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 6px 12px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+        }
+        .tag-default { background: rgba(148, 163, 184, 0.08); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.2); }
+        .tag-normal { background: rgba(34, 197, 94, 0.08); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.2); }
+        .tag-premium { background: rgba(168, 85, 247, 0.08); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.2); }
+        .tag-ultra { background: rgba(234, 179, 8, 0.08); color: #fbbf24; border: 1px solid rgba(234, 179, 8, 0.2); box-shadow: 0 0 15px rgba(234, 179, 8, 0.05); }
+
+        .details-summary-text {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Clean Feature Checklist Components */
+        .feature-checklist {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
-        .tier-card.active {
+        .feature-checklist li {
             display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 14px;
+            color: #cbd5e1;
+            line-height: 1.4;
         }
 
-        .tier-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding-bottom: 12px;
-            margin-bottom: 4px;
-        }
-
-        .tier-title {
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        .tier-tag {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            padding: 4px 10px;
-            border-radius: 6px;
-            letter-spacing: 0.5px;
+        .feature-checklist li i {
+            margin-top: 2px;
+            flex-shrink: 0;
         }
         
-        .tag-default { background: rgba(148, 163, 184, 0.15); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.3); }
-        .tag-normal { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
-        .tag-premium { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); box-shadow: 0 0 8px rgba(168, 85, 247, 0.2); }
-        .tag-ultra { background: linear-gradient(135deg, rgba(234, 179, 8, 0.15), rgba(249, 115, 22, 0.15)); color: #fbbf24; border: 1px solid rgba(234, 179, 8, 0.3); box-shadow: 0 0 10px rgba(234, 179, 8, 0.2); }
+        .icon-accent-default { color: #94a3b8; }
+        .icon-accent-normal { color: #4ade80; }
+        .icon-accent-premium { color: #c084fc; }
+        .icon-accent-ultra { color: #fbbf24; }
 
-        .tier-features {
-            margin: 0;
-            padding-left: 20px;
-            color: #cbd5e1;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .tier-features li {
-            margin-bottom: 6px;
-        }
-
-        /* Tier Selection Buttons Grid */
-        .tier-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            width: 100%;
-        }
-
-        .grid-btn {
-            padding: 14px;
-            font-size: 14px;
-            font-weight: 600;
+        .purchase-action-btn {
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            color: var(--text-muted);
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
+            border: 1px solid var(--glass-border);
+            margin-top: auto;
         }
-
-        .grid-btn.active {
-            color: var(--text-main);
-            background: rgba(0, 229, 255, 0.05);
-            border-color: var(--sniper-cyan);
-            box-shadow: 0 0 10px rgba(0, 229, 255, 0.1);
-        }
+        
+        /* Specialized Hover Treatments for Specific Tier Purchase Buttons */
+        #card-default .purchase-action-btn:hover { border-color: #94a3b8; background: rgba(148, 163, 184, 0.03); }
+        #card-normal .purchase-action-btn:hover { border-color: #4ade80; background: rgba(52, 211, 153, 0.03); }
+        #card-premium .purchase-action-btn:hover { border-color: #c084fc; background: rgba(168, 85, 247, 0.03); }
+        #card-ultra .purchase-action-btn:hover { border-color: #fbbf24; background: rgba(251, 191, 36, 0.03); box-shadow: 0 0 15px rgba(251, 191, 36, 0.05); }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Big Title Above Logo - Bold & Caps -->
-    <div class="top-main-title" id="mainHeaderTitle">QUEUE SNIPER HUB</div>
+    <div class="top-main-title">QUEUE SNIPER HUB</div>
 
-    <!-- Pure CSS Generated Profile Logo -->
     <div class="pfp-logo-container">
         <div class="sniper-line line-v pos-top"></div>
         <div class="sniper-line line-v pos-bottom"></div>
@@ -338,187 +362,170 @@
     </div>
     
     <h1>TIER QUEUE SNIPER</h1>
+    <p class="main-description">
+        The ultimate automated client system engineered for zero-delay server connection bypass. Secure your spot instantly, track real-time position metrics, and get immediate custom network notifications.
+    </p>
 
-    <!-- MAIN HOME PAGE -->
-    <div id="homePage" class="view-panel active">
-        <!-- Core Brand Description -->
-        <p class="main-description">
-            The ultimate automated client system engineered for zero-delay server connection bypass. Secure your spot instantly, track real-time position metrics, and get immediate custom network notifications.
-        </p>
-
-        <!-- Big Expanded Description Card Outlining All 4 Tiers -->
-        <div class="detailed-tier-breakdown">
-            <div class="breakdown-header">📋 Available Client Tiers</div>
-            
-            <div class="tier-summary-item">
-                <div class="summary-title-row">
-                    <span class="summary-dot dot-default"></span>
-                    <span class="summary-name color-default">Default Sniper</span>
-                </div>
-                <p class="summary-text">Essential automation layout with a fixed, unalterable 1000ms checking speed interval, animated dynamic chroma RGB border canvas, click counter tracker, and simple exact-match button triggering.</p>
-            </div>
-
-            <div class="tier-summary-item">
-                <div class="summary-title-row">
-                    <span class="summary-dot dot-normal"></span>
-                    <span class="summary-name color-normal">Normal Sniper</span>
-                </div>
-                <p class="summary-text">Upgraded core build including fully unlocked variable speed adjustment intervals, real-time stop/start control operations, animated dynamic layout borders, and instant target matching elements.</p>
-            </div>
-
-            <div class="tier-summary-item">
-                <div class="summary-title-row">
-                    <span class="summary-dot dot-premium"></span>
-                    <span class="summary-name color-premium">Premium Sniper</span>
-                </div>
-                <p class="summary-text">Advanced implementation highlighting native system push alerts, background runtime clock logs, audio indicator alerts, a hideable control body interface, rainbow title aesthetics, and full storage configuration retention.</p>
-            </div>
-
-            <div class="tier-summary-item">
-                <div class="summary-title-row">
-                    <span class="summary-dot dot-ultra"></span>
-                    <span class="summary-name color-ultra">Ultra Premium Sniper</span>
-                </div>
-                <p class="summary-text">Unmatched high-frequency system capable of adjusting ultra fast connection cycle intervals down to 0.01s (10ms) latency. Supports multi-theme canvas visualization, instant velocity macros, and execution logic metrics tracking panels.</p>
-            </div>
-        </div>
-
-        <!-- Renamed Configuration Button - Set to All Detail Features -->
-        <div class="link-item sniper-btn" onclick="switchPage('sniperPage')">
-            All Detail Features 🎯
-        </div>
-
-        <!-- Dedicated Discord Link Button -->
-        <a href="https://discord.gg/H34E398QeC" class="link-item discord-btn" target="_blank">
-            💬 Join Our Discord Server
-        </a>
-    </div>
-
-    <!-- INTERNAL QUEUE SNIPER SUB-PAGE -->
-    <div id="sniperPage" class="view-panel">
+    <div class="dashboard-frame">
         
-        <!-- Tab Selectors for the 4 Different Interfaces -->
-        <div class="tier-grid">
-            <div class="grid-btn active" id="btn-default" onclick="selectTier('default')">Default</div>
-            <div class="grid-btn" id="btn-normal" onclick="selectTier('normal')">Normal</div>
-            <div class="grid-btn" id="btn-premium" onclick="selectTier('premium')">Premium</div>
-            <div class="grid-btn" id="btn-ultra" onclick="selectTier('ultra')">Ultra Premium</div>
-        </div>
+        <div class="glass-panel">
+            <div class="sidebar-controls">
+                <div class="sidebar-header">
+                    <i data-lucide="layers" style="width: 14px; height: 14px;"></i> Client Architecture Tiers
+                </div>
+                
+                <div class="menu-tab-item active" id="btn-default" onclick="selectTier('default')">
+                    <div class="tab-identity-group">
+                        <span class="tab-indicator-dot dot-default"></span>
+                        <span class="tab-label-text">Default Sniper</span>
+                    </div>
+                    <i data-lucide="chevron-right" class="chevron-icon" style="width: 16px; height: 16px;"></i>
+                </div>
 
-        <!-- GUI 1: DEFAULT -->
-        <div class="tier-card active" id="card-default">
-            <div class="tier-header">
-                <span class="tier-title">Starter Edition</span>
-                <span class="tier-tag tag-default">Cheapest</span>
+                <div class="menu-tab-item" id="btn-normal" onclick="selectTier('normal')">
+                    <div class="tab-identity-group">
+                        <span class="tab-indicator-dot dot-normal"></span>
+                        <span class="tab-label-text">Normal Sniper</span>
+                    </div>
+                    <i data-lucide="chevron-right" class="chevron-icon" style="width: 16px; height: 16px;"></i>
+                </div>
+
+                <div class="menu-tab-item" id="btn-premium" onclick="selectTier('premium')">
+                    <div class="tab-identity-group">
+                        <span class="tab-indicator-dot dot-premium"></span>
+                        <span class="tab-label-text">Premium Sniper</span>
+                    </div>
+                    <i data-lucide="chevron-right" class="chevron-icon" style="width: 16px; height: 16px;"></i>
+                </div>
+
+                <div class="menu-tab-item" id="btn-ultra" onclick="selectTier('ultra')">
+                    <div class="tab-identity-group">
+                        <span class="tab-indicator-dot dot-ultra"></span>
+                        <span class="tab-label-text">Ultra Premium Sniper</span>
+                    </div>
+                    <i data-lucide="chevron-right" class="chevron-icon" style="width: 16px; height: 16px;"></i>
+                </div>
             </div>
-            <ul class="tier-features">
-                <li>Fixed 1000ms system operational speed</li>
-                <li>Live executed clicks counter dashboard</li>
-                <li>Dynamic multi-color scrolling RGB border canvas</li>
-                <li>Drag-and-drop panel positioning setup</li>
-                <li>Exact text click selector trigger algorithms</li>
-            </ul>
-            <a href="https://discord.gg/H34E398QeC" class="link-item discord-btn" target="_blank">
-                🛒 Buy Default
+
+            <a href="https://discord.gg/H34E398QeC" class="action-button discord-channel-hook" target="_blank">
+                <i data-lucide="message-square" style="width: 16px; height: 16px;"></i> Join Our Discord Server
             </a>
         </div>
 
-        <!-- GUI 2: NORMAL -->
-        <div class="tier-card" id="card-normal">
-            <div class="tier-header">
-                <span class="tier-title">Standard Unlocked Edition</span>
-                <span class="tier-tag tag-normal">NORMAL</span>
+        <div class="glass-panel">
+            
+            <div class="tier-details-card active" id="card-default">
+                <div class="details-header">
+                    <span class="details-title-pack">Starter Edition</span>
+                    <span class="tag-pill tag-default">Cheapest Pack</span>
+                </div>
+                <p class="details-summary-text">
+                    Essential automation layout with a fixed, unalterable 1000ms checking speed interval, animated dynamic chroma RGB border canvas, click counter tracker, and simple exact-match button triggering.
+                </p>
+                <ul class="feature-checklist">
+                    <li><i data-lucide="check-circle-2" class="icon-accent-default" style="width: 16px; height: 16px;"></i> Fixed 1000ms system operational speed</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-default" style="width: 16px; height: 16px;"></i> Live executed clicks counter dashboard</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-default" style="width: 16px; height: 16px;"></i> Dynamic multi-color scrolling RGB border canvas</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-default" style="width: 16px; height: 16px;"></i> Drag-and-drop panel positioning setup</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-default" style="width: 16px; height: 16px;"></i> Exact text click selector trigger algorithms</li>
+                </ul>
+                <a href="https://discord.gg/H34E398QeC" class="action-button purchase-action-btn" target="_blank">
+                    <i data-lucide="shopping-cart" style="width: 16px; height: 16px;"></i> Buy Default Tier
+                </a>
             </div>
-            <ul class="tier-features">
-                <li>Fully customizable variable click interval speeds upto 500ms </li>
-                <li>Dedicated system START and STOP sequence controls</li>
-                <li>Live active click telemetry tracker panel</li>
-                <li>Dynamic multi-color scrolling RGB border canvas</li>
-                <li>Drag-and-drop panel positioning setup</li>
-            </ul>
-            <a href="https://discord.gg/H34E398QeC" class="link-item discord-btn" target="_blank">
-                🛒 Buy Normal Sniper
-            </a>
-        </div>
 
-        <!-- GUI 3: PREMIUM -->
-        <div class="tier-card" id="card-premium">
-            <div class="tier-header">
-                <span class="tier-title">Elite Sniper Edition</span>
-                <span class="tier-tag tag-premium">Premium</span>
+            <div class="tier-details-card" id="card-normal">
+                <div class="details-header">
+                    <span class="details-title-pack">Standard Unlocked Edition</span>
+                    <span class="tag-pill tag-normal">Normal Tier</span>
+                </div>
+                <p class="details-summary-text">
+                    Upgraded core build including fully unlocked variable speed adjustment intervals, real-time stop/start control operations, animated dynamic layout borders, and instant target matching elements.
+                </p>
+                <ul class="feature-checklist">
+                    <li><i data-lucide="check-circle-2" class="icon-accent-normal" style="width: 16px; height: 16px;"></i> Fully customizable variable click interval speeds upto 500ms</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-normal" style="width: 16px; height: 16px;"></i> Dedicated system START and STOP sequence controls</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-normal" style="width: 16px; height: 16px;"></i> Live active click telemetry tracker panel</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-normal" style="width: 16px; height: 16px;"></i> Dynamic multi-color scrolling RGB border canvas</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-normal" style="width: 16px; height: 16px;"></i> Drag-and-drop panel positioning setup</li>
+                </ul>
+                <a href="https://discord.gg/H34E398QeC" class="action-button purchase-action-btn" target="_blank">
+                    <i data-lucide="shopping-cart" style="width: 16px; height: 16px;"></i> Buy Normal Sniper
+                </a>
             </div>
-            <ul class="tier-features">
-                <li>Fully customizable variable click interval speeds upto 1ms </li>
-                <li>Native OS system push notifications support</li>
-                <li>Integrated 0.3s ambient audio indicator feeds</li>
-                <li>Live elapsed session duration background tracking clock</li>
-                <li>Live background operational history event logs feed</li>
-                <li>F6 keyboard global macro activation shortcut toggle</li>
-                <li>One-click interface body minimize option layout</li>
-                <li>Auto-save memory engine configuration speed parameters</li>
-            </ul>
-            <a href="https://discord.gg/H34E398QeC" class="link-item discord-btn" target="_blank">
-                🛒 Buy Premium Sniper
-            </a>
-        </div>
 
-        <!-- GUI 4: ULTRA PREMIUM -->
-        <div class="tier-card" id="card-ultra">
-            <div class="tier-header">
-                <span class="tier-title">God Mode Client Suite</span>
-                <span class="tier-tag tag-ultra">Ultra Premium</span>
+            <div class="tier-details-card" id="card-premium">
+                <div class="details-header">
+                    <span class="details-title-pack">Elite Sniper Edition</span>
+                    <span class="tag-pill tag-premium">Premium Tier</span>
+                </div>
+                <p class="details-summary-text">
+                    Advanced implementation highlighting native system push alerts, background runtime clock logs, audio indicator alerts, a hideable control body interface, rainbow title aesthetics, and full storage configuration retention.
+                </p>
+                <ul class="feature-checklist">
+                    <li><i data-lucide="check-circle-2" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> Fully customizable variable click interval speeds upto 1ms</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> Native OS system push notifications support</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> Integrated 0.3s ambient audio indicator feeds</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> Live elapsed session duration background tracking clock</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> Live background operational history event logs feed</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> F6 keyboard global macro activation shortcut toggle</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> One-click interface body minimize option layout</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> Auto-save memory engine configuration speed parameters</li>
+                </ul>
+                <a href="https://discord.gg/H34E398QeC" class="action-button purchase-action-btn" target="_blank">
+                    <i data-lucide="shopping-cart" style="width: 16px; height: 16px;"></i> Buy Premium Sniper
+                </a>
             </div>
-            <ul class="tier-features">
-                <li>Adjust ultra fast speed intervals up to 0.001s (1ms) latency</li>
-                <li>Instant quick preset speed triggers (Fast: 500ms | Ultra: 100ms)</li>
-                <li>4-Theme UI wrapper options (RGB, Matrix Green, Red Hacker, Neon Blue)</li>
-                <li>1.5-Second anti-spam cooldown protection safety algorithms</li>
-                <li>High-velocity success banner popups & screen flash overlay</li>
-                <li>Super compact overlay canvas mode layout profiles</li>
-                <li>Advanced thread execution performance mode overrides</li>
-                <li>Isolated counter for total queues found vs total actions executed</li>
-            </ul>
-            <a href="https://discord.gg/H34E398QeC" class="link-item discord-btn" target="_blank">
-                🛒 Buy Ultra Premium Sniper
-            </a>
-        </div>
 
-        <!-- Navigation Button Back to Main Directory Menu -->
-        <div class="link-item back-btn" onclick="switchPage('homePage')">
-            ← Go Back Home
+            <div class="tier-details-card" id="card-ultra">
+                <div class="details-header">
+                    <span class="details-title-pack">God Mode Client Suite</span>
+                    <span class="tag-pill tag-ultra">Ultra Tier</span>
+                </div>
+                <p class="details-summary-text">
+                    Unmatched high-frequency system capable of adjusting ultra fast connection cycle intervals down to 0.01s (10ms) latency. Supports multi-theme canvas visualization, instant velocity macros, and execution logic metrics tracking panels.
+                </p>
+                <ul class="feature-checklist">
+                    <li><i data-lucide="zap" class="icon-accent-ultra" style="width: 16px; height: 16px;"></i> <strong>Can set ultra fast speed upto 0.01s</strong></li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-ultra" style="width: 16px; height: 16px;"></i> Adjust ultra fast speed intervals up to 0.001s (1ms) latency</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-ultra" style="width: 16px; height: 16px;"></i> Instant quick preset speed triggers (Fast: 500ms | Ultra: 100ms)</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-ultra" style="width: 16px; height: 16px;"></i> 4-Theme UI wrapper options (RGB, Matrix Green, Red Hacker, Neon Blue)</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-ultra" style="width: 16px; height: 16px;"></i> 1.5-Second anti-spam cooldown protection safety algorithms</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-ultra" style="width: 16px; height: 16px;"></i> High-velocity success banner popups & screen flash overlay</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-ultra" style="width: 16px; height: 16px;"></i> Super compact overlay canvas mode layout profiles</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-ultra" style="width: 16px; height: 16px;"></i> Advanced thread execution performance mode overrides</li>
+                    <li><i data-lucide="check-circle-2" class="icon-accent-ultra" style="width: 16px; height: 16px;"></i> Isolated counter for total queues found vs total actions executed</li>
+                </ul>
+                <a href="https://discord.gg/H34E398QeC" class="action-button purchase-action-btn" target="_blank">
+                    <i data-lucide="shopping-cart" style="width: 16px; height: 16px;"></i> Buy Ultra Premium Sniper
+                </a>
+            </div>
+
         </div>
     </div>
 </div>
 
 <script>
-function switchPage(pageId) {
-    document.getElementById('homePage').classList.remove('active');
-    document.getElementById('sniperPage').classList.remove('active');
-    
-    document.getElementById(pageId).classList.add('active');
-    
-    const mainTitle = document.getElementById('mainHeaderTitle');
-    if(pageId === 'sniperPage') {
-        mainTitle.innerText = "SNIPER PACKAGES";
-    } else {
-        mainTitle.innerText = "QUEUE SNIPER HUB";
-    }
-}
+    // System Initializer Hook for Rendering Lucide Vector Asset Components
+    lucide.createIcons();
 
-function selectTier(tierId) {
-    document.getElementById('btn-default').classList.remove('active');
-    document.getElementById('btn-normal').classList.remove('active');
-    document.getElementById('btn-premium').classList.remove('active');
-    document.getElementById('btn-ultra').classList.remove('active');
-    
-    document.getElementById('card-default').classList.remove('active');
-    document.getElementById('card-normal').classList.remove('active');
-    document.getElementById('card-premium').classList.remove('active');
-    document.getElementById('card-ultra').classList.remove('active');
-    
-    document.getElementById('btn-' + tierId).classList.add('active');
-    document.getElementById('card-' + tierId).classList.add('active');
-}
+    function selectTier(tierId) {
+        // Clear active states across master menu tabs component layout arrays
+        document.getElementById('btn-default').classList.remove('active');
+        document.getElementById('btn-normal').classList.remove('active');
+        document.getElementById('btn-premium').classList.remove('active');
+        document.getElementById('btn-ultra').classList.remove('active');
+        
+        // Clear active states across master descriptive context layout wrapper groups
+        document.getElementById('card-default').classList.remove('active');
+        document.getElementById('card-normal').classList.remove('active');
+        document.getElementById('card-premium').classList.remove('active');
+        document.getElementById('card-ultra').classList.remove('active');
+        
+        // Append operational state configuration overrides to targeted selections
+        document.getElementById('btn-' + tierId).classList.add('active');
+        document.getElementById('card-' + tierId).classList.add('active');
+    }
 </script>
 
 </body>
