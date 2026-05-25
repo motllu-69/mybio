@@ -344,8 +344,69 @@
         .icon-accent-premium { color: #c084fc; }
         .icon-accent-ultra { color: #fbbf24; }
 
-        .purchase-action-btn { background: rgba(255, 255, 255, 0.005); border: 1px solid var(--glass-border); margin-top: auto; }
-        .purchase-action-btn:hover { transform: translateY(-3px); color: #ffffff; }
+        /* ================= VIBRANT HIGH-CONTRAST BUY BUTTONS ================= */
+        .purchase-action-btn {
+            margin-top: auto;
+            border-radius: 20px;
+            padding: 18px 28px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .btn-theme-default {
+            background: linear-gradient(135deg, #475569 0%, #1e293b 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 20px rgba(71, 85, 105, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-theme-default:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(71, 85, 105, 0.4);
+            background: linear-gradient(135deg, #64748b 0%, #334155 100%);
+        }
+
+        .btn-theme-normal {
+            background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 20px rgba(34, 197, 150, 0.25);
+        }
+        .btn-theme-normal:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(34, 197, 94, 0.45);
+            background: linear-gradient(135deg, #4ade80 0%, #166534 100%);
+        }
+
+        .btn-theme-premium {
+            background: linear-gradient(135deg, #a855f7 0%, #6b21a8 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 25px rgba(168, 85, 247, 0.3);
+        }
+        .btn-theme-premium:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(168, 85, 247, 0.5);
+            background: linear-gradient(135deg, #c084fc 0%, #7e22ce 100%);
+        }
+
+        .btn-theme-ultra {
+            background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+            color: #000000;
+            box-shadow: 0 4px 25px rgba(251, 191, 36, 0.35);
+        }
+        .btn-theme-ultra:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(251, 191, 36, 0.6);
+            background: linear-gradient(135deg, #fcd34d 0%, #b45309 100%);
+        }
 
         /* ================= EXPANDED VERTICAL CONTENT LAYOUTS ================= */
         .full-width-section {
@@ -415,6 +476,31 @@
         }
         .sim-input-box:focus { border-color: var(--active-accent); }
 
+        /* Custom Interactive Toggle Switches */
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.01);
+            padding: 10px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        .switch {
+            position: relative; display: inline-block; width: 44px; height: 22px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider-switch {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #334155; border-radius: 34px; transition: .3s;
+        }
+        .slider-switch:before {
+            position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px;
+            background-color: white; border-radius: 50%; transition: .3s;
+        }
+        input:checked + .slider-switch { background-color: var(--active-accent); }
+        input:checked + .slider-switch:before { transform: translateX(22px); }
+
         .sim-visual-terminal {
             background: #020408;
             border: 1px solid rgba(255,255,255,0.03);
@@ -422,14 +508,14 @@
             padding: 24px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
-            height: 180px;
+            height: 240px;
             overflow-y: hidden;
             display: flex;
             flex-direction: column;
             gap: 8px;
         }
 
-        /* Feature Matrix Comparison Matrix */
+        /* Side-by-Side Capability Compare Matrix */
         .matrix-table-wrap {
             overflow-x: auto;
             background: rgba(3, 5, 9, 0.4);
@@ -491,6 +577,20 @@
         .accordion-item.open { border-color: rgba(255,255,255,0.05); background: rgba(255,255,255,0.015); }
         .accordion-icon { transition: transform 0.3s ease; color: #475569; }
         .accordion-item.open .accordion-icon { transform: rotate(180deg); color: var(--active-accent); }
+
+        /* Notification Toast Container */
+        #toast-container {
+            position: fixed; bottom: 24px; right: 24px; z-index: 10000;
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        .toast-popup {
+            background: #090d16; border: 1px solid var(--active-accent);
+            padding: 16px 20px; border-radius: 14px; color: #fff; font-size: 13.5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px var(--accent-glow);
+            display: flex; align-items: center; gap: 12px;
+            transform: translateX(120%); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .toast-popup.visible { transform: translateX(0); }
     </style>
 </head>
 <body>
@@ -499,6 +599,8 @@
 <div class="cyber-grid-backdrop"></div>
 <div class="glow-orb orb-top-right" id="mesh-orb-1"></div>
 <div class="glow-orb orb-bottom-left" id="mesh-orb-2"></div>
+
+<div id="toast-container"></div>
 
 <div class="container">
     <div class="page-navigation-hub">
@@ -607,9 +709,9 @@
                     <li><i data-lucide="check" class="icon-accent-default" style="width: 16px; height: 16px;"></i> Drag-and-drop panel positioning setup</li>
                     <li><i data-lucide="check" class="icon-accent-default" style="width: 16px; height: 16px;"></i> Exact text click selector trigger algorithms</li>
                 </ul>
-                <a href="https://discord.gg/H34E398QeC" class="action-button purchase-action-btn" target="_blank">
-                    <i data-lucide="shopping-cart" style="width: 16px; height: 16px;"></i> Buy Default Tier
-                </a>
+                <button onclick="triggerPurchase('Default')" class="purchase-action-btn btn-theme-default">
+                    <i data-lucide="shopping-cart" style="width: 18px; height: 18px;"></i> Purchase Default Tier
+                </button>
             </div>
 
             <div class="tier-details-card" id="card-normal">
@@ -627,9 +729,9 @@
                     <li><i data-lucide="check" class="icon-accent-normal" style="width: 16px; height: 16px;"></i> Dynamic multi-color scrolling RGB border canvas</li>
                     <li><i data-lucide="check" class="icon-accent-normal" style="width: 16px; height: 16px;"></i> Drag-and-drop panel positioning setup</li>
                 </ul>
-                <a href="https://discord.gg/H34E398QeC" class="action-button purchase-action-btn" target="_blank">
-                    <i data-lucide="shopping-cart" style="width: 16px; height: 16px;"></i> Buy Normal Sniper
-                </a>
+                <button onclick="triggerPurchase('Normal')" class="purchase-action-btn btn-theme-normal">
+                    <i data-lucide="shopping-cart" style="width: 18px; height: 18px;"></i> Purchase Standard Build
+                </button>
             </div>
 
             <div class="tier-details-card" id="card-premium">
@@ -650,9 +752,9 @@
                     <li><i data-lucide="check" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> One-click interface body minimize option layout</li>
                     <li><i data-lucide="check" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> Auto-save memory engine configuration speed parameters</li>
                 </ul>
-                <a href="https://discord.gg/H34E398QeC" class="action-button purchase-action-btn" target="_blank">
-                    <i data-lucide="shopping-cart" style="width: 16px; height: 16px;"></i> Buy Premium Sniper
-                </a>
+                <button onclick="triggerPurchase('Premium')" class="purchase-action-btn btn-theme-premium">
+                    <i data-lucide="zap" style="width: 18px; height: 18px;"></i> Secure Premium License
+                </button>
             </div>
 
             <div class="tier-details-card" id="card-ultra">
@@ -674,9 +776,9 @@
                     <li><i data-lucide="zap" class="icon-accent-ultra" style="width: 16px; height: 16px;"></i> Advanced thread execution performance mode overrides</li>
                     <li><i data-lucide="zap" class="icon-accent-ultra" style="width: 16px; height: 16px;"></i> Split telemetry for total queues found vs clicks executed</li>
                 </ul>
-                <a href="https://discord.gg/H34E398QeC" class="action-button purchase-action-btn" target="_blank">
-                    <i data-lucide="shopping-cart" style="width: 16px; height: 16px;"></i> Buy Ultra Premium
-                </a>
+                <button onclick="triggerPurchase('Ultra Premium')" class="purchase-action-btn btn-theme-ultra">
+                    <i data-lucide="shield-alert" style="width: 18px; height: 18px;"></i> Deploy God Mode Suite
+                </button>
             </div>
         </div>
     </div>
@@ -687,19 +789,35 @@
         </div>
         <div class="simulator-box">
             <div class="sim-controls-panel">
-                <div style="font-size: 14px; color: #8892b0; line-height: 1.6; margin-bottom: 12px;">
+                <div style="font-size: 14px; color: #8892b0; line-height: 1.6; margin-bottom: 4px;">
                     Interactively update parameter structures to evaluate how verification thresholds lock performance configurations.
                 </div>
-                <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:14px;">
-                    <span style="font-size:12px; font-weight:700; color:#475569; text-transform:uppercase;">Custom Target String Selector:</span>
+                <div style="display:flex; flex-direction:column; gap:6px;">
+                    <span style="font-size:11px; font-weight:700; color:#475569; text-transform:uppercase;">Custom Target String Selector:</span>
                     <input type="text" class="sim-input-box" id="target-string-box" value="Queue" placeholder="e.g. Queue, Claim, Join Match" oninput="updateSimTarget(this.value)">
                 </div>
-                <div style="display:flex; justify-content:space-between; font-weight:600; font-size:14px;">
+
+                <div class="toggle-row">
+                    <span style="font-size: 13px; font-weight: 500; color: #cbd5e1;">Anti-Bot Jitter Latency Engine</span>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-jitter" onchange="toggleSimFeature('jitter', this.checked)">
+                        <span class="slider-switch"></span>
+                    </label>
+                </div>
+                <div class="toggle-row">
+                    <span style="font-size: 13px; font-weight: 500; color: #cbd5e1;">Shadow DOM Element Injection</span>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-shadow" onchange="toggleSimFeature('shadow', this.checked)">
+                        <span class="slider-switch"></span>
+                    </label>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; font-weight:600; font-size:14px; margin-top: 10px;">
                     <span>Interval Delay Threshold:</span>
                     <span id="sim-speed-val" style="color:var(--active-accent); font-family:'JetBrains Mono';">1000ms</span>
                 </div>
                 <input type="range" min="30" max="1000" value="1000" class="sim-slider" id="frequency-slider" oninput="adjustSimFrequency(this.value)">
-                <div id="sim-tier-badge" style="font-size:11px; font-weight:700; text-transform:uppercase; color:#94a3b8; letter-spacing:1px; margin-top:8px;">
+                <div id="sim-tier-badge" style="font-size:11px; font-weight:700; text-transform:uppercase; color:#94a3b8; letter-spacing:1px; margin-top:4px;">
                     Current Output Level: Default Sniper Edition
                 </div>
             </div>
@@ -830,8 +948,6 @@
     document.addEventListener("DOMContentLoaded", () => {
         if (typeof lucide !== 'undefined') {
             lucide.createIcons();
-        } else {
-            console.error("Lucide scripts blocked or unavailable offline.");
         }
         initMatrixEngine();
         loopMatrixEngine();
@@ -905,14 +1021,36 @@
         }
     }
 
-    // WEB DATA TICKER SIMULATOR (Scaled values to ~100)
+    // Interactive Toast Notification Trigger Feature
+    function showNotificationToast(message) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = 'toast-popup';
+        toast.innerHTML = `<i data-lucide="bell" style="width:16px; height:16px; color:var(--active-accent);"></i> <span>${message}</span>`;
+        container.appendChild(toast);
+        lucide.createIcons();
+        
+        setTimeout(() => toast.classList.add('visible'), 50);
+        setTimeout(() => {
+            toast.classList.remove('visible');
+            setTimeout(() => toast.remove(), 400);
+        }, 3500);
+    }
+
+    function triggerPurchase(tierName) {
+        showNotificationToast(`Redirecting to secure gateway for ${tierName} Tier...`);
+        setTimeout(() => {
+            window.open("https://discord.gg/H34E398QeC", "_blank");
+        }, 800);
+    }
+
+    // WEB DATA TICKER SIMULATOR
     let baseClears = 109;
     let baseActive = 142;
     setInterval(() => {
         baseClears += Math.floor(Math.random() * 2);
         document.getElementById('global-counter-clears').innerText = baseClears.toLocaleString();
         baseActive += Math.floor(Math.random() * 3) - 1;
-        // Clamp to avoid dropping too far below initial range
         if (baseActive < 130) baseActive = 135;
         document.getElementById('global-counter-active').innerText = baseActive.toLocaleString();
     }, 3000);
@@ -940,9 +1078,15 @@
     // VELOCITY SIMULATOR STABILIZED LOGIC ENGINE
     let simIntervalTimer;
     let currentSimTarget = "Queue";
+    let activeSimFeatures = { jitter: false, shadow: false };
 
     function updateSimTarget(val) {
         currentSimTarget = val.trim() || "Queue";
+    }
+
+    function toggleSimFeature(feature, isChecked) {
+        activeSimFeatures[feature] = isChecked;
+        showNotificationToast(`${feature === 'jitter' ? 'Jitter Delay' : 'Shadow DOM encapsulation'} ${isChecked ? 'Enabled' : 'Disabled'}`);
     }
 
     function adjustSimFrequency(val) {
@@ -967,12 +1111,21 @@
         simIntervalTimer = setInterval(() => {
             const view = document.getElementById('sim-terminal-view');
             if(!view) return;
+            
+            let latencyText = `${val}ms`;
+            if (activeSimFeatures.jitter) {
+                const calculatedJitter = Math.floor(Math.random() * 12) + 2;
+                latencyText = `${val}ms (+${calculatedJitter}ms Jitter Offset)`;
+            }
+            
             const log = document.createElement('div');
             log.style.color = val < 100 ? '#fbbf24' : '#cbd5e1';
-            log.innerHTML = `> Scanning DOM for ["${currentSimTarget}"]... Target hit [${val}ms latency]`;
-            view.appendChild(log);
             
-            while (view.children.length > 6) {
+            let DOMTypePrefix = activeSimFeatures.shadow ? `[ShadowRoot Tree]` : `[Global Document]`;
+            log.innerHTML = `> ${DOMTypePrefix} Scanning elements for value ["${currentSimTarget}"]... Action dispatched at ${latencyText} latency.`;
+            
+            view.appendChild(log);
+            while (view.children.length > 8) {
                 view.removeChild(view.children[0]);
             }
         }, parseInt(val));
@@ -1011,7 +1164,6 @@
         }
     }
 
-    // Initialize Matrix Engine Content mapping
     function initMatrixEngine() {
         particlesArray = [];
         for (let i = 0; i < 45; i++) { particlesArray.push(new ParticleNode()); }
