@@ -41,7 +41,7 @@
             align-items: center;
         }
 
-        /* Generated Minecraft Sniper CSS Profile Icon */
+        /* Pure CSS Minecraft Sniper Profile Icon */
         .pfp-logo-container {
             width: 100px;
             height: 100px;
@@ -166,7 +166,7 @@
             background: rgba(255, 255, 255, 0.02);
         }
 
-        /* Features Box Styling */
+        /* Tier Features List Box Styling */
         .features-list {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border-color);
@@ -179,15 +179,36 @@
             margin: 0 0 12px 0;
             color: var(--sniper-cyan);
             font-size: 16px;
+            text-align: center;
         }
         .features-list ul {
             margin: 0;
-            padding-left: 20px;
-            color: #cbd5e1;
+            padding: 0;
+            list-style: none;
         }
         .features-list li {
-            margin-bottom: 8px;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
         }
+        .tier-tag {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+        .tag-default { background: rgba(100, 116, 139, 0.2); color: #94a3b8; border: 1px solid rgba(100, 116, 139, 0.3); }
+        .tag-normal { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+        .tag-premium { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); box-shadow: 0 0 8px rgba(168, 85, 247, 0.2); }
+        .tag-ultra { background: linear-gradient(135deg, rgba(234, 179, 8, 0.2), rgba(249, 115, 22, 0.2)); color: #fbbf24; border: 1px solid rgba(234, 179, 8, 0.3); box-shadow: 0 0 10px rgba(234, 179, 8, 0.3); }
     </style>
 </head>
 <body>
@@ -220,20 +241,32 @@
 
     <!-- INTERNAL QUEUE SNIPER SUB-PAGE -->
     <div id="sniperPage" class="view-panel">
-        <!-- Client Features Display Panel -->
+        <!-- Client Features Display Panel with Tier Options -->
         <div class="features-list">
-            <h3>⚡ Tier Queue Sniper Status</h3>
+            <h3>⚡ Select Your Tier Package</h3>
             <ul>
-                <li>Ultra-fast queue tracking and position detection</li>
-                <li>Instant mobile alerts & Discord webhook support</li>
-                <li>Automated reconnection engines</li>
-                <li>Safe, clean, and optimized performance profiles</li>
+                <li>
+                    <span>Standard Features</span>
+                    <span class="tier-tag tag-default">Default</span>
+                </li>
+                <li>
+                    <span>Enhanced Priority Sniper</span>
+                    <span class="tier-tag tag-normal">Normal</span>
+                </li>
+                <li>
+                    <span>Super-Fast Advanced Bypass</span>
+                    <span class="tier-tag tag-premium">Premium</span>
+                </li>
+                <li>
+                    <span>Maximum Speed + Instant Alerts</span>
+                    <span class="tier-tag tag-ultra">Ultra Premium</span>
+                </li>
             </ul>
         </div>
 
         <!-- Buy Now Redirection Button to Discord Server -->
         <a href="https://discord.gg/YOUR_DISCORD_INVITE_LINK" class="link-item discord-btn" target="_blank">
-            🛒 Buy Now (Redirect to Discord)
+            🛒 Buy Now via Discord
         </a>
 
         <!-- Navigation Button Back to Main Directory Menu -->
@@ -245,17 +278,14 @@
 
 <script>
 function switchPage(pageId) {
-    // Hide all view panels
     document.getElementById('homePage').classList.remove('active');
     document.getElementById('sniperPage').classList.remove('active');
     
-    // Show requested view panel
     document.getElementById(pageId).classList.add('active');
     
-    // Change sub-status tag for extra polish
     const status = document.getElementById('statusPanel');
     if(pageId === 'sniperPage') {
-        status.innerText = "⚡ Client Details";
+        status.innerText = "⚡ Client Tiers";
     } else {
         status.innerText = "🟢 System Online";
     }
