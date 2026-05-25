@@ -14,7 +14,7 @@
             --text-main: #ffffff;
             --text-muted: #334155;
             --discord-color: #5865F2;
-            --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             
             /* Core Client State Variables */
             --active-accent: #00e5ff;
@@ -36,10 +36,9 @@
             box-sizing: border-box;
             position: relative;
             overflow-x: hidden;
-            perspective: 1200px;
         }
 
-        /* 3. Immersive Interactive Background Engine Canvas Frame */
+        /* Interactive Background Engine Canvas Frame */
         #particle-canvas {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -181,15 +180,25 @@
             justify-content: space-between;
             box-shadow: 0 40px 80px -20px rgba(0,0,0,0.9);
             position: relative;
-            transform-style: preserve-3d;
+            transition: var(--transition-smooth);
         }
 
-        /* 1. Laser Border Trailing Effect Framework Structure */
+        /* REPLACED TILT WITH PREMIUM ZOOM HOVER EFFECT */
+        .glass-panel:hover {
+            transform: scale(1.015);
+            border-color: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.95);
+        }
+
+        /* Laser Border Trailing Effect Framework Structure */
         .glass-panel.detail-viewer {
             border: 1px solid rgba(255, 255, 255, 0.03);
             box-shadow: 0 0 50px -20px var(--accent-glow), 0 40px 80px -20px rgba(0,0,0,0.9);
-            transition: var(--transition-smooth);
             overflow: hidden;
+        }
+        .glass-panel.detail-viewer:hover {
+            transform: scale(1.015);
+            box-shadow: 0 0 60px -15px var(--accent-glow), 0 50px 100px -20px rgba(0, 0, 0, 0.95);
         }
 
         /* Dynamic Moving Circuit Border Component Overlay */
@@ -266,7 +275,7 @@
         .menu-tab-item:hover {
             background: rgba(255, 255, 255, 0.015);
             border-color: rgba(255, 255, 255, 0.03);
-            transform: translateX(6px) translateZ(10px);
+            transform: translateX(6px);
         }
 
         /* Multi-Theme Selector Focus Layout Injections */
@@ -337,7 +346,7 @@
         .discord-channel-hook:hover {
             background: #4651ca;
             box-shadow: 0 12px 30px rgba(88, 101, 242, 0.3);
-            transform: translateY(-2px) translateZ(15px);
+            transform: translateY(-2px);
         }
 
         /* Multi-Edition Feature Panels Layout Module */
@@ -346,7 +355,7 @@
             flex-direction: column;
             gap: 26px;
             opacity: 0;
-            transform: translateZ(0px) scale(0.96);
+            transform: scale(0.97);
             transition: var(--transition-smooth);
             height: 100%;
             position: relative;
@@ -355,11 +364,11 @@
 
         .tier-details-card.active {
             display: flex;
-            animation: cardReveal 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: cardReveal 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
         @keyframes cardReveal {
-            to { opacity: 1; transform: translateZ(40px) scale(1); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .details-header {
@@ -426,7 +435,7 @@
             margin-top: auto;
             position: relative;
         }
-        .purchase-action-btn:hover { transform: translateY(-4px) translateZ(20px); color: #ffffff; }
+        .purchase-action-btn:hover { transform: translateY(-3px); color: #ffffff; }
         
         /* Interactive Micro-Glow Accent Custom Overrides */
         #card-default .purchase-action-btn:hover { border-color: #94a3b8; background: rgba(148, 163, 184, 0.04); box-shadow: 0 0 25px rgba(148, 163, 184, 0.12); }
@@ -656,40 +665,7 @@
         executeScramble(document.getElementById('subtitle-tier'), currentTheme.text);
     }
 
-    // 2. Interactive 3D Card Orientation & Glare Reflection Processing Engine
-    const viewerCard = document.getElementById('main-viewer-card');
-    const sidebarPanel = document.getElementById('sidebar-panel');
-
-    function applyAdvancedTactilePhysics(panelElement) {
-        panelElement.addEventListener('mousemove', (event) => {
-            const boundaries = panelElement.getBoundingClientRect();
-            const mouseX = event.clientX - boundaries.left;
-            const mouseY = event.clientY - boundaries.top;
-            
-            const rotateX = -15 * ((mouseY - boundaries.height / 2) / boundaries.height);
-            const rotateY = 15 * ((mouseX - boundaries.width / 2) / boundaries.width);
-            
-            // Render physical 3D tilt
-            panelElement.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
-            
-            // Render interactive specular reflection shimmer glare
-            const brightness = 12;
-            panelElement.style.background = `
-                linear-gradient(${135}deg, rgba(255,255,255,${(boundaries.height - mouseY)/boundaries.height * 0.03}) 0%, rgba(255,255,255,0) 70%),
-                var(--card-bg)
-            `;
-        });
-
-        panelElement.addEventListener('mouseleave', () => {
-            panelElement.style.transform = `rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-            panelElement.style.background = `var(--card-bg)`;
-        });
-    }
-
-    applyAdvancedTactilePhysics(viewerCard);
-    applyAdvancedTactilePhysics(sidebarPanel);
-
-    // 3. Immersive Background Space Particle Matrix Animation Setup
+    // Immersive Background Space Particle Matrix Animation Setup
     const particleCanvas = document.getElementById('particle-canvas');
     const ctx = particleCanvas.getContext('2d');
     let particlesArray = [];
@@ -734,7 +710,6 @@
     function loopMatrixEngine() {
         ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
         
-        // Dynamic vector network interconnect grids layout render
         for (let i = 0; i < particlesArray.length; i++) {
             particlesArray[i].update();
             particlesArray[i].draw();
