@@ -8,19 +8,19 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --bg-color: #020406;
-            --card-bg: rgba(5, 8, 14, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.04);
+            --bg-color: #010305;
+            --card-bg: rgba(4, 6, 10, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.03);
             --text-main: #ffffff;
-            --text-muted: #64748b;
+            --text-muted: #475569;
             --discord-color: #5865F2;
-            --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             
-            /* Core Theme Adaptation Properties */
+            /* Dynamic Hex Color Tokens */
             --active-accent: #00e5ff;
-            --accent-glow: rgba(0, 229, 255, 0.18);
-            --bg-orb-1: rgba(0, 229, 255, 0.12);
-            --bg-orb-2: rgba(168, 85, 247, 0.06);
+            --accent-glow: rgba(0, 229, 255, 0.15);
+            --bg-orb-1: rgba(0, 229, 255, 0.1);
+            --bg-orb-2: rgba(168, 85, 247, 0.05);
         }
 
         body {
@@ -36,43 +36,38 @@
             box-sizing: border-box;
             position: relative;
             overflow-x: hidden;
+            perspective: 1000px; /* Enables 3D Space perspective for card tilt */
         }
 
-        /* 1. Animated Tech Matrix Background Layer */
+        /* Tech Grid Backdrop Background */
         .cyber-grid-backdrop {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.004) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.004) 1px, transparent 1px);
-            background-size: 32px 32px;
+                linear-gradient(rgba(255, 255, 255, 0.003) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.003) 1px, transparent 1px);
+            background-size: 40px 40px;
             z-index: 0;
             pointer-events: none;
         }
 
-        /* 2. Interactive Dynamic Backdrop Mesh Orbs */
+        /* Dynamic Blurred Colored Orbs */
         .glow-orb {
             position: fixed;
-            width: 50vw;
-            height: 50vw;
+            width: 45vw;
+            height: 45vw;
             border-radius: 50%;
-            filter: blur(140px);
+            filter: blur(160px);
             z-index: 0;
             pointer-events: none;
             transition: var(--transition-smooth);
         }
-        .orb-top-right {
-            top: -10%; right: -10%;
-            background: var(--bg-orb-1);
-        }
-        .orb-bottom-left {
-            bottom: -10%; left: -10%;
-            background: var(--bg-orb-2);
-        }
+        .orb-top-right { top: -10%; right: -10%; background: var(--bg-orb-1); }
+        .orb-bottom-left { bottom: -10%; left: -10%; background: var(--bg-orb-2); }
 
         .container {
             width: 100%;
-            max-width: 1020px;
+            max-width: 1040px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -82,50 +77,48 @@
 
         .top-main-title {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 38px;
+            font-size: 40px;
             font-weight: 700;
             margin: 0 0 8px 0;
             text-align: center;
-            letter-spacing: 3px;
-            background: linear-gradient(135deg, #ffffff 40%, var(--active-accent) 100%);
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, #ffffff 30%, var(--active-accent) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
             transition: var(--transition-smooth);
         }
 
-        /* 4. Target Crosshair Scope Component with Spin Actions */
+        /* Target HUD Crosshair Selector */
         .pfp-logo-container {
-            width: 84px;
-            height: 84px;
+            width: 86px;
+            height: 86px;
             border-radius: 50%;
-            background: #04070c;
+            background: #030509;
             border: 2px dashed var(--active-accent);
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
-            box-shadow: 0 0 35px var(--accent-glow);
+            box-shadow: 0 0 40px var(--accent-glow);
             margin-bottom: 24px;
             transition: var(--transition-smooth);
         }
-        .pfp-logo-container.spin-lock {
-            transform: rotate(180deg) scale(1.05);
-        }
+        .pfp-logo-container.spin-lock { transform: rotate(360deg) scale(1.1); }
 
         .sniper-dot {
             width: 6px;
             height: 6px;
             background-color: var(--active-accent);
             border-radius: 50%;
-            box-shadow: 0 0 12px var(--active-accent);
+            box-shadow: 0 0 14px var(--active-accent);
             transition: var(--transition-smooth);
         }
 
         .sniper-line {
             position: absolute;
             background: var(--active-accent);
-            opacity: 0.6;
+            opacity: 0.7;
             transition: var(--transition-smooth);
         }
         .line-v { width: 2px; height: 16px; }
@@ -136,11 +129,11 @@
         .pos-right { right: 6px; }
 
         h1 {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
-            font-weight: 700;
-            margin: 0 0 20px 0;
-            letter-spacing: 5px;
+            font-weight: 500;
+            margin: 0 0 24px 0;
+            letter-spacing: 6px;
             color: var(--active-accent);
             text-transform: uppercase;
             text-shadow: 0 0 20px var(--accent-glow);
@@ -149,47 +142,60 @@
 
         .main-description {
             font-size: 14.5px;
-            color: #94a3b8;
+            color: #8a99ad;
             text-align: center;
-            margin: 0 0 44px 0;
-            line-height: 1.6;
-            max-width: 600px;
+            margin: 0 0 48px 0;
+            line-height: 1.65;
+            max-width: 620px;
         }
 
         .dashboard-frame {
             width: 100%;
             display: grid;
             grid-template-columns: 1fr;
-            gap: 28px;
+            gap: 32px;
         }
 
         @media (min-width: 768px) {
-            .dashboard-frame {
-                grid-template-columns: 340px 1fr;
-            }
+            .dashboard-frame { grid-template-columns: 330px 1fr; }
         }
 
-        /* Glassmorphism Hub Layout Wrap */
+        /* Glassmorphism Structural Core Panels */
         .glass-panel {
             background: var(--card-bg);
             border: 1px solid var(--glass-border);
-            border-radius: 28px;
-            padding: 32px;
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            border-radius: 30px;
+            padding: 36px;
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 20px 50px -15px rgba(0,0,0,0.7);
+            box-shadow: 0 30px 60px -20px rgba(0,0,0,0.8);
             position: relative;
+            transform-style: preserve-3d; /* Required for 3D card response */
         }
 
-        /* 3. True Laser Glow Framework for Right Display */
+        /* 2. Glow-Tracks (Laser Border Trailing Effect Setup) */
         .glass-panel.detail-viewer {
-            border-color: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 0 40px -10px var(--accent-glow), 0 20px 50px -15px rgba(0,0,0,0.7);
-            transition: var(--transition-smooth);
+            border-color: rgba(255, 255, 255, 0.04);
+            box-shadow: 0 0 50px -15px var(--accent-glow), 0 30px 60px -20px rgba(0,0,0,0.8);
+            transition: border-color var(--transition-smooth), box-shadow var(--transition-smooth);
+            overflow: hidden;
+        }
+
+        /* 3. Hardware Monitor CRT Scanlines Overlay */
+        .glass-panel.detail-viewer::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 10;
+            background-size: 100% 4px, 6px 100%;
+            pointer-events: none;
+            opacity: 0.4;
         }
 
         .sidebar-controls {
@@ -203,7 +209,7 @@
             font-size: 11px;
             font-weight: 700;
             letter-spacing: 1.5px;
-            color: var(--text-muted);
+            color: #475569;
             text-transform: uppercase;
             margin-bottom: 8px;
             display: flex;
@@ -211,29 +217,29 @@
             gap: 10px;
         }
 
-        /* Navigation List Blocks */
+        /* Interactive Menu Selection Strips */
         .menu-tab-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 18px 22px;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.005);
-            border: 1px solid rgba(255, 255, 255, 0.01);
+            padding: 18px 24px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.003);
+            border: 1px solid transparent;
             cursor: pointer;
             transition: var(--transition-smooth);
         }
         .menu-tab-item:hover {
-            background: rgba(255, 255, 255, 0.02);
-            border-color: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.015);
+            border-color: rgba(255, 255, 255, 0.04);
             transform: translateX(6px);
         }
 
-        /* Specialized Tab Glow Anchors */
-        .menu-tab-item.active#btn-default { border-color: rgba(148, 163, 184, 0.25); background: rgba(148, 163, 184, 0.04); }
-        .menu-tab-item.active#btn-normal { border-color: rgba(74, 222, 128, 0.25); background: rgba(74, 222, 128, 0.04); }
-        .menu-tab-item.active#btn-premium { border-color: rgba(192, 132, 252, 0.25); background: rgba(192, 132, 252, 0.04); }
-        .menu-tab-item.active#btn-ultra { border-color: rgba(251, 191, 36, 0.25); background: rgba(251, 191, 36, 0.04); }
+        /* Tab Neon Injections */
+        .menu-tab-item.active#btn-default { border-color: rgba(148, 163, 184, 0.2); background: rgba(148, 163, 184, 0.03); }
+        .menu-tab-item.active#btn-normal { border-color: rgba(74, 222, 128, 0.2); background: rgba(74, 222, 128, 0.03); }
+        .menu-tab-item.active#btn-premium { border-color: rgba(192, 132, 252, 0.2); background: rgba(192, 132, 252, 0.03); }
+        .menu-tab-item.active#btn-ultra { border-color: rgba(251, 191, 36, 0.2); background: rgba(251, 191, 36, 0.03); }
 
         .tab-identity-group {
             display: flex;
@@ -254,12 +260,10 @@
         .tab-label-text {
             font-weight: 600;
             font-size: 14.5px;
-            color: #64748b;
+            color: #475569;
             transition: var(--transition-smooth);
         }
-        .menu-tab-item.active .tab-label-text {
-            color: #ffffff;
-        }
+        .menu-tab-item.active .tab-label-text { color: #ffffff; }
 
         .chevron-icon {
             color: var(--text-muted);
@@ -267,16 +271,13 @@
             transform: translateX(-6px);
             transition: var(--transition-smooth);
         }
-        .menu-tab-item.active .chevron-icon {
-            opacity: 1;
-            transform: translateX(0);
-        }
+        .menu-tab-item.active .chevron-icon { opacity: 1; transform: translateX(0); }
         #btn-default.active .chevron-icon { color: #94a3b8; }
         #btn-normal.active .chevron-icon { color: #4ade80; }
         #btn-premium.active .chevron-icon { color: #c084fc; }
         #btn-ultra.active .chevron-icon { color: #fbbf24; }
 
-        /* General Functional Layout Interactive Button Fields */
+        /* Global Routing Buttons */
         .action-button {
             display: flex;
             align-items: center;
@@ -286,7 +287,7 @@
             color: var(--text-main);
             background: rgba(255, 255, 255, 0.01);
             border: 1px solid var(--glass-border);
-            border-radius: 16px;
+            border-radius: 18px;
             padding: 16px;
             font-weight: 600;
             font-size: 14.5px;
@@ -301,35 +302,35 @@
         }
         .discord-channel-hook:hover {
             background: #4651ca;
-            box-shadow: 0 10px 28px rgba(88, 101, 242, 0.35);
+            box-shadow: 0 12px 30px rgba(88, 101, 242, 0.35);
             transform: translateY(-2px);
         }
 
-        /* Output Sub-Card Enclosures */
+        /* Panel Output Components Layout */
         .tier-details-card {
             display: none;
             flex-direction: column;
             gap: 26px;
             opacity: 0;
-            transform: scale(0.98) translateY(8px);
+            transform: translateZ(0px) scale(0.97);
             transition: var(--transition-smooth);
             height: 100%;
         }
 
         .tier-details-card.active {
             display: flex;
-            animation: cardReveal 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: paneReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes cardReveal {
-            to { opacity: 1; transform: scale(1) translateY(0); }
+        @keyframes paneReveal {
+            to { opacity: 1; transform: translateZ(30px) scale(1); } /* Explodes content slightly outward in 3D */
         }
 
         .details-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
             padding-bottom: 22px;
         }
 
@@ -348,10 +349,10 @@
             border-radius: 30px;
             letter-spacing: 1px;
         }
-        .tag-default { background: rgba(148, 163, 184, 0.05); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.15); }
-        .tag-normal { background: rgba(34, 197, 94, 0.05); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.15); }
-        .tag-premium { background: rgba(168, 85, 247, 0.05); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.15); }
-        .tag-ultra { background: rgba(234, 179, 8, 0.05); color: #fbbf24; border: 1px solid rgba(234, 179, 8, 0.15); }
+        .tag-default { background: rgba(148, 163, 184, 0.04); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.15); }
+        .tag-normal { background: rgba(34, 197, 94, 0.04); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.15); }
+        .tag-premium { background: rgba(168, 85, 247, 0.04); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.15); }
+        .tag-ultra { background: rgba(234, 179, 8, 0.04); color: #fbbf24; border: 1px solid rgba(234, 179, 8, 0.15); }
 
         .details-summary-text {
             font-size: 14px;
@@ -360,7 +361,7 @@
             margin: 0;
         }
 
-        /* Checklists Structural Grid Layout Components */
+        /* Premium Icon Metric Tree Arrays */
         .feature-checklist {
             list-style: none;
             padding: 0;
@@ -377,9 +378,7 @@
             font-size: 14.5px;
             color: #cbd5e1;
         }
-        .feature-checklist li i {
-            flex-shrink: 0;
-        }
+        .feature-checklist li i { flex-shrink: 0; }
         
         .icon-accent-default { color: #94a3b8; }
         .icon-accent-normal { color: #4ade80; }
@@ -390,17 +389,16 @@
             background: rgba(255, 255, 255, 0.01);
             border: 1px solid var(--glass-border);
             margin-top: auto;
+            position: relative;
+            z-index: 20;
         }
-        .purchase-action-btn:hover {
-            transform: translateY(-3px);
-            color: #ffffff;
-        }
+        .purchase-action-btn:hover { transform: translateY(-3px); color: #ffffff; }
         
-        /* Interactive Unique Accent Overrides for Every Card Variant Block */
-        #card-default .purchase-action-btn:hover { border-color: #94a3b8; background: rgba(148, 163, 184, 0.05); box-shadow: 0 0 25px rgba(148, 163, 184, 0.12); }
-        #card-normal .purchase-action-btn:hover { border-color: #4ade80; background: rgba(74, 222, 128, 0.05); box-shadow: 0 0 25px rgba(74, 222, 128, 0.18); }
-        #card-premium .purchase-action-btn:hover { border-color: #c084fc; background: rgba(192, 132, 252, 0.05); box-shadow: 0 0 25px rgba(192, 132, 252, 0.18); }
-        #card-ultra .purchase-action-btn:hover { border-color: #fbbf24; background: rgba(251, 191, 36, 0.05); box-shadow: 0 0 30px rgba(251, 191, 36, 0.25); }
+        /* Personalized Checkout Micro-Glow Outlines */
+        #card-default .purchase-action-btn:hover { border-color: #94a3b8; background: rgba(148, 163, 184, 0.04); box-shadow: 0 0 25px rgba(148, 163, 184, 0.15); }
+        #card-normal .purchase-action-btn:hover { border-color: #4ade80; background: rgba(74, 222, 128, 0.04); box-shadow: 0 0 25px rgba(74, 222, 128, 0.2); }
+        #card-premium .purchase-action-btn:hover { border-color: #c084fc; background: rgba(192, 132, 252, 0.04); box-shadow: 0 0 25px rgba(192, 132, 252, 0.2); }
+        #card-ultra .purchase-action-btn:hover { border-color: #fbbf24; background: rgba(251, 191, 36, 0.04); box-shadow: 0 0 30px rgba(251, 191, 36, 0.25); }
     </style>
 </head>
 <body>
@@ -427,7 +425,7 @@
 
     <div class="dashboard-frame">
         
-        <div class="glass-panel">
+        <div class="glass-panel" id="sidebar-panel">
             <div class="sidebar-controls">
                 <div class="sidebar-header">
                     <i data-lucide="layers" style="width: 14px; height: 14px;"></i> Client Architecture Tiers
@@ -565,19 +563,37 @@
 </div>
 
 <script>
-    // Asset Vector Render Call Hook
+    // Initialize SVG CDN Node Assets
     lucide.createIcons();
 
-    // Map tier parameters to responsive global style engines
+    // Map themes to dynamic custom color variable objects
     const tierThemes = {
-        default: { color: '#94a3b8', text: 'DEFAULT BUILD', glow: 'rgba(148, 163, 184, 0.2)', orb1: 'rgba(148, 163, 184, 0.1)', orb2: 'rgba(30, 41, 59, 0.2)' },
-        normal: { color: '#4ade80', text: 'STANDARD UNLOCKED', glow: 'rgba(74, 222, 128, 0.22)', orb1: 'rgba(34, 197, 94, 0.12)', orb2: 'rgba(4, 120, 87, 0.05)' },
-        premium: { color: '#c084fc', text: 'ELITE SYSTEM LAYER', glow: 'rgba(192, 132, 252, 0.25)', orb1: 'rgba(168, 85, 247, 0.15)', orb2: 'rgba(76, 29, 149, 0.05)' },
-        ultra: { color: '#fbbf24', text: 'GOD MODE PROTOCOL', glow: 'rgba(251, 191, 36, 0.3)', orb1: 'rgba(234, 179, 8, 0.18)', orb2: 'rgba(120, 53, 4, 0.05)' }
+        default: { color: '#94a3b8', text: 'DEFAULT BUILD PROTOCOL', glow: 'rgba(148, 163, 184, 0.15)', orb1: 'rgba(148, 163, 184, 0.08)', orb2: 'rgba(30, 41, 59, 0.2)' },
+        normal: { color: '#4ade80', text: 'STANDARD UNLOCKED CORE', glow: 'rgba(74, 222, 128, 0.18)', orb1: 'rgba(34, 197, 94, 0.1)', orb2: 'rgba(4, 120, 87, 0.04)' },
+        premium: { color: '#c084fc', text: 'ELITE SYSTEM ARCHITECTURE', glow: 'rgba(192, 132, 252, 0.2)', orb1: 'rgba(168, 85, 247, 0.12)', orb2: 'rgba(76, 29, 149, 0.04)' },
+        ultra: { color: '#fbbf24', text: 'GOD MODE SNIPER ENGAGED', glow: 'rgba(251, 191, 36, 0.25)', orb1: 'rgba(234, 179, 8, 0.16)', orb2: 'rgba(120, 53, 4, 0.04)' }
     };
 
+    // 4. Interactive Text Scramble Decoder Engine
+    function scrambleText(targetElement, finalString) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*+=';
+        let iterations = 0;
+        clearInterval(targetElement.scrambleInterval);
+        
+        targetElement.scrambleInterval = setInterval(() => {
+            targetElement.innerText = finalString.split('').map((char, index) => {
+                if (index < iterations) return finalString[index];
+                if (char === ' ') return ' ';
+                return chars[Math.floor(Math.random() * chars.length)];
+            }).join('');
+            
+            if (iterations >= finalString.length) clearInterval(targetElement.scrambleInterval);
+            iterations += 1 / 2;
+        }, 25);
+    }
+
     function selectTier(tierId) {
-        // Toggle Master Grid Classes across controls
+        // Clear active classes across arrays
         ['default', 'normal', 'premium', 'ultra'].forEach(id => {
             document.getElementById('btn-' + id).classList.remove('active');
             document.getElementById('card-' + id).classList.remove('active');
@@ -586,12 +602,12 @@
         document.getElementById('btn-' + tierId).classList.add('active');
         document.getElementById('card-' + tierId).classList.add('active');
 
-        // Fire Sniper Target Rotation Effect
+        // Target Crosshair Lock Spin
         const scope = document.getElementById('scope-hud');
         scope.classList.add('spin-lock');
-        setTimeout(() => scope.classList.remove('spin-lock'), 500);
+        setTimeout(() => scope.classList.remove('spin-lock'), 600);
 
-        // Inject color tokens into CSS custom variable trees
+        // Inject color properties down theme trees
         const theme = tierThemes[tierId];
         const root = document.documentElement;
         
@@ -600,8 +616,34 @@
         root.style.setProperty('--bg-orb-1', theme.orb1);
         root.style.setProperty('--bg-orb-2', theme.orb2);
         
-        document.getElementById('subtitle-tier').innerText = theme.text;
+        // Execute scramble effect on subheader element
+        scrambleText(document.getElementById('subtitle-tier'), theme.text);
     }
+
+    // 1. Interactive 3D Interactive Card Tilt Processing Logic
+    const viewerCard = document.getElementById('main-viewer-card');
+    const sidebarPanel = document.getElementById('sidebar-panel');
+
+    function applyTiltEffect(element) {
+        element.addEventListener('mousemove', (e) => {
+            const rect = element.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const xRotation = -20 * ((y - rect.height / 2) / rect.height);
+            const yRotation = 20 * ((x - rect.width / 2) / rect.width);
+            
+            element.style.transform = `rotateX(${xRotation}deg) rotateY(${yRotation}deg) scale3d(1.02, 1.02, 1.02)`;
+        });
+
+        element.addEventListener('mouseleave', () => {
+            element.style.transform = `rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+        });
+    }
+
+    // Bind tilt logic to both premium glass dashboards
+    applyTiltEffect(viewerCard);
+    applyTiltEffect(sidebarPanel);
 </script>
 
 </body>
