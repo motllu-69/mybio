@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@motllu | Links</title>
+    <title>Queue Sniper Client | Portal</title>
     <style>
         :root {
-            --bg-color: #0d0f12;
-            --card-bg: rgba(255, 255, 255, 0.07);
-            --card-hover: rgba(255, 255, 255, 0.15);
+            --bg-color: #0a0c10;
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --card-hover: rgba(0, 229, 255, 0.1);
             --text-main: #ffffff;
-            --text-muted: #a0aec0;
-            --border-color: rgba(255, 255, 255, 0.1);
-            --accent-glow: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+            --text-muted: #64748b;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --sniper-cyan: #00e5ff;
+            --sniper-blue: #0083b0;
+            --glow: linear-gradient(135deg, var(--sniper-cyan) 0%, var(--sniper-blue) 100%);
+            --youtube-red: #ff0000;
+            --youtube-hover: rgba(255, 0, 0, 0.15);
+            --discord-blurple: #5865F2;
+            --discord-hover: rgba(88, 101, 242, 0.2);
         }
 
         body {
@@ -35,50 +41,76 @@
             align-items: center;
         }
 
-        /* Big Title Above Image */
-        .top-banner-title {
-            font-size: 28px;
+        /* Generated Minecraft Sniper CSS Profile Icon */
+        .pfp-logo-container {
+            width: 100px;
+            height: 100px;
+            border-radius: 24px;
+            background: #121620;
+            border: 2px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
+            margin-bottom: 20px;
+        }
+
+        /* Crosshair Center Dot */
+        .sniper-dot {
+            width: 10px;
+            height: 10px;
+            background-color: var(--sniper-cyan);
+            border-radius: 2px;
+            box-shadow: 0 0 10px var(--sniper-cyan);
+        }
+
+        /* Crosshair Reticle Lines */
+        .sniper-line {
+            position: absolute;
+            background: var(--glow);
+            box-shadow: 0 0 8px var(--sniper-cyan);
+        }
+        .line-v { width: 4px; height: 24px; }
+        .line-h { width: 24px; height: 4px; }
+        .pos-top { top: 12px; }
+        .pos-bottom { bottom: 12px; }
+        .pos-left { left: 12px; }
+        .pos-right { right: 12px; }
+
+        h1 {
+            font-size: 24px;
             font-weight: 800;
-            margin: 0 0 24px 0;
-            text-align: center;
+            margin: 0 0 8px 0;
             letter-spacing: -0.5px;
-            background: var(--accent-glow);
+            background: var(--glow);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* Profile Header */
-        .profile-img {
-            width: 96px;
-            height: 96px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            background: var(--accent-glow) border-box;
-            object-fit: cover;
-            margin-bottom: 16px;
-        }
-
-        h1 {
-            font-size: 20px;
+        .status-badge {
+            background: rgba(0, 229, 255, 0.1);
+            color: var(--sniper-cyan);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: 700;
-            margin: 0 0 8px 0;
-            letter-spacing: -0.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
         }
 
-        .bio {
-            font-size: 14px;
-            color: var(--text-muted);
-            text-align: center;
-            margin: 0 0 24px 0;
-            line-height: 1.5;
-        }
-
-        /* Links & Product Cards */
-        .links-wrapper {
+        /* View-Switching Wrapper Setup */
+        .view-panel {
             width: 100%;
-            display: flex;
+            display: none;
             flex-direction: column;
             gap: 16px;
+        }
+        
+        .view-panel.active {
+            display: flex;
         }
 
         .link-item {
@@ -87,77 +119,146 @@
             color: var(--text-main);
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 16px;
+            border-radius: 14px;
+            padding: 18px;
             text-align: center;
             font-weight: 600;
             font-size: 16px;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
             backdrop-filter: blur(10px);
             cursor: pointer;
         }
 
         .link-item:hover {
-            background: var(--card-hover);
             transform: translateY(-2px);
-            border-color: rgba(255, 255, 255, 0.25);
         }
 
-        .uid-number {
-            font-size: 12px;
+        /* Button Custom Variants */
+        .youtube-btn:hover {
+            background: var(--youtube-hover);
+            border-color: var(--youtube-red);
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.15);
+        }
+
+        .sniper-btn:hover {
+            background: var(--card-hover);
+            border-color: var(--sniper-cyan);
+            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.15);
+        }
+
+        .discord-btn {
+            background: rgba(88, 101, 242, 0.1);
+            border-color: rgba(88, 101, 242, 0.3);
+        }
+        .discord-btn:hover {
+            background: var(--discord-hover);
+            border-color: var(--discord-blurple);
+            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.2);
+        }
+
+        .back-btn {
+            border-style: dashed;
             color: var(--text-muted);
-            font-weight: normal;
-            margin-top: 4px;
+            margin-top: 10px;
+        }
+        .back-btn:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Features Box Styling */
+        .features-list {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .features-list h3 {
+            margin: 0 0 12px 0;
+            color: var(--sniper-cyan);
+            font-size: 16px;
+        }
+        .features-list ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #cbd5e1;
+        }
+        .features-list li {
+            margin-bottom: 8px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Big Title Above Image -->
-    <div class="top-banner-title">M O T U..Motllu HANDLE Links</div>
-
-    <!-- Profile Image Avatar (Using your working image name setup) -->
-    <img class="profile-img" src="avatar.png" alt="Profile Picture">
+    <!-- Pure CSS Generated Profile Logo -->
+    <div class="pfp-logo-container">
+        <div class="sniper-line line-v pos-top"></div>
+        <div class="sniper-line line-v pos-bottom"></div>
+        <div class="sniper-line line-h pos-left"></div>
+        <div class="sniper-line line-h pos-right"></div>
+        <div class="sniper-dot"></div>
+    </div>
     
-    <!-- User Handles & Bio Info -->
-    <h1>@motllu (gamer)</h1>
-    <p class="bio">hey there! me motu also known motllu (part time gamer) check my all handles here and drop a rating or follow me ;-;</p>
+    <h1>Tier Queue Sniper</h1>
+    <div class="status-badge" id="statusPanel">🟢 System Online</div>
 
-    <div class="links-wrapper">
-        <!-- 1st Button: YouTube -->
-        <a href="https://youtube.com/@motllugaming?si=WHJTxWYa711FzVej" class="link-item" target="_blank">
-            YouTube Channel 🤤
+    <!-- MAIN HOME PAGE -->
+    <div id="homePage" class="view-panel active">
+        <!-- YouTube Link Button Only -->
+        <a href="https://youtube.com/@motllugaming?si=WHJTxWYa711FzVej" class="link-item youtube-btn" target="_blank">
+            YouTube Channel 📺
         </a>
 
-        <!-- 2nd Button: Instagram -->
-        <a href="https://www.instagram.com/motllubhau.01?igsh=MThvMzRqY3oxNTVkZw==" class="link-item" target="_blank">
-            Instagram Profile 🔥
+        <!-- Queue Sniper Website Button (Opens Internal Sub-Page) -->
+        <div class="link-item sniper-btn" onclick="switchPage('sniperPage')">
+            Queue Sniper Site Info 🎯
+        </div>
+    </div>
+
+    <!-- INTERNAL QUEUE SNIPER SUB-PAGE -->
+    <div id="sniperPage" class="view-panel">
+        <!-- Client Features Display Panel -->
+        <div class="features-list">
+            <h3>⚡ Tier Queue Sniper Status</h3>
+            <ul>
+                <li>Ultra-fast queue tracking and position detection</li>
+                <li>Instant mobile alerts & Discord webhook support</li>
+                <li>Automated reconnection engines</li>
+                <li>Safe, clean, and optimized performance profiles</li>
+            </ul>
+        </div>
+
+        <!-- Buy Now Redirection Button to Discord Server -->
+        <a href="https://discord.gg/YOUR_DISCORD_INVITE_LINK" class="link-item discord-btn" target="_blank">
+            🛒 Buy Now (Redirect to Discord)
         </a>
 
-        <!-- 3rd Button: Free Fire UID Copy Action -->
-        <div class="link-item" id="ffButton" onclick="copyUID()">
-            <span>Free Fire UID 🤷‍♂️</span>
-            <div class="uid-number" id="uidText">UID: 1673944735 (Click to copy)</div>
+        <!-- Navigation Button Back to Main Directory Menu -->
+        <div class="link-item back-btn" onclick="switchPage('homePage')">
+            ← Go Back Home
         </div>
     </div>
 </div>
 
 <script>
-function copyUID() {
-    const uid = "1673944735";
-    navigator.clipboard.writeText(uid).then(() => {
-        const uidText = document.getElementById('uidText');
-        uidText.innerText = "UID Copied! ✅";
-        uidText.style.color = "#00b4db";
-        
-        setTimeout(() => {
-            uidText.innerText = "UID: " + uid + " (Click to copy)";
-            uidText.style.color = "#a0aec0";
-        }, 2000);
-    }).catch(err => {
-        console.error('Could not copy text: ', err);
-    });
+function switchPage(pageId) {
+    // Hide all view panels
+    document.getElementById('homePage').classList.remove('active');
+    document.getElementById('sniperPage').classList.remove('active');
+    
+    // Show requested view panel
+    document.getElementById(pageId).classList.add('active');
+    
+    // Change sub-status tag for extra polish
+    const status = document.getElementById('statusPanel');
+    if(pageId === 'sniperPage') {
+        status.innerText = "⚡ Client Details";
+    } else {
+        status.innerText = "🟢 System Online";
+    }
 }
 </script>
 
