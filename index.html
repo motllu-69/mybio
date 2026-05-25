@@ -326,14 +326,14 @@
         .tier-details-card.active { display: flex; animation: cardReveal 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
         @keyframes cardReveal { to { opacity: 1; transform: scale(1); } }
 
-        .details-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.02); padding-bottom: 22px; }
-        .details-title-pack { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; }
+        /* Modified Header Setup: Removed text element, maximized the tier badge size */
+        .details-header { display: flex; justify-content: flex-start; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.02); padding-bottom: 22px; }
 
-        .tag-pill { font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 6px 14px; border-radius: 30px; letter-spacing: 1px; }
-        .tag-default { background: rgba(148, 163, 184, 0.04); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.12); }
-        .tag-normal { background: rgba(34, 197, 94, 0.04); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.12); }
-        .tag-premium { background: rgba(168, 85, 247, 0.04); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.12); }
-        .tag-ultra-premium { background: rgba(234, 179, 8, 0.04); color: #fbbf24; border: 1px solid rgba(234, 179, 8, 0.12); }
+        .tag-pill { font-family: 'Space Grotesk', sans-serif; font-size: 38px; font-weight: 700; text-transform: uppercase; padding: 0; border-radius: 0; letter-spacing: 0.5px; background: none !mix; border: none !important; }
+        .tag-default { color: #ffffff; }
+        .tag-normal { color: #4ade80; }
+        .tag-premium { color: #c084fc; }
+        .tag-ultra-premium { color: #fbbf24; }
 
         .details-summary-text { font-size: 14px; color: #8892b0; line-height: 1.65; margin: 0; }
         .feature-checklist { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 16px; }
@@ -696,8 +696,7 @@
             
             <div class="tier-details-card active" id="card-default">
                 <div class="details-header">
-                    <span class="details-title-pack">Default Edition</span>
-                    <span class="tag-pill tag-default">Default Tier</span>
+                    <span class="tag-pill tag-default" id="title-label-default">Default Edition</span>
                 </div>
                 <p class="details-summary-text">
                     Essential automation layout with a fixed, unalterable 1000ms checking speed interval, animated dynamic chroma RGB border canvas, click counter tracker, and simple exact-match button triggering.
@@ -716,8 +715,7 @@
 
             <div class="tier-details-card" id="card-normal">
                 <div class="details-header">
-                    <span class="details-title-pack">Normal Edition</span>
-                    <span class="tag-pill tag-normal">Normal Tier</span>
+                    <span class="tag-pill tag-normal" id="title-label-normal">Normal Edition</span>
                 </div>
                 <p class="details-summary-text">
                     Upgraded core build including fully unlocked variable speed adjustment intervals, real-time stop/start control operations, animated dynamic layout borders, and instant target matching elements.
@@ -736,8 +734,7 @@
 
             <div class="tier-details-card" id="card-premium">
                 <div class="details-header">
-                    <span class="details-title-pack">Premium Edition</span>
-                    <span class="tag-pill tag-premium">Premium Tier</span>
+                    <span class="tag-pill tag-premium" id="title-label-premium">Premium Edition</span>
                 </div>
                 <p class="details-summary-text">
                     Advanced implementation highlighting native system push alerts, background runtime clock logs, audio indicator alerts, a hideable control body interface, rainbow title aesthetics, and full storage configuration retention.
@@ -759,8 +756,7 @@
 
             <div class="tier-details-card" id="card-ultra-premium">
                 <div class="details-header">
-                    <span class="details-title-pack">Ultra Premium Suite</span>
-                    <span class="tag-pill tag-ultra-premium">Ultra Premium Tier</span>
+                    <span class="tag-pill tag-ultra-premium" id="title-label-ultra-premium">Ultra Premium</span>
                 </div>
                 <p class="details-summary-text">
                     Unmatched high-frequency system capable of adjusting ultra-fast connection cycle intervals down to 0.01s (10ms) latency. Supports multi-theme canvas visualization, instant velocity macros, and execution logic metrics tracking panels.
@@ -956,13 +952,14 @@
 
     // Fully re-mapped internal theme names matching requested tiers
     const tierThemes = {
-        'default': { color: '#94a3b8', text: 'DEFAULT BUILD STACK', glow: 'rgba(148, 163, 184, 0.12)', orb1: 'rgba(148, 163, 184, 0.06)', orb2: 'rgba(30, 41, 59, 0.15)' },
-        'normal': { color: '#4ade80', text: 'NORMAL OPERATIONAL CORE', glow: 'rgba(74, 222, 128, 0.15)', orb1: 'rgba(34, 197, 94, 0.08)', orb2: 'rgba(4, 120, 87, 0.03)' },
-        'premium': { color: '#c084fc', text: 'PREMIUM ARCHITECTURE ENGAGED', glow: 'rgba(192, 132, 252, 0.18)', orb1: 'rgba(168, 85, 247, 0.1)', orb2: 'rgba(76, 29, 149, 0.03)' },
-        'ultra-premium': { color: '#fbbf24', text: 'ULTRA PREMIUM PROTOCOL ACTIVE', glow: 'rgba(251, 191, 36, 0.22)', orb1: 'rgba(234, 179, 8, 0.14)', orb2: 'rgba(120, 53, 4, 0.03)' }
+        'default': { color: '#94a3b8', text: 'DEFAULT BUILD STACK', label: 'Default Edition', glow: 'rgba(148, 163, 184, 0.12)', orb1: 'rgba(148, 163, 184, 0.06)', orb2: 'rgba(30, 41, 59, 0.15)' },
+        'normal': { color: '#4ade80', text: 'NORMAL OPERATIONAL CORE', label: 'Normal Edition', glow: 'rgba(74, 222, 128, 0.15)', orb1: 'rgba(34, 197, 94, 0.08)', orb2: 'rgba(4, 120, 87, 0.03)' },
+        'premium': { color: '#c084fc', text: 'PREMIUM ARCHITECTURE ENGAGED', label: 'Premium Edition', glow: 'rgba(192, 132, 252, 0.18)', orb1: 'rgba(168, 85, 247, 0.1)', orb2: 'rgba(76, 29, 149, 0.03)' },
+        'ultra-premium': { color: '#fbbf24', text: 'ULTRA PREMIUM PROTOCOL ACTIVE', label: 'Ultra Premium', glow: 'rgba(251, 191, 36, 0.22)', orb1: 'rgba(234, 179, 8, 0.14)', orb2: 'rgba(120, 53, 4, 0.03)' }
     };
 
     function executeScramble(element, targetText) {
+        if(!element) return;
         const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$&*+%';
         let cycle = 0;
         clearInterval(element.scrambleTimer);
@@ -1001,6 +998,12 @@
         rootElement.style.setProperty('--bg-orb-2', currentTheme.orb2);
         
         executeScramble(document.getElementById('subtitle-tier'), currentTheme.text);
+        
+        // Trigger scramble animation directly onto the enlarged badge title inside the content box
+        const targetLabelElement = document.getElementById('title-label-' + tierId);
+        if(targetLabelElement) {
+            executeScramble(targetLabelElement, currentTheme.label);
+        }
     }
 
     function toggleAccordion(element) {
