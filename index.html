@@ -18,7 +18,6 @@
             --youtube-red: #ff0000;
             --youtube-hover: rgba(255, 0, 0, 0.15);
             --discord-blurple: #5865F2;
-            --discord-hover: rgba(88, 101, 242, 0.2);
         }
 
         body {
@@ -39,6 +38,19 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+
+        /* Top Banner Title - Set to maximum font weight and forced uppercase */
+        .top-main-title {
+            font-size: 28px;
+            font-weight: 900;
+            margin: 0 0 24px 0;
+            text-align: center;
+            letter-spacing: 0.5px;
+            background: var(--glow);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
         }
 
         /* Pure CSS Minecraft Sniper Profile Icon */
@@ -78,14 +90,24 @@
         .pos-left { left: 12px; }
         .pos-right { right: 12px; }
 
+        /* Secondary Heading - Styled Bold and Forced Uppercase */
         h1 {
-            font-size: 24px;
-            font-weight: 800;
+            font-size: 22px;
+            font-weight: 900;
             margin: 0 0 8px 0;
-            letter-spacing: -0.5px;
-            background: var(--glow);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        /* High Quality Brand Description for Queue Sniper */
+        .main-description {
+            font-size: 14px;
+            color: #94a3b8;
+            text-align: center;
+            margin: 0 0 24px 0;
+            line-height: 1.6;
+            max-width: 90%;
         }
 
         .status-badge {
@@ -256,6 +278,9 @@
 <body>
 
 <div class="container">
+    <!-- Big Title Above Logo - Updated to Maximum Weight & Caps -->
+    <div class="top-main-title" id="mainHeaderTitle">QUEUE SNIPER HUB</div>
+
     <!-- Pure CSS Generated Profile Logo -->
     <div class="pfp-logo-container">
         <div class="sniper-line line-v pos-top"></div>
@@ -265,17 +290,22 @@
         <div class="sniper-dot"></div>
     </div>
     
-    <h1>Tier Queue Sniper</h1>
+    <h1>TIER QUEUE SNIPER</h1>
     <div class="status-badge" id="statusPanel">🟢 System Online</div>
 
     <!-- MAIN HOME PAGE -->
     <div id="homePage" class="view-panel active">
-        <!-- YouTube Link Button Only -->
+        <!-- Brand Description -->
+        <p class="main-description">
+            The ultimate automated client system designed for zero-delay server connection bypass. Secure your spot instantly, track real-time positioning metrics, and get instant push alerts on any device.
+        </p>
+
+        <!-- YouTube Link Button -->
         <a href="https://youtube.com/@motllugaming?si=WHJTxWYa711FzVej" class="link-item youtube-btn" target="_blank">
             YouTube Channel 📺
         </a>
 
-        <!-- Queue Sniper Website Button (Opens Internal Sub-Page) -->
+        <!-- Queue Sniper Website Button -->
         <div class="link-item sniper-btn" onclick="switchPage('sniperPage')">
             Queue Sniper Site Info 🎯
         </div>
@@ -373,27 +403,28 @@ function switchPage(pageId) {
     document.getElementById(pageId).classList.add('active');
     
     const status = document.getElementById('statusPanel');
+    const mainTitle = document.getElementById('mainHeaderTitle');
+    
     if(pageId === 'sniperPage') {
         status.innerText = "⚡ Select Package";
+        mainTitle.innerText = "SNIPER PACKAGES";
     } else {
         status.innerText = "🟢 System Online";
+        mainTitle.innerText = "QUEUE SNIPER HUB";
     }
 }
 
 function selectTier(tierId) {
-    // Remove active status from all selection tab buttons
     document.getElementById('btn-default').classList.remove('active');
     document.getElementById('btn-normal').classList.remove('active');
     document.getElementById('btn-premium').classList.remove('active');
     document.getElementById('btn-ultra').classList.remove('active');
     
-    // Hide all internal GUI layout boxes
     document.getElementById('card-default').classList.remove('active');
     document.getElementById('card-normal').classList.remove('active');
     document.getElementById('card-premium').classList.remove('active');
     document.getElementById('card-ultra').classList.remove('active');
     
-    // Set clicked variant items as visually active interfaces
     document.getElementById('btn-' + tierId).classList.add('active');
     document.getElementById('card-' + tierId).classList.add('active');
 }
