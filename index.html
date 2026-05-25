@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Queue Sniper Client | Portal</title>
+    <title>Queue Sniper Client | Enterprise Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js"></script>
     <style>
         :root {
             --bg-color: #010204;
             --card-bg: rgba(3, 5, 9, 0.8);
             --glass-border: rgba(255, 255, 255, 0.02);
             --text-main: #ffffff;
-            --text-muted: #334155;
+            --text-muted: #64748b;
             --discord-color: #5865F2;
             --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             
@@ -23,6 +23,10 @@
             --bg-orb-2: rgba(168, 85, 247, 0.04);
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
             background-color: var(--bg-color);
@@ -30,7 +34,7 @@
             margin: 0;
             padding: 40px 20px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
             box-sizing: border-box;
@@ -69,16 +73,39 @@
             transition: var(--transition-smooth);
         }
         .orb-top-right { top: -10%; right: -10%; background: var(--bg-orb-1); }
-        .orb-bottom-left { bottom: -10%; left: -10%; background: var(--bg-orb-2); }
+        .orb-bottom-left { bottom: 20%; left: -10%; background: var(--bg-orb-2); }
 
         .container {
             width: 100%;
-            max-width: 1060px;
+            max-width: 1000px;
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
             z-index: 2;
+        }
+
+        /* Navigation Jump Bar */
+        .page-navigation-hub {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 40px;
+            background: rgba(255,255,255,0.01);
+            border: 1px solid var(--glass-border);
+            padding: 10px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(10px);
+        }
+        .page-navigation-hub a {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: var(--transition-smooth);
+        }
+        .page-navigation-hub a:hover {
+            color: var(--active-accent);
         }
 
         .top-main-title {
@@ -113,8 +140,7 @@
         .pfp-logo-container.spin-lock { transform: rotate(360deg) scale(1.08); }
 
         .sniper-dot {
-            width: 6px;
-            height: 6px;
+            width: 6px; height: 6px;
             background-color: var(--active-accent);
             border-radius: 50%;
             box-shadow: 0 0 14px var(--active-accent);
@@ -144,15 +170,26 @@
             text-transform: uppercase;
             text-shadow: 0 0 20px var(--accent-glow);
             transition: var(--transition-smooth);
+            text-align: center;
         }
 
         .main-description {
             font-size: 14.5px;
             color: #718096;
             text-align: center;
-            margin: 0 0 52px 0;
+            margin: 0 0 40px 0;
             line-height: 1.7;
             max-width: 640px;
+        }
+
+        /* Live Tracker Counters Component Frame */
+        .live-counter-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+            margin-bottom: 52px;
         }
 
         .dashboard-frame {
@@ -160,10 +197,11 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 32px;
+            margin-bottom: 90px;
         }
 
         @media (min-width: 768px) {
-            .dashboard-frame { grid-template-columns: 330px 1fr; }
+            .dashboard-frame { grid-template-columns: 340px 1fr; }
         }
 
         /* Glassmorphism Structural Hub Enclosures */
@@ -183,22 +221,15 @@
             transition: var(--transition-smooth);
         }
 
-        /* REPLACED TILT WITH PREMIUM ZOOM HOVER EFFECT */
         .glass-panel:hover {
-            transform: scale(1.015);
-            border-color: rgba(255, 255, 255, 0.06);
-            box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.95);
+            transform: scale(1.01);
+            border-color: rgba(255, 255, 255, 0.04);
         }
 
-        /* Laser Border Trailing Effect Framework Structure */
         .glass-panel.detail-viewer {
             border: 1px solid rgba(255, 255, 255, 0.03);
             box-shadow: 0 0 50px -20px var(--accent-glow), 0 40px 80px -20px rgba(0,0,0,0.9);
             overflow: hidden;
-        }
-        .glass-panel.detail-viewer:hover {
-            transform: scale(1.015);
-            box-shadow: 0 0 60px -15px var(--accent-glow), 0 50px 100px -20px rgba(0, 0, 0, 0.95);
         }
 
         /* Dynamic Moving Circuit Border Component Overlay */
@@ -224,22 +255,7 @@
             transition: var(--transition-smooth);
         }
 
-        @keyframes laserRotate {
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Hardware Monitor CRT Subtle Screen Strip Lines */
-        .glass-panel.detail-viewer::before {
-            content: " ";
-            display: block;
-            position: absolute;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.12) 50%);
-            z-index: 4;
-            background-size: 100% 4px;
-            pointer-events: none;
-            opacity: 0.3;
-        }
+        @keyframes laserRotate { 100% { transform: rotate(360deg); } }
 
         .sidebar-controls {
             display: flex;
@@ -278,170 +294,174 @@
             transform: translateX(6px);
         }
 
-        /* Multi-Theme Selector Focus Layout Injections */
         .menu-tab-item.active#btn-default { border-color: rgba(148, 163, 184, 0.15); background: rgba(148, 163, 184, 0.03); }
         .menu-tab-item.active#btn-normal { border-color: rgba(74, 222, 128, 0.15); background: rgba(74, 222, 128, 0.03); }
         .menu-tab-item.active#btn-premium { border-color: rgba(192, 132, 252, 0.15); background: rgba(192, 132, 252, 0.03); }
         .menu-tab-item.active#btn-ultra { border-color: rgba(251, 191, 36, 0.15); background: rgba(251, 191, 36, 0.03); }
 
-        .tab-identity-group {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .tab-indicator-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
+        .tab-identity-group { display: flex; align-items: center; gap: 14px; }
+        .tab-indicator-dot { width: 8px; height: 8px; border-radius: 50%; }
         .dot-default { background-color: #94a3b8; box-shadow: 0 0 10px #94a3b8; }
         .dot-normal { background-color: #4ade80; box-shadow: 0 0 10px #4ade80; }
         .dot-premium { background-color: #c084fc; box-shadow: 0 0 10px #c084fc; }
         .dot-ultra { background-color: #fbbf24; box-shadow: 0 0 14px #fbbf24; }
 
-        .tab-label-text {
-            font-weight: 600;
-            font-size: 14.5px;
-            color: #475569;
-            transition: var(--transition-smooth);
-        }
+        .tab-label-text { font-weight: 600; font-size: 14.5px; color: #475569; transition: var(--transition-smooth); }
         .menu-tab-item.active .tab-label-text { color: #ffffff; }
 
-        .chevron-icon {
-            color: var(--text-muted);
-            opacity: 0;
-            transform: translateX(-6px);
-            transition: var(--transition-smooth);
-        }
+        .chevron-icon { color: var(--text-muted); opacity: 0; transform: translateX(-6px); transition: var(--transition-smooth); }
         .menu-tab-item.active .chevron-icon { opacity: 1; transform: translateX(0); }
-        #btn-default.active .chevron-icon { color: #94a3b8; }
-        #btn-normal.active .chevron-icon { color: #4ade80; }
-        #btn-premium.active .chevron-icon { color: #c084fc; }
-        #btn-ultra.active .chevron-icon { color: #fbbf24; }
 
-        /* General Dynamic Client Buttons */
         .action-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            text-decoration: none;
-            color: var(--text-main);
-            background: rgba(255, 255, 255, 0.01);
-            border: 1px solid var(--glass-border);
-            border-radius: 18px;
-            padding: 16px;
-            font-weight: 600;
-            font-size: 14.5px;
-            transition: var(--transition-smooth);
-            cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            text-decoration: none; color: var(--text-main); background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--glass-border); border-radius: 18px; padding: 16px;
+            font-weight: 600; font-size: 14.5px; transition: var(--transition-smooth); cursor: pointer;
         }
 
-        .discord-channel-hook {
-            background: var(--discord-color);
-            border-color: rgba(255, 255, 255, 0.01);
-            margin-top: 24px;
-        }
-        .discord-channel-hook:hover {
-            background: #4651ca;
-            box-shadow: 0 12px 30px rgba(88, 101, 242, 0.3);
-            transform: translateY(-2px);
-        }
+        .discord-channel-hook { background: var(--discord-color); border-color: rgba(255, 255, 255, 0.01); margin-top: 24px; }
+        .discord-channel-hook:hover { background: #4651ca; box-shadow: 0 12px 30px rgba(88, 101, 242, 0.3); transform: translateY(-2px); }
 
-        /* Multi-Edition Feature Panels Layout Module */
-        .tier-details-card {
-            display: none;
-            flex-direction: column;
-            gap: 26px;
-            opacity: 0;
-            transform: scale(0.97);
-            transition: var(--transition-smooth);
-            height: 100%;
-            position: relative;
-            z-index: 10;
-        }
+        .tier-details-card { display: none; flex-direction: column; gap: 26px; opacity: 0; transform: scale(0.97); height: 100%; position: relative; z-index: 10; }
+        .tier-details-card.active { display: flex; animation: cardReveal 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        @keyframes cardReveal { to { opacity: 1; transform: scale(1); } }
 
-        .tier-details-card.active {
-            display: flex;
-            animation: cardReveal 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-        }
+        .details-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.02); padding-bottom: 22px; }
+        .details-title-pack { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; }
 
-        @keyframes cardReveal {
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .details-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
-            padding-bottom: 22px;
-        }
-
-        .details-title-pack {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .tag-pill {
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            padding: 6px 14px;
-            border-radius: 30px;
-            letter-spacing: 1px;
-        }
+        .tag-pill { font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 6px 14px; border-radius: 30px; letter-spacing: 1px; }
         .tag-default { background: rgba(148, 163, 184, 0.04); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.12); }
         .tag-normal { background: rgba(34, 197, 94, 0.04); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.12); }
         .tag-premium { background: rgba(168, 85, 247, 0.04); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.12); }
         .tag-ultra { background: rgba(234, 179, 8, 0.04); color: #fbbf24; border: 1px solid rgba(234, 179, 8, 0.12); }
 
-        .details-summary-text {
-            font-size: 14px;
-            color: #8892b0;
-            line-height: 1.65;
-            margin: 0;
-        }
-
-        .feature-checklist {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .feature-checklist li {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            font-size: 14.5px;
-            color: #cbd5e1;
-        }
-        .feature-checklist li i { flex-shrink: 0; }
+        .details-summary-text { font-size: 14px; color: #8892b0; line-height: 1.65; margin: 0; }
+        .feature-checklist { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 16px; }
+        .feature-checklist li { display: flex; align-items: center; gap: 14px; font-size: 14.5px; color: #cbd5e1; }
         
         .icon-accent-default { color: #94a3b8; }
         .icon-accent-normal { color: #4ade80; }
         .icon-accent-premium { color: #c084fc; }
         .icon-accent-ultra { color: #fbbf24; }
 
-        .purchase-action-btn {
-            background: rgba(255, 255, 255, 0.005);
-            border: 1px solid var(--glass-border);
-            margin-top: auto;
-            position: relative;
-        }
+        .purchase-action-btn { background: rgba(255, 255, 255, 0.005); border: 1px solid var(--glass-border); margin-top: auto; }
         .purchase-action-btn:hover { transform: translateY(-3px); color: #ffffff; }
-        
-        /* Interactive Micro-Glow Accent Custom Overrides */
-        #card-default .purchase-action-btn:hover { border-color: #94a3b8; background: rgba(148, 163, 184, 0.04); box-shadow: 0 0 25px rgba(148, 163, 184, 0.12); }
-        #card-normal .purchase-action-btn:hover { border-color: #4ade80; background: rgba(74, 222, 128, 0.04); box-shadow: 0 0 25px rgba(74, 222, 128, 0.18); }
-        #card-premium .purchase-action-btn:hover { border-color: #c084fc; background: rgba(192, 132, 252, 0.04); box-shadow: 0 0 25px rgba(192, 132, 252, 0.18); }
-        #card-ultra .purchase-action-btn:hover { border-color: #fbbf24; background: rgba(251, 191, 36, 0.04); box-shadow: 0 0 30px rgba(251, 191, 36, 0.25); }
+
+        /* ================= EXPANDED VERTICAL CONTENT LAYOUTS ================= */
+        .full-width-section {
+            width: 100%;
+            margin-bottom: 80px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .section-header-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            padding-bottom: 14px;
+        }
+
+        /* Interactive Speed Simulator Module */
+        .simulator-box {
+            background: rgba(3, 5, 9, 0.5);
+            border: 1px solid rgba(255,255,255,0.02);
+            border-radius: 24px;
+            padding: 32px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+        @media (min-width: 768px) { .simulator-box { grid-template-columns: 1fr 1fr; } }
+
+        .sim-controls-panel { display: flex; flex-direction: column; gap: 20px; justify-content: center; }
+        .sim-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255,255,255,0.1);
+            outline: none;
+            transition: var(--transition-smooth);
+        }
+        .sim-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px; height: 18px;
+            border-radius: 50%;
+            background: var(--active-accent);
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--active-accent);
+        }
+
+        .sim-visual-terminal {
+            background: #020408;
+            border: 1px solid rgba(255,255,255,0.03);
+            border-radius: 16px;
+            padding: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            height: 180px;
+            overflow-y: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* Features Matrix Cluster */
+        .matrix-features-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        @media(min-width: 768px) { .matrix-features-grid { grid-template-columns: repeat(3, 1fr); } }
+
+        .matrix-feature-box {
+            background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.02);
+            border-radius: 24px; padding: 28px; transition: var(--transition-smooth);
+        }
+        .matrix-feature-box:hover {
+            background: rgba(255,255,255,0.02); border-color: rgba(255,255,255,0.06); transform: translateY(-4px);
+        }
+        .box-icon-wrap {
+            width: 44px; height: 44px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
+            background: rgba(0, 229, 255, 0.03); border: 1px solid rgba(0, 229, 255, 0.1); color: var(--active-accent);
+        }
+        .box-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; font-family: 'Space Grotesk', sans-serif; }
+        .box-desc { font-size: 13.5px; color: #64748b; line-height: 1.6; margin: 0; }
+
+        /* Network Status Analytics Infrastructure */
+        .network-analytics-board {
+            background: rgba(3, 5, 9, 0.4); border: 1px solid rgba(255,255,255,0.02);
+            border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 20px;
+        }
+        .network-node-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 20px; background: rgba(255,255,255,0.005); border-radius: 14px; border: 1px solid rgba(255,255,255,0.01);
+        }
+        .node-identity { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 600; }
+        .node-pulse-indicator { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 10px #4ade80; }
+        .node-speed-metric { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #4ade80; }
+
+        /* Interactive FAQ Accordion Matrix */
+        .accordion-stack { display: flex; flex-direction: column; gap: 12px; }
+        .accordion-item {
+            background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.02); border-radius: 18px;
+            overflow: hidden; transition: var(--transition-smooth);
+        }
+        .accordion-trigger-row { padding: 22px 28px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+        .accordion-trigger-row span { font-weight: 600; font-size: 15px; }
+        .accordion-content-panel {
+            max-height: 0; overflow: hidden; padding: 0 28px; color: #64748b; font-size: 14px; line-height: 1.65;
+            transition: max-height 0.3s cubic-bezier(0.25, 1, 0.5, 1), padding 0.3s ease;
+        }
+        .accordion-item.open .accordion-content-panel { padding-bottom: 22px; }
+        .accordion-item.open { border-color: rgba(255,255,255,0.05); background: rgba(255,255,255,0.015); }
+        .accordion-icon { transition: transform 0.3s ease; color: #475569; }
+        .accordion-item.open .accordion-icon { transform: rotate(180deg); color: var(--active-accent); }
     </style>
 </head>
 <body>
@@ -452,6 +472,14 @@
 <div class="glow-orb orb-bottom-left" id="mesh-orb-2"></div>
 
 <div class="container">
+    <div class="page-navigation-hub">
+        <a href="#main-brand-header">Licensing</a>
+        <a href="#simulator">Velocity Sim</a>
+        <a href="#safeguards">Safeguards</a>
+        <a href="#network">Network Status</a>
+        <a href="#faq">FAQ Matrix</a>
+    </div>
+
     <div class="top-main-title" id="main-brand-header">QUEUE SNIPER HUB</div>
 
     <div class="pfp-logo-container" id="scope-hud">
@@ -467,8 +495,18 @@
         The ultimate automated client system engineered for zero-delay server connection bypass. Secure your spot instantly, track real-time position metrics, and get immediate custom network notifications.
     </p>
 
+    <div class="live-counter-row">
+        <div class="glass-panel" style="padding: 24px; text-align: center; align-items: center; justify-content: center;">
+            <div style="font-size: 11px; font-weight:700; color:#475569; letter-spacing:1.5px; text-transform:uppercase;">Global Clears (Today)</div>
+            <div id="global-counter-clears" style="font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight:700; color:#fff; margin-top:8px;">842,109</div>
+        </div>
+        <div class="glass-panel" style="padding: 24px; text-align: center; align-items: center; justify-content: center;">
+            <div style="font-size: 11px; font-weight:700; color:#475569; letter-spacing:1.5px; text-transform:uppercase;">Active Core Connections</div>
+            <div id="global-counter-active" style="font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight:700; color:var(--active-accent); margin-top:8px;">1,424</div>
+        </div>
+    </div>
+
     <div class="dashboard-frame">
-        
         <div class="glass-panel" id="sidebar-panel">
             <div class="sidebar-controls">
                 <div class="sidebar-header">
@@ -508,13 +546,21 @@
                 </div>
             </div>
 
+            <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
+                <div class="sidebar-header" style="color:var(--active-accent); margin-bottom: 0;">
+                    <i data-lucide="terminal" style="width: 12px; height: 12px;"></i> Telemetry Stream
+                </div>
+                <div id="live-stream-terminal" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #a7f3d0; background: #02040a; padding: 14px; border-radius: 16px; height: 95px; overflow-y: hidden; line-height: 1.7; border: 1px solid rgba(255,255,255,0.01);">
+                    <div>[SYS] Relay link stable...</div>
+                </div>
+            </div>
+
             <a href="https://discord.gg/H34E398QeC" class="action-button discord-channel-hook" target="_blank">
                 <i data-lucide="message-square" style="width: 16px; height: 16px;"></i> Join Our Discord Server
             </a>
         </div>
 
         <div class="glass-panel detail-viewer" id="main-viewer-card">
-            
             <div class="laser-border-wrapper"></div>
             
             <div class="tier-details-card active" id="card-default">
@@ -603,16 +649,126 @@
                     <i data-lucide="shopping-cart" style="width: 16px; height: 16px;"></i> Buy Ultra Premium
                 </a>
             </div>
-
         </div>
     </div>
+
+    <div class="full-width-section" id="simulator">
+        <div class="section-header-title">
+            <i data-lucide="gauge" style="color:var(--active-accent);"></i> Execution Frequency Engine Simulator
+        </div>
+        <div class="simulator-box">
+            <div class="sim-controls-panel">
+                <div style="font-size: 14px; color: #8892b0; line-height: 1.6;">
+                    Adjust the interactive telemetry framework below to simulate how checking cycle speeds shift parameters between licensing blocks.
+                </div>
+                <div style="display:flex; justify-content:space-between; font-weight:600; font-size:14px; margin-top:10px;">
+                    <span>Interval Delay Threshold:</span>
+                    <span id="sim-speed-val" style="color:var(--active-accent); font-family:'JetBrains Mono';">1000ms</span>
+                </div>
+                <input type="range" min="30" max="1000" value="1000" class="sim-slider" id="frequency-slider" oninput="adjustSimFrequency(this.value)">
+                <div id="sim-tier-badge" style="font-size:11px; font-weight:700; text-transform:uppercase; color:#94a3b8; letter-spacing:1px;">
+                    Current Output Level: Default Sniper Edition
+                </div>
+            </div>
+            <div class="sim-visual-terminal" id="sim-terminal-view">
+                <div style="color:#64748b;">// Awaiting frequency loop initialization...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="full-width-section" id="safeguards">
+        <div class="section-header-title">
+            <i data-lucide="shield-check" style="color:var(--active-accent);"></i> Security & Bypass Safeguard Core
+        </div>
+        <div class="matrix-features-grid">
+            <div class="matrix-feature-box">
+                <div class="box-icon-wrap"><i data-lucide="shuffle" style="width:18px; height:18px;"></i></div>
+                <div class="box-title">Click Jitter Simulation</div>
+                <div class="box-desc">Adds randomized micro-second click delays to break uniform mechanical intervals, accurately mimicking standard biological interaction profiles.</div>
+            </div>
+            <div class="matrix-feature-box">
+                <div class="box-icon-wrap"><i data-lucide="eye-off" style="width:18px; height:18px;"></i></div>
+                <div class="box-title">Shadow DOM Injection</div>
+                <div class="box-desc">Renders interface overlays inside an decoupled memory layer, hiding code parameters from intrusive element inspectors.</div>
+            </div>
+            <div class="matrix-feature-box">
+                <div class="box-icon-wrap"><i data-lucide="lock" style="width:18px; height:18px;"></i></div>
+                <div class="box-title">Isolated Storage States</div>
+                <div class="box-desc">Encrypts state values inside dedicated configurations before saving variables locally, leaving zero clear-text trace identifiers behind.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="full-width-section" id="network">
+        <div class="section-header-title">
+            <i data-lucide="activity" style="color:var(--active-accent);"></i> Infrastructure Deployment Logs
+        </div>
+        <div class="network-analytics-board">
+            <div class="network-node-row">
+                <div class="node-identity"><span class="node-pulse-indicator"></span> US-EAST Enterprise Pipeline Instance</div>
+                <div class="node-speed-metric">0.002s Response</div>
+            </div>
+            <div class="network-node-row">
+                <div class="node-identity"><span class="node-pulse-indicator"></span> EU-CENTRAL Routing Core Relay</div>
+                <div class="node-speed-metric">0.005s Response</div>
+            </div>
+            <div class="network-node-row">
+                <div class="node-identity"><span class="node-pulse-indicator"></span> ASIA-SOUTH Telemetry Grid Node</div>
+                <div class="node-speed-metric">0.009s Response</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="full-width-section" id="faq">
+        <div class="section-header-title">
+            <i data-lucide="help-circle" style="color:var(--active-accent);"></i> Frequently Answered Matrix
+        </div>
+        <div class="accordion-stack">
+            <div class="accordion-item">
+                <div class="accordion-trigger-row" onclick="toggleAccordion(this)">
+                    <span>How do I execute and link the client package?</span>
+                    <i data-lucide="chevron-down" class="accordion-icon" style="width:16px; height:16px;"></i>
+                </div>
+                <div class="accordion-content-panel">
+                    The software loads immediately via any developer console window or authorized script manager wrapper extension. Once pasted, tap F6 to instantly bind and activate background engine scripts safely.
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-trigger-row" onclick="toggleAccordion(this)">
+                    <span>Will target host protection flags discover the tracking markers?</span>
+                    <i data-lucide="chevron-down" class="accordion-icon" style="width:16px; height:16px;"></i>
+                </div>
+                <div class="accordion-content-panel">
+                    No. The integrated shadow protection engine systematically cleans global variables and strips specific window interval identifiers, preserving anonymous execution pathways across active web loops.
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-trigger-row" onclick="toggleAccordion(this)">
+                    <span>Can I bind personalized Discord notification hooks?</span>
+                    <i data-lucide="chevron-down" class="accordion-icon" style="width:16px; height:16px;"></i>
+                </div>
+                <div class="accordion-content-panel">
+                    Yes. The Premium and God Mode editions contain an analytics communication matrix that relays queue status alerts and connection logs straight to designated server notification endpoints automatically.
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script>
-    // Initialize Vector Nodes Assets
-    lucide.createIcons();
+    // Safeguard Initialization of Lucide Icons Library
+    document.addEventListener("DOMContentLoaded", () => {
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        } else {
+            console.error("Lucide scripts blocked or unavailable offline.");
+        }
+        initMatrixEngine();
+        loopMatrixEngine();
+        adjustSimFrequency(1000);
+    });
 
-    // Mapping states to operational CSS variable themes
     const tierThemes = {
         default: { color: '#94a3b8', text: 'DEFAULT BUILD STACK', glow: 'rgba(148, 163, 184, 0.12)', orb1: 'rgba(148, 163, 184, 0.06)', orb2: 'rgba(30, 41, 59, 0.15)' },
         normal: { color: '#4ade80', text: 'STANDARD OPERATIONAL CORE', glow: 'rgba(74, 222, 128, 0.15)', orb1: 'rgba(34, 197, 94, 0.08)', orb2: 'rgba(4, 120, 87, 0.03)' },
@@ -620,7 +776,6 @@
         ultra: { color: '#fbbf24', text: 'GOD MODE PROTOCOL ACTIVE', glow: 'rgba(251, 191, 36, 0.22)', orb1: 'rgba(234, 179, 8, 0.14)', orb2: 'rgba(120, 53, 4, 0.03)' }
     };
 
-    // Text Scramble Decoder Matrix Loop
     function executeScramble(element, targetText) {
         const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$&*+%';
         let cycle = 0;
@@ -639,7 +794,6 @@
     }
 
     function selectTier(tierId) {
-        // Toggle Active Card UI State trees
         ['default', 'normal', 'premium', 'ultra'].forEach(id => {
             document.getElementById('btn-' + id).classList.remove('active');
             document.getElementById('card-' + id).classList.remove('active');
@@ -648,12 +802,10 @@
         document.getElementById('btn-' + tierId).classList.add('active');
         document.getElementById('card-' + tierId).classList.add('active');
 
-        // Target Crosshair Scope Tracker Animation Lock
         const scope = document.getElementById('scope-hud');
         scope.classList.add('spin-lock');
         setTimeout(() => scope.classList.remove('spin-lock'), 500);
 
-        // Inject dynamic theme color properties down DOM trees
         const currentTheme = tierThemes[tierId];
         const rootElement = document.documentElement;
         
@@ -665,77 +817,151 @@
         executeScramble(document.getElementById('subtitle-tier'), currentTheme.text);
     }
 
-    // Immersive Background Space Particle Matrix Animation Setup
+    function toggleAccordion(element) {
+        const item = element.parentElement;
+        const panel = item.querySelector('.accordion-content-panel');
+        const isOpen = item.classList.contains('open');
+        
+        document.querySelectorAll('.accordion-item').forEach(i => {
+            i.classList.remove('open');
+            i.querySelector('.accordion-content-panel').style.maxHeight = null;
+        });
+
+        if (!isOpen) {
+            item.classList.add('open');
+            panel.style.maxHeight = panel.scrollHeight + "px";
+        } else {
+            item.classList.remove('open');
+            panel.style.maxHeight = null;
+        }
+    }
+
+    // WEB DATA TICKER SIMULATOR
+    let baseClears = 842109;
+    let baseActive = 1424;
+    setInterval(() => {
+        baseClears += Math.floor(Math.random() * 3) + 1;
+        document.getElementById('global-counter-clears').innerText = baseClears.toLocaleString();
+        baseActive += Math.floor(Math.random() * 5) - 2;
+        document.getElementById('global-counter-active').innerText = baseActive.toLocaleString();
+    }, 2500);
+
+    // DYNAMIC STREAM COMPONENT LOGIC
+    const activities = [
+        "User ***42 clear connection bypassing queue",
+        "User ***91 set interval speed override parameters",
+        "User ***11 push analytics session verification link",
+        "User ***07 trigger exact text selection match",
+        "User ***63 cycle start command sequence via hotkey"
+    ];
+    function pushLiveTrackSim() {
+        const terminal = document.getElementById('live-stream-terminal');
+        if (!terminal) return;
+        const randomAct = activities[Math.floor(Math.random() * activities.length)];
+        const time = new Date().toLocaleTimeString();
+        const newRow = document.createElement('div');
+        newRow.innerHTML = `<span style="color: #475569;">[${time}]</span> ${randomAct}`;
+        terminal.appendChild(newRow);
+        if (terminal.children.length > 4) terminal.removeChild(terminal.children[0]);
+    }
+    setInterval(pushLiveTrackSim, 3000);
+
+    // VELOCITY SIMULATOR STABILIZED LOGIC ENGINE
+    let simIntervalTimer;
+    function adjustSimFrequency(val) {
+        document.getElementById('sim-speed-val').innerText = val + "ms";
+        const badge = document.getElementById('sim-tier-badge');
+        
+        if(val > 500) {
+            badge.innerText = "Current Output Level: Default Sniper Edition";
+            badge.style.color = "#94a3b8";
+        } else if(val > 100) {
+            badge.innerText = "Current Output Level: Standard Unlocked Edition";
+            badge.style.color = "#4ade80";
+        } else if(val > 35) {
+            badge.innerText = "Current Output Level: Elite Sniper Edition";
+            badge.style.color = "#c084fc";
+        } else {
+            badge.innerText = "Current Output Level: God Mode Client Suite";
+            badge.style.color = "#fbbf24";
+        }
+        
+        clearInterval(simIntervalTimer);
+        simIntervalTimer = setInterval(() => {
+            const view = document.getElementById('sim-terminal-view');
+            if(!view) return;
+            const log = document.createElement('div');
+            log.style.color = val < 100 ? '#fbbf24' : '#cbd5e1';
+            log.innerHTML = `> Executing search check parameters... Done [${val}ms latency]`;
+            view.appendChild(log);
+            
+            // Critical Safeguard: Trim DOM nodes aggressively to avoid leaks or memory crashes
+            while (view.children.length > 6) {
+                view.removeChild(view.children[0]);
+            }
+        }, parseInt(val));
+    }
+
+    // CANVAS CORE RENDER PARTICLES FRAMEWORK
     const particleCanvas = document.getElementById('particle-canvas');
     const ctx = particleCanvas.getContext('2d');
     let particlesArray = [];
 
     function resizeCanvasFrame() {
-        particleCanvas.width = window.innerWidth;
-        particleCanvas.height = window.innerHeight;
+        if(particleCanvas) {
+            particleCanvas.width = window.innerWidth;
+            particleCanvas.height = window.innerHeight;
+        }
     }
     window.addEventListener('resize', resizeCanvasFrame);
     resizeCanvasFrame();
 
     class ParticleNode {
         constructor() {
-            this.x = Math.random() * particleCanvas.width;
-            this.y = Math.random() * particleCanvas.height;
+            this.x = Math.random() * (particleCanvas ? particleCanvas.width : 500);
+            this.y = Math.random() * (particleCanvas ? particleCanvas.height : 500);
             this.size = Math.random() * 1.5 + 0.5;
             this.speedX = (Math.random() - 0.5) * 0.3;
             this.speedY = (Math.random() - 0.5) * 0.3;
         }
         update() {
-            this.x += this.speedX;
-            this.y += this.speedY;
-
+            this.x += this.speedX; this.y += this.speedY;
             if (this.x < 0 || this.x > particleCanvas.width) this.speedX *= -1;
             if (this.y < 0 || this.y > particleCanvas.height) this.speedY *= -1;
         }
         draw() {
-            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--active-accent').trim();
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--active-accent').trim() || '#00e5ff';
+            ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
         }
     }
 
     function initMatrixEngine() {
         particlesArray = [];
-        for (let i = 0; i < 65; i++) {
-            particlesArray.push(new ParticleNode());
-        }
+        for (let i = 0; i < 45; i++) { particlesArray.push(new ParticleNode()); }
     }
 
     function loopMatrixEngine() {
+        if(!particleCanvas || !ctx) return;
         ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
-        
         for (let i = 0; i < particlesArray.length; i++) {
             particlesArray[i].update();
             particlesArray[i].draw();
-            
             for (let j = i; j < particlesArray.length; j++) {
                 const dx = particlesArray[i].x - particlesArray[j].x;
                 const dy = particlesArray[i].y - particlesArray[j].y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
-                
                 if (distance < 110) {
-                    ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--active-accent').trim();
+                    ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--active-accent').trim() || '#00e5ff';
                     ctx.globalAlpha = (110 - distance) / 110 * 0.05;
                     ctx.lineWidth = 0.5;
-                    ctx.beginPath();
-                    ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
-                    ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
-                    ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                    ctx.lineTo(particlesArray[j].x, particlesArray[j].y); ctx.stroke();
                     ctx.globalAlpha = 1.0;
                 }
             }
         }
         requestAnimationFrame(loopMatrixEngine);
     }
-
-    initMatrixEngine();
-    loopMatrixEngine();
 </script>
 
 </body>
