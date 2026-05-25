@@ -147,13 +147,16 @@
         }
 
         .discord-btn {
-            background: rgba(88, 101, 242, 0.1);
-            border-color: rgba(88, 101, 242, 0.3);
+            background: #5865F2;
+            border-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            margin-top: 8px;
+            font-size: 15px;
+            padding: 14px;
         }
         .discord-btn:hover {
-            background: var(--discord-hover);
-            border-color: var(--discord-blurple);
-            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.2);
+            background: #4752C4;
+            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
         }
 
         .back-btn {
@@ -166,49 +169,88 @@
             background: rgba(255, 255, 255, 0.02);
         }
 
-        /* Tier Features List Box Styling */
-        .features-list {
+        /* Tier Feature Box Card */
+        .tier-card {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border-color);
-            border-radius: 14px;
+            border-radius: 16px;
             padding: 20px;
-            font-size: 14px;
-            line-height: 1.6;
+            display: none;
+            flex-direction: column;
+            gap: 12px;
         }
-        .features-list h3 {
-            margin: 0 0 12px 0;
-            color: var(--sniper-cyan);
-            font-size: 16px;
-            text-align: center;
+
+        .tier-card.active {
+            display: flex;
         }
-        .features-list ul {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-        .features-list li {
-            margin-bottom: 12px;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
+
+        .tier-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-weight: 500;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 12px;
+            margin-bottom: 4px;
         }
+
+        .tier-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
         .tier-tag {
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
-            padding: 2px 8px;
-            border-radius: 4px;
+            padding: 4px 10px;
+            border-radius: 6px;
             letter-spacing: 0.5px;
         }
-        .tag-default { background: rgba(100, 116, 139, 0.2); color: #94a3b8; border: 1px solid rgba(100, 116, 139, 0.3); }
-        .tag-normal { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
-        .tag-premium { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); box-shadow: 0 0 8px rgba(168, 85, 247, 0.2); }
-        .tag-ultra { background: linear-gradient(135deg, rgba(234, 179, 8, 0.2), rgba(249, 115, 22, 0.2)); color: #fbbf24; border: 1px solid rgba(234, 179, 8, 0.3); box-shadow: 0 0 10px rgba(234, 179, 8, 0.3); }
+        
+        .tag-default { background: rgba(148, 163, 184, 0.15); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.3); }
+        .tag-normal { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+        .tag-premium { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); box-shadow: 0 0 8px rgba(168, 85, 247, 0.2); }
+        .tag-ultra { background: linear-gradient(135deg, rgba(234, 179, 8, 0.15), rgba(249, 115, 22, 0.15)); color: #fbbf24; border: 1px solid rgba(234, 179, 8, 0.3); box-shadow: 0 0 10px rgba(234, 179, 8, 0.2); }
+
+        .tier-features {
+            margin: 0;
+            padding-left: 20px;
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .tier-features li {
+            margin-bottom: 6px;
+        }
+
+        /* Tier Selection Buttons Grid */
+        .tier-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .grid-btn {
+            padding: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-muted);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .grid-btn.active {
+            color: var(--text-main);
+            background: rgba(0, 229, 255, 0.05);
+            border-color: var(--sniper-cyan);
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -241,33 +283,80 @@
 
     <!-- INTERNAL QUEUE SNIPER SUB-PAGE -->
     <div id="sniperPage" class="view-panel">
-        <!-- Client Features Display Panel with Tier Options -->
-        <div class="features-list">
-            <h3>⚡ Select Your Tier Package</h3>
-            <ul>
-                <li>
-                    <span>Standard Features</span>
-                    <span class="tier-tag tag-default">Default</span>
-                </li>
-                <li>
-                    <span>Enhanced Priority Sniper</span>
-                    <span class="tier-tag tag-normal">Normal</span>
-                </li>
-                <li>
-                    <span>Super-Fast Advanced Bypass</span>
-                    <span class="tier-tag tag-premium">Premium</span>
-                </li>
-                <li>
-                    <span>Maximum Speed + Instant Alerts</span>
-                    <span class="tier-tag tag-ultra">Ultra Premium</span>
-                </li>
-            </ul>
+        
+        <!-- Tab Selectors for the 4 Different Interfaces -->
+        <div class="tier-grid">
+            <div class="grid-btn active" id="btn-default" onclick="selectTier('default')">Default</div>
+            <div class="grid-btn" id="btn-normal" onclick="selectTier('normal')">Normal</div>
+            <div class="grid-btn" id="btn-premium" onclick="selectTier('premium')">Premium</div>
+            <div class="grid-btn" id="btn-ultra" onclick="selectTier('ultra')">Ultra Premium</div>
         </div>
 
-        <!-- Buy Now Redirection Button to Discord Server -->
-        <a href="https://discord.gg/YOUR_DISCORD_INVITE_LINK" class="link-item discord-btn" target="_blank">
-            🛒 Buy Now via Discord
-        </a>
+        <!-- GUI 1: DEFAULT -->
+        <div class="tier-card active" id="card-default">
+            <div class="tier-header">
+                <span class="tier-title">Basic Edition</span>
+                <span class="tier-tag tag-default">Default</span>
+            </div>
+            <ul class="tier-features">
+                <li>Standard queue positioning monitor</li>
+                <li>Manual retry connection system</li>
+                <li>Essential alert status feeds</li>
+            </ul>
+            <a href="https://discord.gg/YOUR_DISCORD_INVITE_LINK" class="link-item discord-btn" target="_blank">
+                🛒 Buy Default Tier via Discord
+            </a>
+        </div>
+
+        <!-- GUI 2: NORMAL -->
+        <div class="tier-card" id="card-normal">
+            <div class="tier-header">
+                <span class="tier-title">Pro Edition</span>
+                <span class="tier-tag tag-normal">Normal</span>
+            </div>
+            <ul class="tier-features">
+                <li>Enhanced queue tracking speed</li>
+                <li>Automated reconnection engines</li>
+                <li>Basic Discord Webhook logs integration</li>
+            </ul>
+            <a href="https://discord.gg/YOUR_DISCORD_INVITE_LINK" class="link-item discord-btn" target="_blank">
+                🛒 Buy Normal Tier via Discord
+            </a>
+        </div>
+
+        <!-- GUI 3: PREMIUM -->
+        <div class="tier-card" id="card-premium">
+            <div class="tier-header">
+                <span class="tier-title">Elite Sniper Edition</span>
+                <span class="tier-tag tag-premium">Premium</span>
+            </div>
+            <ul class="tier-features">
+                <li>Super-fast advanced server bypass features</li>
+                <li>Instant mobile push status notifications</li>
+                <li>Priority queue position tracking channels</li>
+                <li>24/7 client stability assurance support</li>
+            </ul>
+            <a href="https://discord.gg/YOUR_DISCORD_INVITE_LINK" class="link-item discord-btn" target="_blank">
+                🛒 Buy Premium Tier via Discord
+            </a>
+        </div>
+
+        <!-- GUI 4: ULTRA PREMIUM -->
+        <div class="tier-card" id="card-ultra">
+            <div class="tier-header">
+                <span class="tier-title">God Mode Client</span>
+                <span class="tier-tag tag-ultra">Ultra Premium</span>
+            </div>
+            <ul class="tier-features">
+                <li>Maximum execution speeds with zero delays</li>
+                <li>Multi-account concurrent thread sniping sessions</li>
+                <li>Instant priority webhook alerts setup</li>
+                <li>Access to private optimization configurations</li>
+            </ul>
+            <a href="https://discord.gg/YOUR_DISCORD_INVITE_LINK" class="link-item discord-btn" target="_blank">
+                🛒 Buy Ultra Premium Tier via Discord
+            </a>
+        </div>
 
         <!-- Navigation Button Back to Main Directory Menu -->
         <div class="link-item back-btn" onclick="switchPage('homePage')">
@@ -285,10 +374,28 @@ function switchPage(pageId) {
     
     const status = document.getElementById('statusPanel');
     if(pageId === 'sniperPage') {
-        status.innerText = "⚡ Client Tiers";
+        status.innerText = "⚡ Select Package";
     } else {
         status.innerText = "🟢 System Online";
     }
+}
+
+function selectTier(tierId) {
+    // Remove active status from all selection tab buttons
+    document.getElementById('btn-default').classList.remove('active');
+    document.getElementById('btn-normal').classList.remove('active');
+    document.getElementById('btn-premium').classList.remove('active');
+    document.getElementById('btn-ultra').classList.remove('active');
+    
+    // Hide all internal GUI layout boxes
+    document.getElementById('card-default').classList.remove('active');
+    document.getElementById('card-normal').classList.remove('active');
+    document.getElementById('card-premium').classList.remove('active');
+    document.getElementById('card-ultra').classList.remove('active');
+    
+    // Set clicked variant items as visually active interfaces
+    document.getElementById('btn-' + tierId).classList.add('active');
+    document.getElementById('card-' + tierId).classList.add('active');
 }
 </script>
 
