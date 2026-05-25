@@ -16,7 +16,11 @@
             --discord-color: #5865F2;
             --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             
-            /* Core Client State Variables */
+            /* Static Page Accent Colors to prevent awkward shifting */
+            --page-brand-color: #00e5ff;
+            --page-brand-glow: rgba(0, 229, 255, 0.12);
+
+            /* Unlinked Tier-Specific Reactive Variables */
             --active-accent: #00e5ff;
             --accent-glow: rgba(0, 229, 255, 0.12);
             --bg-orb-1: rgba(0, 229, 255, 0.08);
@@ -105,7 +109,7 @@
             transition: var(--transition-smooth);
         }
         .page-navigation-hub a:hover {
-            color: var(--active-accent);
+            color: var(--page-brand-color);
         }
 
         .top-main-title {
@@ -115,7 +119,7 @@
             margin: 0 0 8px 0;
             text-align: center;
             letter-spacing: 5px;
-            background: linear-gradient(135deg, #ffffff 40%, var(--active-accent) 100%);
+            background: linear-gradient(135deg, #ffffff 40%, var(--page-brand-color) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
@@ -128,12 +132,12 @@
             height: 88px;
             border-radius: 50%;
             background: #020407;
-            border: 2px dashed var(--active-accent);
+            border: 2px dashed var(--page-brand-color);
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
-            box-shadow: 0 0 40px var(--accent-glow);
+            box-shadow: 0 0 40px var(--page-brand-glow);
             margin-bottom: 24px;
             transition: var(--transition-smooth);
         }
@@ -141,15 +145,15 @@
 
         .sniper-dot {
             width: 6px; height: 6px;
-            background-color: var(--active-accent);
+            background-color: var(--page-brand-color);
             border-radius: 50%;
-            box-shadow: 0 0 14px var(--active-accent);
+            box-shadow: 0 0 14px var(--page-brand-color);
             transition: var(--transition-smooth);
         }
 
         .sniper-line {
             position: absolute;
-            background: var(--active-accent);
+            background: var(--page-brand-color);
             opacity: 0.6;
             transition: var(--transition-smooth);
         }
@@ -166,9 +170,9 @@
             font-weight: 500;
             margin: 0 0 24px 0;
             letter-spacing: 7px;
-            color: var(--active-accent);
+            color: var(--page-brand-color);
             text-transform: uppercase;
-            text-shadow: 0 0 20px var(--accent-glow);
+            text-shadow: 0 0 20px var(--page-brand-glow);
             transition: var(--transition-smooth);
             text-align: center;
         }
@@ -326,11 +330,11 @@
         .tier-details-card.active { display: flex; animation: cardReveal 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
         @keyframes cardReveal { to { opacity: 1; transform: scale(1); } }
 
-        /* Modified Header Setup: Removed text element, maximized the tier badge size */
+        /* Setup: Maximized the tier badge size and dropped standard white text headings */
         .details-header { display: flex; justify-content: flex-start; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.02); padding-bottom: 22px; }
 
-        .tag-pill { font-family: 'Space Grotesk', sans-serif; font-size: 38px; font-weight: 700; text-transform: uppercase; padding: 0; border-radius: 0; letter-spacing: 0.5px; background: none !mix; border: none !important; }
-        .tag-default { color: #ffffff; }
+        .tag-pill { font-family: 'Space Grotesk', sans-serif; font-size: 38px; font-weight: 700; text-transform: uppercase; padding: 0; border-radius: 0; letter-spacing: 0.5px; background: none; border: none !important; transition: var(--transition-smooth); }
+        .tag-default { color: #94a3b8; }
         .tag-normal { color: #4ade80; }
         .tag-premium { color: #c084fc; }
         .tag-ultra-premium { color: #fbbf24; }
@@ -408,7 +412,7 @@
             background: linear-gradient(135deg, #fcd34d 0%, #b45309 100%);
         }
 
-        /* ================= EXPANDED VERTICAL CONTENT LAYOUTS ================= */
+        /* ================= CONTENT LAYOUTS ================= */
         .full-width-section {
             width: 100%;
             margin-bottom: 80px;
@@ -456,9 +460,9 @@
             appearance: none;
             width: 18px; height: 18px;
             border-radius: 50%;
-            background: var(--active-accent);
+            background: var(--page-brand-color);
             cursor: pointer;
-            box-shadow: 0 0 10px var(--active-accent);
+            box-shadow: 0 0 10px var(--page-brand-color);
         }
 
         .sim-input-box {
@@ -474,7 +478,7 @@
             box-sizing: border-box;
             transition: var(--transition-smooth);
         }
-        .sim-input-box:focus { border-color: var(--active-accent); }
+        .sim-input-box:focus { border-color: var(--page-brand-color); }
 
         /* Custom Interactive Toggle Switches */
         .toggle-row {
@@ -498,7 +502,7 @@
             position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px;
             background-color: white; border-radius: 50%; transition: .3s;
         }
-        input:checked + .slider-switch { background-color: var(--active-accent); }
+        input:checked + .slider-switch { background-color: var(--page-brand-color); }
         input:checked + .slider-switch:before { transform: translateX(22px); }
 
         .sim-visual-terminal {
@@ -556,7 +560,7 @@
         .box-icon-wrap {
             width: 44px; height: 44px; border-radius: 12px;
             display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
-            background: rgba(0, 229, 255, 0.03); border: 1px solid rgba(0, 229, 255, 0.1); color: var(--active-accent);
+            background: rgba(0, 229, 255, 0.03); border: 1px solid rgba(0, 229, 255, 0.1); color: var(--page-brand-color);
         }
         .box-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; font-family: 'Space Grotesk', sans-serif; }
         .box-desc { font-size: 13.5px; color: #64748b; line-height: 1.6; margin: 0; }
@@ -576,7 +580,7 @@
         .accordion-item.open .accordion-content-panel { padding-bottom: 22px; }
         .accordion-item.open { border-color: rgba(255, 255, 255, 0.05); background: rgba(255, 255, 255, 0.015); }
         .accordion-icon { transition: transform 0.3s ease; color: #475569; }
-        .accordion-item.open .accordion-icon { transform: rotate(180deg); color: var(--active-accent); }
+        .accordion-item.open .accordion-icon { transform: rotate(180deg); color: var(--page-brand-color); }
 
         /* Notification Toast Container */
         #toast-container {
@@ -584,9 +588,9 @@
             display: flex; flex-direction: column; gap: 10px;
         }
         .toast-popup {
-            background: #090d16; border: 1px solid var(--active-accent);
+            background: #090d16; border: 1px solid var(--page-brand-color);
             padding: 16px 20px; border-radius: 14px; color: #fff; font-size: 13.5px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px var(--accent-glow);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px var(--page-brand-glow);
             display: flex; align-items: center; gap: 12px;
             transform: translateX(120%); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
@@ -621,7 +625,7 @@
         <div class="sniper-dot"></div>
     </div>
     
-    <h1 id="subtitle-tier">DEFAULT BUILD</h1>
+    <h1 id="subtitle-tier">DEFAULT BUILD STACK</h1>
     <p class="main-description">
         The ultimate automated client system engineered for zero-delay server connection bypass. Secure your spot instantly, track real-time position metrics, and get immediate custom network notifications.
     </p>
@@ -633,7 +637,7 @@
         </div>
         <div class="glass-panel" style="padding: 24px; text-align: center; align-items: center; justify-content: center;">
             <div style="font-size: 11px; font-weight:700; color:#475569; letter-spacing:1.5px; text-transform:uppercase;">Active Core Connections</div>
-            <div id="global-counter-active" style="font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight:700; color:var(--active-accent); margin-top:8px;">142</div>
+            <div id="global-counter-active" style="font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight:700; color:var(--page-brand-color); margin-top:8px;">142</div>
         </div>
     </div>
 
@@ -678,7 +682,7 @@
             </div>
 
             <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
-                <div class="sidebar-header" style="color:var(--active-accent); margin-bottom: 0;">
+                <div class="sidebar-header" style="color:var(--page-brand-color); margin-bottom: 0;">
                     <i data-lucide="terminal" style="width: 12px; height: 12px;"></i> Telemetry Stream
                 </div>
                 <div id="live-stream-terminal" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #a7f3d0; background: #02040a; padding: 14px; border-radius: 16px; height: 95px; overflow-y: hidden; line-height: 1.7; border: 1px solid rgba(255,255,255,0.01);">
@@ -709,7 +713,7 @@
                     <li><i data-lucide="check" class="icon-accent-default" style="width: 16px; height: 16px;"></i> Exact text click selector trigger algorithms</li>
                 </ul>
                 <button onclick="triggerPurchase('Default')" class="purchase-action-btn btn-theme-default">
-                    <i data-lucide="shopping-cart" style="width: 18px; height: 18px;"></i> Purchase Default SNIPER
+                    <i data-lucide="shopping-cart" style="width: 18px; height: 18px;"></i> Purchase Default Tier
                 </button>
             </div>
 
@@ -728,7 +732,7 @@
                     <li><i data-lucide="check" class="icon-accent-normal" style="width: 16px; height: 16px;"></i> Drag-and-drop panel positioning setup</li>
                 </ul>
                 <button onclick="triggerPurchase('Normal')" class="purchase-action-btn btn-theme-normal">
-                    <i data-lucide="shopping-cart" style="width: 18px; height: 18px;"></i> PURCHASE NORMAL SNIPER
+                    <i data-lucide="shopping-cart" style="width: 18px; height: 18px;"></i> Purchase Normal Build
                 </button>
             </div>
 
@@ -750,7 +754,7 @@
                     <li><i data-lucide="check" class="icon-accent-premium" style="width: 16px; height: 16px;"></i> Auto-save memory engine configuration speed parameters</li>
                 </ul>
                 <button onclick="triggerPurchase('Premium')" class="purchase-action-btn btn-theme-premium">
-                    <i data-lucide="zap" style="width: 18px; height: 18px;"></i> PURCHASE PREMIUM SNIPER
+                    <i data-lucide="zap" style="width: 18px; height: 18px;"></i> Secure Premium License
                 </button>
             </div>
 
@@ -773,7 +777,7 @@
                     <li><i data-lucide="zap" class="icon-accent-ultra-premium" style="width: 16px; height: 16px;"></i> Split telemetry for total queues found vs clicks executed</li>
                 </ul>
                 <button onclick="triggerPurchase('Ultra Premium')" class="purchase-action-btn btn-theme-ultra-premium">
-                    <i data-lucide="shield-alert" style="width: 18px; height: 18px;"></i> PURCHASE ULTRA PREMIUM SNIPER
+                    <i data-lucide="shield-alert" style="width: 18px; height: 18px;"></i> Deploy Ultra Premium Suite
                 </button>
             </div>
         </div>
@@ -781,7 +785,7 @@
 
     <div class="full-width-section" id="simulator">
         <div class="section-header-title">
-            <i data-lucide="gauge" style="color:var(--active-accent);"></i> Configuration Sandbox & Frequency Simulator
+            <i data-lucide="gauge" style="color:var(--page-brand-color);"></i> Configuration Sandbox & Frequency Simulator
         </div>
         <div class="simulator-box">
             <div class="sim-controls-panel">
@@ -810,7 +814,7 @@
 
                 <div style="display:flex; justify-content:space-between; font-weight:600; font-size:14px; margin-top: 10px;">
                     <span>Interval Delay Threshold:</span>
-                    <span id="sim-speed-val" style="color:var(--active-accent); font-family:'JetBrains Mono';">1000ms</span>
+                    <span id="sim-speed-val" style="color:var(--page-brand-color); font-family:'JetBrains Mono';">1000ms</span>
                 </div>
                 <input type="range" min="30" max="1000" value="1000" class="sim-slider" id="frequency-slider" oninput="adjustSimFrequency(this.value)">
                 <div id="sim-tier-badge" style="font-size:11px; font-weight:700; text-transform:uppercase; color:#94a3b8; letter-spacing:1px; margin-top:4px;">
@@ -825,7 +829,7 @@
 
     <div class="full-width-section" id="matrix">
         <div class="section-header-title">
-            <i data-lucide="bar-chart-2" style="color:var(--active-accent);"></i> Comparative Feature Capability Matrix
+            <i data-lucide="bar-chart-2" style="color:var(--page-brand-color);"></i> Comparative Feature Capability Matrix
         </div>
         <div class="matrix-table-wrap">
             <table class="matrix-table">
@@ -842,9 +846,9 @@
                     <tr>
                         <td style="font-weight:600;">Minimum Speed Delay</td>
                         <td style="color:#64748b;">1000ms</td>
-                        <td style="color:#4ade80;">500ms</td>
-                        <td style="color:#c084fc;">1ms</td>
-                        <td style="color:#fbbf24; font-weight:700;">0.01ms</td>
+                        <td style="color:#64748b;">500ms</td>
+                        <td style="color:#64748b;">1ms</td>
+                        <td style="color:#64748b;">0.01ms</td>
                     </tr>
                     <tr>
                         <td style="font-weight:600;">Chroma RGB Boundary Layout</td>
@@ -856,23 +860,23 @@
                     <tr>
                         <td style="font-weight:600;">Dedicated Engine Toggle Hotkeys</td>
                         <td style="color:#64748b;">❌</td>
-                        <td style="color:#cbd5e1;">F6 Bind</td>
-                        <td style="color:#cbd5e1;">F6 Dynamic</td>
-                        <td style="color:#fbbf24; font-weight:700;">Multi-Profile</td>
+                        <td style="color:#64748b;">F6 Bind</td>
+                        <td style="color:#64748b;">F6 Dynamic</td>
+                        <td style="color:#64748b;">Multi-Profile</td>
                     </tr>
                     <tr>
                         <td style="font-weight:600;">Anti-Bot Human Jitter Engine</td>
                         <td style="color:#64748b;">❌</td>
                         <td style="color:#64748b;">❌</td>
-                        <td style="color:#4ade80;">Standard</td>
-                        <td style="color:#fbbf24; font-weight:700;">Adaptive</td>
+                        <td style="color:#64748b;">Standard</td>
+                        <td style="color:#64748b;">Adaptive</td>
                     </tr>
                     <tr>
                         <td style="font-weight:600;">Live Webhook Stream Alerts</td>
                         <td style="color:#64748b;">❌</td>
                         <td style="color:#64748b;">❌</td>
-                        <td style="color:#cbd5e1;">Discord Hook</td>
-                        <td style="color:#fbbf24; font-weight:700;">Realtime API</td>
+                        <td style="color:#64748b;">Discord Hook</td>
+                        <td style="color:#64748b;">Realtime API</td>
                     </tr>
                 </tbody>
             </table>
@@ -881,7 +885,7 @@
 
     <div class="full-width-section" id="safeguards">
         <div class="section-header-title">
-            <i data-lucide="shield-check" style="color:var(--active-accent);"></i> Security & Bypass Safeguard Core
+            <i data-lucide="shield-check" style="color:var(--page-brand-color);"></i> Security & Bypass Safeguard Core
         </div>
         <div class="matrix-features-grid">
             <div class="matrix-feature-box">
@@ -904,7 +908,7 @@
 
     <div class="full-width-section" id="faq">
         <div class="section-header-title">
-            <i data-lucide="help-circle" style="color:var(--active-accent);"></i> Frequently Answered Matrix
+            <i data-lucide="help-circle" style="color:var(--page-brand-color);"></i> Frequently Answered Matrix
         </div>
         <div class="accordion-stack">
             <div class="accordion-item">
@@ -940,7 +944,6 @@
 </div>
 
 <script>
-    // Safeguard Initialization of Lucide Icons Library
     document.addEventListener("DOMContentLoaded", () => {
         if (typeof lucide !== 'undefined') {
             lucide.createIcons();
@@ -950,7 +953,6 @@
         adjustSimFrequency(1000);
     });
 
-    // Fully re-mapped internal theme names matching requested tiers
     const tierThemes = {
         'default': { color: '#94a3b8', text: 'DEFAULT BUILD STACK', label: 'Default Edition', glow: 'rgba(148, 163, 184, 0.12)', orb1: 'rgba(148, 163, 184, 0.06)', orb2: 'rgba(30, 41, 59, 0.15)' },
         'normal': { color: '#4ade80', text: 'NORMAL OPERATIONAL CORE', label: 'Normal Edition', glow: 'rgba(74, 222, 128, 0.15)', orb1: 'rgba(34, 197, 94, 0.08)', orb2: 'rgba(4, 120, 87, 0.03)' },
@@ -992,6 +994,7 @@
         const currentTheme = tierThemes[tierId];
         const rootElement = document.documentElement;
         
+        // Dynamically update background highlights, glowing structures, and title metrics
         rootElement.style.setProperty('--active-accent', currentTheme.color);
         rootElement.style.setProperty('--accent-glow', currentTheme.glow);
         rootElement.style.setProperty('--bg-orb-1', currentTheme.orb1);
@@ -999,7 +1002,6 @@
         
         executeScramble(document.getElementById('subtitle-tier'), currentTheme.text);
         
-        // Trigger scramble animation directly onto the enlarged badge title inside the content box
         const targetLabelElement = document.getElementById('title-label-' + tierId);
         if(targetLabelElement) {
             executeScramble(targetLabelElement, currentTheme.label);
@@ -1025,12 +1027,11 @@
         }
     }
 
-    // Interactive Toast Notification Trigger Feature
     function showNotificationToast(message) {
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
         toast.className = 'toast-popup';
-        toast.innerHTML = `<i data-lucide="bell" style="width:16px; height:16px; color:var(--active-accent);"></i> <span>${message}</span>`;
+        toast.innerHTML = `<i data-lucide="bell" style="width:16px; height:16px; color:var(--page-brand-color);"></i> <span>${message}</span>`;
         container.appendChild(toast);
         lucide.createIcons();
         
@@ -1048,7 +1049,6 @@
         }, 800);
     }
 
-    // WEB DATA TICKER SIMULATOR
     let baseClears = 109;
     let baseActive = 142;
     setInterval(() => {
@@ -1059,7 +1059,6 @@
         document.getElementById('global-counter-active').innerText = baseActive.toLocaleString();
     }, 3000);
 
-    // DYNAMIC STREAM COMPONENT LOGIC
     const activities = [
         "User ***42 clear connection bypassing queue",
         "User ***91 set interval speed override parameters",
@@ -1079,7 +1078,6 @@
     }
     setInterval(pushLiveTrackSim, 3000);
 
-    // VELOCITY SIMULATOR STABILIZED LOGIC ENGINE
     let simIntervalTimer;
     let currentSimTarget = "Queue";
     let activeSimFeatures = { jitter: false, shadow: false };
@@ -1135,7 +1133,6 @@
         }, parseInt(val));
     }
 
-    // CANVAS CORE RENDER PARTICLES FRAMEWORK
     const particleCanvas = document.getElementById('particle-canvas');
     const ctx = particleCanvas.getContext('2d');
     let particlesArray = [];
